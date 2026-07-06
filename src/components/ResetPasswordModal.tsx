@@ -72,7 +72,7 @@ export default function ResetPasswordModal({ onClose }: ResetPasswordModalProps)
                   onChange={e => setPassword(e.target.value)}
                   required
                   minLength={6}
-                  className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+                  className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                 />
               </div>
               <div className="relative">
@@ -84,7 +84,7 @@ export default function ResetPasswordModal({ onClose }: ResetPasswordModalProps)
                   onChange={e => setConfirm(e.target.value)}
                   required
                   minLength={6}
-                  className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+                  className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                 />
               </div>
             </div>

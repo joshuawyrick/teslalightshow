@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Zap } from 'lucide-react';
+import { Zap, Shield, Clock, Cloud, Heart } from 'lucide-react';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import AuthModal from './components/AuthModal';
@@ -71,7 +71,7 @@ function AppInner() {
       return (
         <div className="min-h-[60vh] flex items-center justify-center px-4">
           <div className="bg-charcoal border border-border rounded-2xl p-10 max-w-md w-full text-center space-y-4">
-            <p className="text-text-primary font-bold text-xl font-heading">Purchase cancelled</p>
+            <p className="text-text-primary font-bold text-xl font-display">Purchase cancelled</p>
             <p className="text-text-secondary text-sm">No charge was made. You can buy credits any time from the generator.</p>
             <button onClick={() => { window.history.replaceState({}, '', window.location.pathname); navigate('/'); }} className="w-full bg-steel hover:bg-slate border border-border text-text-primary font-semibold rounded-xl py-3 transition-all duration-150">
               Back to generator
@@ -101,23 +101,69 @@ function AppInner() {
 
         {renderPage()}
 
-        <footer className="border-t border-border mt-16 py-8 px-4">
-          <div className="max-w-[1320px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
-                <Zap size={12} className="text-accent-red" />
+        {/* Footer */}
+        <footer className="border-t border-border mt-16">
+          {/* Trust icons row */}
+          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center">
+                  <Shield size={16} className="text-electric-cyan" />
+                </div>
+                <div>
+                  <p className="text-text-primary text-sm font-medium">Trusted & Secure</p>
+                  <p className="text-text-secondary text-xs">Your data is private and safe.</p>
+                </div>
               </div>
-              <span className="text-text-secondary text-sm font-heading font-semibold tracking-tight">
-                Tesla<span className="text-text-primary">LightShows</span><span className="text-accent-red">.com</span>
-              </span>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center">
+                  <Clock size={16} className="text-electric-cyan" />
+                </div>
+                <div>
+                  <p className="text-text-primary text-sm font-medium">Lightning Fast</p>
+                  <p className="text-text-secondary text-xs">Shows generated in seconds.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center">
+                  <Cloud size={16} className="text-electric-cyan" />
+                </div>
+                <div>
+                  <p className="text-text-primary text-sm font-medium">Cloud Powered</p>
+                  <p className="text-text-secondary text-xs">Access anywhere, anytime.</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center">
+                  <Heart size={16} className="text-electric-cyan" />
+                </div>
+                <div>
+                  <p className="text-text-primary text-sm font-medium">For Tesla Fans</p>
+                  <p className="text-text-secondary text-xs">Built by Tesla enthusiasts.</p>
+                </div>
+              </div>
             </div>
-            <p className="text-text-secondary/60 text-xs text-center">
-              Generates files in Tesla's official FSEQ v2.0 format. Not affiliated with Tesla, Inc.
-            </p>
-            <div className="flex items-center gap-5">
-              <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Terms</button>
-              <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Privacy</button>
-              <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Support</button>
+          </div>
+
+          {/* Bottom bar */}
+          <div className="border-t border-border py-6 px-4 sm:px-6">
+            <div className="max-w-[1320px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+                  <Zap size={13} className="text-accent-red" />
+                </div>
+                <span className="text-sm font-display font-bold tracking-tight">
+                  Tesla<span className="text-accent-red">Light</span>Shows<span className="text-accent-red">.com</span>
+                </span>
+              </div>
+              <p className="text-text-secondary/60 text-xs text-center">
+                Music. Energy. Harmony. Your Tesla. &bull; Not affiliated with Tesla, Inc. &bull; FSEQ v2.0 format
+              </p>
+              <div className="flex items-center gap-5">
+                <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Terms</button>
+                <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Privacy</button>
+                <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Support</button>
+              </div>
             </div>
           </div>
         </footer>

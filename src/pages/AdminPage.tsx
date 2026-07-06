@@ -254,7 +254,7 @@ export default function AdminPage() {
           {stats && (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <StatCard icon={<DollarSign size={18} className="text-emerald-400" />} label="Total Revenue" value={`$${(stats.totalRevenueCents / 100).toFixed(2)}`} />
-              <StatCard icon={<Users size={18} className="text-electric-blue" />} label="Total Users" value={stats.totalUsers.toLocaleString()} />
+              <StatCard icon={<Users size={18} className="text-electric-cyan" />} label="Total Users" value={stats.totalUsers.toLocaleString()} />
               <StatCard icon={<Download size={18} className="text-sky-400" />} label="Total Downloads" value={stats.totalDownloads.toLocaleString()} />
             </div>
           )}
@@ -272,7 +272,7 @@ export default function AdminPage() {
                     value={grantEmail}
                     onChange={e => setGrantEmail(e.target.value)}
                     required
-                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                   />
                 </div>
                 <div className="w-24 space-y-1">
@@ -283,7 +283,7 @@ export default function AdminPage() {
                     max={100}
                     value={grantAmount}
                     onChange={e => setGrantAmount(parseInt(e.target.value) || 1)}
-                    className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+                    className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                   />
                 </div>
                 <div className="flex-1 min-w-[140px] space-y-1">
@@ -293,7 +293,7 @@ export default function AdminPage() {
                     placeholder="Contest winner"
                     value={grantNote}
                     onChange={e => setGrantNote(e.target.value)}
-                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                   />
                 </div>
                 <button
@@ -353,7 +353,7 @@ export default function AdminPage() {
                   placeholder="Search email..."
                   value={userSearch}
                   onChange={e => setUserSearch(e.target.value)}
-                  className="bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl pl-8 pr-3 py-1.5 text-sm outline-none focus:border-electric-blue/50 w-48 transition-colors"
+                  className="bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl pl-8 pr-3 py-1.5 text-sm outline-none focus:border-electric-cyan/50 w-48 transition-colors"
                 />
               </div>
             </div>
@@ -446,7 +446,7 @@ export default function AdminPage() {
                       value={adminEmail}
                       onChange={e => setAdminEmail(e.target.value)}
                       required
-                      className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+                      className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                     />
                   </div>
                   <div className="w-32 space-y-1">
@@ -454,7 +454,7 @@ export default function AdminPage() {
                     <select
                       value={adminRole}
                       onChange={e => setAdminRole(e.target.value)}
-                      className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors appearance-none"
+                      className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors appearance-none"
                     >
                       <option value="viewer">Viewer</option>
                       <option value="editor">Editor</option>

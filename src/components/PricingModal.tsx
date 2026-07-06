@@ -62,18 +62,18 @@ export default function PricingModal({ onClose }: PricingModalProps) {
             <div
               key={pkg.id}
               className={`relative bg-steel border rounded-xl p-4 flex items-center gap-4 ${
-                pkg.badge === 'Best Value' ? 'border-accent-red/40' : pkg.badge === 'Popular' ? 'border-electric-blue/30' : 'border-border'
+                pkg.badge === 'Best Value' ? 'border-accent-red/40' : pkg.badge === 'Popular' ? 'border-electric-cyan/30' : 'border-border'
               }`}
             >
               {pkg.badge && (
                 <span className={`absolute -top-2.5 right-4 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                  pkg.badge === 'Best Value' ? 'bg-accent-red text-white' : 'bg-electric-blue/20 text-electric-blue'
+                  pkg.badge === 'Best Value' ? 'bg-accent-red text-white' : 'bg-electric-cyan/20 text-electric-cyan'
                 }`}>
                   {pkg.badge}
                 </span>
               )}
               <div className="w-10 h-10 rounded-xl bg-midnight border border-border flex items-center justify-center shrink-0">
-                <Zap size={18} className="text-electric-blue" />
+                <Zap size={18} className="text-electric-cyan" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-text-primary font-semibold text-sm">{pkg.name}</p>

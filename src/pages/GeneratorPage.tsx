@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { Upload, Zap, Download, Music, AlertTriangle, CheckCircle2, Cpu, Lock, Scissors, ArrowRight, Play } from 'lucide-react';
+import { Upload, Zap, Download, Music, AlertTriangle, CheckCircle2, Cpu, Lock, Scissors, ArrowRight, Sparkles, Car, Palette, Sliders } from 'lucide-react';
 import {
   analyzeAudio,
   renditionsFor,
@@ -58,26 +58,17 @@ const THEME_NOTES: Record<ThemeId, string> = {
 };
 
 const PLACE_HELP: Record<Placement, string> = {
-  drops: 'Lights hit hardest at detected drops and chorus.',
+  drops: 'Movements land right where the song hits hardest.',
   even: 'Movements are spaced out at equal intervals across the whole song.',
   finale: 'Movements cluster in the last third of the song for a big ending.',
 };
-
-// ---- Step Badge ----
-function StepBadge({ n }: { n: number }) {
-  return (
-    <div className="w-7 h-7 rounded-full bg-electric-blue flex items-center justify-center shrink-0">
-      <span className="text-white text-xs font-bold">{n}</span>
-    </div>
-  );
-}
 
 // ---- Light bar ----
 const LB_N = 60;
 function LightBar({ progress, phase }: { progress: number; phase: 'idle' | 'analyzing' | 'done' }) {
   const half = LB_N / 2;
   return (
-    <div className="flex items-center gap-[2px] h-6" aria-hidden="true">
+    <div className="flex items-center gap-[2px] h-5" aria-hidden="true">
       {Array.from({ length: LB_N }, (_, i) => {
         let lit = false;
         if (phase === 'analyzing') {
@@ -89,12 +80,12 @@ function LightBar({ progress, phase }: { progress: number; phase: 'idle' | 'anal
         return (
           <span
             key={i}
-            className={`flex-1 h-full rounded-sm transition-all duration-75 ${
+            className={`flex-1 h-full rounded-[2px] transition-all duration-75 ${
               phase === 'idle'
                 ? 'lightbar-idle'
                 : lit
-                  ? phase === 'analyzing' ? 'bg-electric-blue shadow-[0_0_6px_#2D8CFF]' : 'bg-emerald-400 shadow-[0_0_6px_#34d399]'
-                  : 'bg-steel'
+                  ? phase === 'analyzing' ? 'bg-electric-cyan shadow-[0_0_4px_#00E5FF]' : 'bg-emerald-400 shadow-[0_0_4px_#34d399]'
+                  : 'bg-charcoal'
             }`}
             style={phase === 'idle' ? { '--lb-i': i } as React.CSSProperties : undefined}
           />
@@ -111,8 +102,8 @@ function Chip({ on, onClick, children, small }: { on: boolean; onClick: () => vo
       className={`rounded-lg border font-medium transition-all duration-150 cursor-pointer select-none
         ${small ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'}
         ${on
-          ? 'bg-electric-blue/15 border-electric-blue text-white shadow-[0_0_12px_rgba(45,140,255,0.25)]'
-          : 'bg-charcoal border-border text-text-secondary hover:border-electric-blue/50 hover:text-text-primary'
+          ? 'bg-electric-cyan/15 border-electric-cyan text-white shadow-[0_0_10px_rgba(0,229,255,0.2)]'
+          : 'bg-charcoal border-border text-text-secondary hover:border-electric-cyan/40 hover:text-text-primary'
         }`}
     >
       {children}
@@ -122,8 +113,8 @@ function Chip({ on, onClick, children, small }: { on: boolean; onClick: () => vo
 
 interface RenditionOutput {
   r: Rendition;
-  fseq: Uint8Array;        // full-length
-  snippetFseq: Uint8Array; // 20-second snippet
+  fseq: Uint8Array;
+  snippetFseq: Uint8Array;
 }
 
 interface ResultCardProps {
@@ -159,26 +150,25 @@ function ResultCard({ output, audioFile, audioBytes, snippetUsed, credits, onDow
 
   if (!snippetUsed) {
     return (
-      <div className="bg-steel border border-border rounded-2xl p-5 flex flex-col gap-3 hover:border-electric-blue/30 transition-all duration-200 card-hover">
-        <div>
+      <div className="bg-charcoal border border-border rounded-2xl p-5 flex flex-col gap-3 hover:border-electric-cyan/30 transition-all duration-200 card-hover">
+        <div className="flex-1">
           <h3 className="text-text-primary font-semibold text-base">{r.name}</h3>
           <p className="text-text-secondary text-sm mt-1 leading-relaxed">{r.desc}</p>
         </div>
-        <div className="flex flex-col gap-2 mt-auto pt-1">
+        <div className="flex gap-2 mt-auto pt-2">
           <button
             onClick={() => onDownloadFree(output)}
             disabled={isBusy || downloadingId !== null}
-            className="flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-steel disabled:text-text-secondary/50 text-white text-sm font-semibold rounded-xl px-4 py-2.5 transition-colors duration-150"
+            className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-charcoal disabled:text-text-secondary/50 text-white text-sm font-semibold rounded-xl px-3 py-2.5 transition-colors duration-150"
           >
-            <Scissors size={14} />
-            {isBusy ? 'Preparing...' : `Free ${SNIPPET_SECONDS}s Snippet`}
+            <Scissors size={13} />
+            {isBusy ? 'Preparing...' : `Free ${SNIPPET_SECONDS}s`}
           </button>
           <button
             onClick={() => downloadLocal(output.fseq, '')}
-            className="flex items-center justify-center gap-2 bg-charcoal hover:bg-slate text-text-secondary hover:text-text-primary text-xs font-medium rounded-xl px-4 py-2 transition-colors duration-150 border border-border"
+            className="flex items-center justify-center gap-1.5 bg-steel hover:bg-slate text-text-secondary hover:text-text-primary text-xs font-medium rounded-xl px-3 py-2.5 transition-colors duration-150 border border-border"
           >
-            <Download size={12} />
-            Preview full show (local only, no credit used)
+            .fseq only
           </button>
         </div>
       </div>
@@ -186,32 +176,32 @@ function ResultCard({ output, audioFile, audioBytes, snippetUsed, credits, onDow
   }
 
   return (
-    <div className="bg-steel border border-border rounded-2xl p-5 flex flex-col gap-3 hover:border-electric-blue/30 transition-all duration-200 card-hover">
-      <div>
+    <div className="bg-charcoal border border-border rounded-2xl p-5 flex flex-col gap-3 hover:border-electric-cyan/30 transition-all duration-200 card-hover">
+      <div className="flex-1">
         <h3 className="text-text-primary font-semibold text-base">{r.name}</h3>
         <p className="text-text-secondary text-sm mt-1 leading-relaxed">{r.desc}</p>
       </div>
-      <div className="flex gap-2 mt-auto pt-1">
+      <div className="flex gap-2 mt-auto pt-2">
         {credits > 0 ? (
           <button
             onClick={() => onDownloadPaid(output)}
             disabled={isBusy || downloadingId !== null}
-            className="flex-1 flex items-center justify-center gap-2 bg-accent-red hover:bg-accent-red/90 disabled:bg-steel disabled:text-text-secondary/50 text-white text-sm font-semibold rounded-xl px-4 py-2.5 transition-all duration-150 glow-red"
+            className="flex-1 flex items-center justify-center gap-2 bg-accent-red hover:bg-accent-red/90 disabled:bg-charcoal disabled:text-text-secondary/50 text-white text-sm font-semibold rounded-xl px-3 py-2.5 transition-all duration-150 glow-red"
           >
-            {isBusy ? <><Cpu size={14} className="animate-spin" /> Saving...</> : <><Download size={14} /> Use 1 Credit</>}
+            {isBusy ? <><Cpu size={13} className="animate-spin" /> Saving...</> : <>1 Credit</>}
           </button>
         ) : (
           <button
             onClick={onBuyCredits}
-            className="flex-1 flex items-center justify-center gap-2 bg-steel hover:bg-slate border border-border hover:border-accent-red/50 text-text-secondary hover:text-text-primary text-sm font-semibold rounded-xl px-4 py-2.5 transition-all duration-150"
+            className="flex-1 flex items-center justify-center gap-2 bg-steel hover:bg-slate border border-border hover:border-accent-red/50 text-text-secondary hover:text-text-primary text-sm font-semibold rounded-xl px-3 py-2.5 transition-all duration-150"
           >
-            <Lock size={14} />
-            Use 1 Credit
+            <Lock size={13} />
+            1 Credit
           </button>
         )}
         <button
           onClick={() => downloadLocal(output.fseq, '')}
-          className="flex items-center justify-center gap-2 bg-charcoal hover:bg-slate text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl px-4 py-2.5 transition-colors duration-150 border border-border"
+          className="flex items-center justify-center gap-1.5 bg-steel hover:bg-slate text-text-secondary hover:text-text-primary text-xs font-medium rounded-xl px-3 py-2.5 transition-colors duration-150 border border-border"
         >
           .fseq only
         </button>
@@ -337,12 +327,10 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       await new Promise(r => setTimeout(r, 30));
       const n = decoded.length, chn = decoded.numberOfChannels;
 
-      // Full mono mix
       const mono = new Float32Array(n);
       for (let c = 0; c < chn; c++) { const ch = decoded.getChannelData(c); for (let i = 0; i < n; i++) mono[i] += ch[i]; }
       for (let i = 0; i < n; i++) mono[i] /= chn;
 
-      // 20-second snippet mono
       const snippetSamples = Math.min(mono.length, Math.round(decoded.sampleRate * SNIPPET_SECONDS));
       const snippetMono = mono.slice(0, snippetSamples);
 
@@ -409,7 +397,6 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || `Failed (${res.status})`);
 
-      // Download the snippet locally
       const blob = new Blob([output.snippetFseq], { type: 'application/octet-stream' });
       const slug = audioFile.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/gi, '_').slice(0, 40);
       const ext = audioFile.name.toLowerCase().split('.').pop() || 'mp3';
@@ -459,7 +446,6 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || `Failed (${res.status})`);
 
-      // Download the full show
       const ext = audioFile.name.toLowerCase().split('.').pop() || 'mp3';
       const slug = audioFile.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/gi, '_').slice(0, 40);
       const zipData = makeZip([
@@ -499,270 +485,283 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
   void artOpts;
 
   return (
-    <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 space-y-10">
+    <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8 space-y-8">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-charcoal border border-border rounded-2xl p-8 sm:p-12">
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-electric-blue/5 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-1/2 h-full opacity-30 pointer-events-none">
-          <div className="absolute top-1/2 right-12 -translate-y-1/2 w-64 h-40">
-            <div className="absolute inset-0 bg-gradient-to-b from-slate/50 to-midnight rounded-xl" />
-            <div className="absolute top-[45%] left-[10%] w-[80%] h-[2px] bg-accent-red/60 rounded-full shadow-[0_0_8px_rgba(255,59,48,0.4)]" />
-            <div className="absolute top-[35%] left-[20%] w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_white]" />
-            <div className="absolute top-[35%] right-[20%] w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_white]" />
-            <div className="absolute bottom-0 left-[15%] right-[15%] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          </div>
-        </div>
-        <div className="relative max-w-2xl space-y-5">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold tracking-tight leading-tight text-text-primary">
-            Turn your music into<br />a <span className="bg-gradient-to-r from-accent-red to-electric-blue bg-clip-text text-transparent">Tesla light show.</span>
-          </h1>
-          <p className="text-text-secondary text-base sm:text-lg leading-relaxed max-w-lg">
-            Upload a song. Fine-tune your show. Generate.<br className="hidden sm:block" />It's that simple.
-          </p>
-          <div className="flex flex-wrap items-center gap-3 pt-2">
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="inline-flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white font-semibold text-sm rounded-xl px-5 py-2.5 transition-all duration-150 glow-red"
-            >
-              Start Your Show <ArrowRight size={16} />
-            </button>
-            <button
-              onClick={() => document.getElementById('step-upload')?.scrollIntoView({ behavior: 'smooth' })}
-              className="inline-flex items-center gap-2 bg-transparent border border-border hover:border-electric-blue/50 text-text-secondary hover:text-text-primary font-medium text-sm rounded-xl px-5 py-2.5 transition-all duration-150"
-            >
-              <Play size={14} className="text-electric-blue" /> How It Works
-            </button>
-          </div>
-          <p className="text-text-secondary/60 text-xs pt-1">200-channel FSEQ &bull; Official format &bull; Built for Tesla</p>
-        </div>
-        {!user && (
-          <div className="mt-6 inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-4 py-2 text-emerald-300 text-sm">
-            <CheckCircle2 size={14} />
-            Sign up free and get a 20-second snippet to try on your Tesla
-          </div>
-        )}
-        {user && !snippetUsed && (
-          <div className="mt-6 inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-4 py-2 text-emerald-300 text-sm">
-            <Scissors size={14} />
-            Your free {SNIPPET_SECONDS}s snippet is waiting — generate a show to claim it
-          </div>
-        )}
-      </section>
-
-      {/* Step 1 — Upload */}
-      <section id="step-upload" className="space-y-4">
-        <div className="flex items-center gap-3">
-          <StepBadge n={1} />
-          <h2 className="text-text-primary font-heading font-semibold text-lg">Upload Your Song</h2>
-        </div>
-        <div className="bg-charcoal border border-border rounded-2xl p-6">
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => fileInputRef.current?.click()}
-            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInputRef.current?.click(); } }}
-            onDragOver={e => { e.preventDefault(); setIsDragOver(true); }}
-            onDragEnter={e => { e.preventDefault(); setIsDragOver(true); }}
-            onDragLeave={() => setIsDragOver(false)}
-            onDrop={handleDrop}
-            className={`relative border-2 border-dashed rounded-xl p-8 flex flex-col items-center gap-4 cursor-pointer transition-all duration-200 select-none
-              ${isDragOver ? 'border-electric-blue/60 bg-electric-blue/5' : audioFile ? 'border-emerald-500/30 bg-steel' : 'border-border bg-steel hover:border-electric-blue/30'}`}
-          >
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".mp3,.wav"
-              className="sr-only"
-              onChange={e => { if (e.target.files?.[0]) loadFile(e.target.files[0]); }}
-            />
-            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border transition-colors duration-200
-              ${audioFile ? 'bg-emerald-500/15 border-emerald-500/30' : 'bg-electric-blue/10 border-electric-blue/25'}`}>
-              {audioFile ? <Music size={24} className="text-emerald-400" /> : <Upload size={24} className="text-electric-blue" />}
+      <section className="relative overflow-hidden bg-charcoal border border-border rounded-2xl">
+        <div className="hero-glow" />
+        <div className="flex flex-col lg:flex-row items-center">
+          {/* Left content */}
+          <div className="relative z-10 p-8 sm:p-10 lg:p-12 lg:w-[55%] space-y-5">
+            <p className="text-text-secondary text-xs sm:text-sm uppercase tracking-[0.2em] font-medium">
+              Turn your music into
+            </p>
+            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] tracking-tight leading-[1.1]">
+              <span className="text-text-primary">TESLA </span>
+              <span className="bg-gradient-to-r from-accent-red via-accent-red to-electric-cyan bg-clip-text text-transparent">LIGHT SHOWS</span>
+            </h1>
+            <p className="text-text-secondary text-sm sm:text-base leading-relaxed max-w-md">
+              Upload any song. Our AI maps every beat, drop, and detail to a custom light show for your Tesla.
+            </p>
+            {/* Trust badges */}
+            <div className="flex flex-wrap items-center gap-5 pt-2">
+              <div className="flex items-center gap-2">
+                <Sparkles size={14} className="text-electric-cyan" />
+                <div>
+                  <p className="text-text-primary text-xs font-medium">AI Music Analysis</p>
+                  <p className="text-text-secondary text-[10px]">Smart & Accurate</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Car size={14} className="text-electric-cyan" />
+                <div>
+                  <p className="text-text-primary text-xs font-medium">Tesla Optimized</p>
+                  <p className="text-text-secondary text-[10px]">All Models Supported</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Lock size={14} className="text-electric-cyan" />
+                <div>
+                  <p className="text-text-primary text-xs font-medium">Fast & Secure</p>
+                  <p className="text-text-secondary text-[10px]">Your Privacy Matters</p>
+                </div>
+              </div>
             </div>
-            <div className="text-center">
-              <p className="text-text-primary font-medium text-base">{audioFile ? audioFile.name : 'Drag & drop an MP3 or WAV file here'}</p>
-              <p className="text-text-secondary text-sm mt-1">{audioFile ? fileMeta : 'or click to browse'}</p>
-            </div>
-            {!audioFile && (
-              <p className="text-text-secondary/50 text-xs">MP3, WAV &bull; Up to 4 hours &bull; Max 500MB</p>
+            {!user && (
+              <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-4 py-2 text-emerald-300 text-sm">
+                <CheckCircle2 size={14} />
+                Sign up free — get a 20-second snippet to try on your Tesla
+              </div>
             )}
-            {audioFile && (
-              <button
-                onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
-                className="text-electric-blue hover:text-electric-blue/80 text-sm font-medium transition-colors"
-              >
-                Replace File
-              </button>
-            )}
-            {srWarn && (
-              <div className="flex items-start gap-2 bg-amber-500/10 border border-amber-500/25 rounded-xl px-4 py-3 text-amber-300 text-sm max-w-lg text-left">
-                <AlertTriangle size={16} className="mt-0.5 shrink-0" />
-                {srWarn}
+            {user && !snippetUsed && (
+              <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-4 py-2 text-emerald-300 text-sm">
+                <Scissors size={14} />
+                Your free {SNIPPET_SECONDS}s snippet is waiting — generate a show to claim it
               </div>
             )}
           </div>
+          {/* Right - Tesla image */}
+          <div className="relative lg:w-[45%] h-64 sm:h-80 lg:h-auto lg:min-h-[340px] w-full overflow-hidden">
+            <img
+              src="/tesla-hero.webp"
+              alt="Tesla Model 3 front view with glowing lights"
+              className="absolute inset-0 w-full h-full object-cover object-center opacity-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent lg:via-charcoal/40" />
+          </div>
         </div>
       </section>
 
-      {/* Step 2 — Vehicle */}
-      <section className="space-y-4">
+      {/* Step 1 — Upload */}
+      <section className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
         <div className="flex items-center gap-3">
-          <StepBadge n={2} />
-          <h2 className="text-text-primary font-heading font-semibold text-lg">Select Your Vehicle</h2>
-        </div>
-        <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
-          <div className="flex flex-wrap gap-2">
-            {(Object.keys(MODEL_NAMES) as ModelId[]).map(m => (
-              <Chip key={m} on={model === m} onClick={() => setModel(m)}>{MODEL_NAMES[m]}</Chip>
-            ))}
+          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+            <Upload size={14} className="text-accent-red" />
           </div>
-          <p className="text-text-secondary text-sm">{modelNote[model]}</p>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">Step 1 — Upload Your Song</h2>
         </div>
-      </section>
-
-      {/* Step 3 — Color theme */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-3">
-          <StepBadge n={3} />
-          <h2 className="text-text-primary font-heading font-semibold text-lg">Choose Your Color Theme</h2>
-        </div>
-        <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
-          <div className="flex flex-wrap gap-2">
-            {(Object.keys(THEME_NOTES) as ThemeId[]).map(t => (
-              <Chip key={t} on={themeId === t} onClick={() => setThemeId(t)} small>
-                {t === 'dynamic' ? 'Dynamic' : t === 'usa' ? 'USA' : t === 'stpat' ? "St. Pat's" : t === 'valentine' ? 'Valentine' : t === 'halloween' ? 'Halloween' : t === 'christmas' ? 'Christmas' : 'Custom'}
-              </Chip>
-            ))}
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => fileInputRef.current?.click()}
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInputRef.current?.click(); } }}
+          onDragOver={e => { e.preventDefault(); setIsDragOver(true); }}
+          onDragEnter={e => { e.preventDefault(); setIsDragOver(true); }}
+          onDragLeave={() => setIsDragOver(false)}
+          onDrop={handleDrop}
+          className={`relative border-2 border-dashed rounded-xl p-8 flex flex-col items-center gap-4 cursor-pointer transition-all duration-200 select-none
+            ${isDragOver ? 'border-electric-cyan/60 bg-electric-cyan/5' : audioFile ? 'border-emerald-500/30 bg-steel' : 'border-border bg-steel hover:border-electric-cyan/30'}`}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".mp3,.wav"
+            className="sr-only"
+            onChange={e => { if (e.target.files?.[0]) loadFile(e.target.files[0]); }}
+          />
+          <div className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-colors duration-200
+            ${audioFile ? 'bg-emerald-500/15 border-emerald-500/30' : 'bg-electric-cyan/10 border-electric-cyan/25'}`}>
+            {audioFile ? <Music size={20} className="text-emerald-400" /> : <Upload size={20} className="text-electric-cyan" />}
           </div>
-          <p className="text-text-secondary text-sm">{THEME_NOTES[themeId]}</p>
-          {themeId === 'custom' && (
-            <div className="flex items-center gap-3 pt-1">
-              {customColors.map((c, i) => (
-                <label key={i} className="relative cursor-pointer">
-                  <div className="w-9 h-9 rounded-full border-2 border-border overflow-hidden" style={{ background: c }}>
-                    <input
-                      type="color"
-                      value={c}
-                      onChange={e => setCustomColors(prev => { const n = [...prev]; n[i] = e.target.value; return n; })}
-                      className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
-                    />
-                  </div>
-                </label>
-              ))}
-              <span className="text-text-secondary/60 text-sm">Click a swatch to change</span>
+          <div className="text-center">
+            <p className="text-text-primary font-medium">{audioFile ? audioFile.name : 'Drag & drop your MP3 or WAV file here'}</p>
+            <p className="text-text-secondary text-sm mt-1">{audioFile ? fileMeta : 'or click to browse (up to 4 hours supported)'}</p>
+          </div>
+          {!audioFile && (
+            <div className="flex items-center gap-4 text-text-secondary/50 text-xs">
+              <span>MP3, WAV, 44.1 kHz</span>
+              <span>Up to 4 hours</span>
+              <span>200-Channel FSEQ</span>
+            </div>
+          )}
+          {audioFile && (
+            <button
+              onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}
+              className="text-electric-cyan hover:text-electric-cyan/80 text-sm font-medium transition-colors"
+            >
+              Change File
+            </button>
+          )}
+          {srWarn && (
+            <div className="flex items-start gap-2 bg-amber-500/10 border border-amber-500/25 rounded-xl px-4 py-3 text-amber-300 text-sm max-w-lg text-left">
+              <AlertTriangle size={16} className="mt-0.5 shrink-0" />
+              {srWarn}
             </div>
           )}
         </div>
       </section>
 
-      {/* Step 4 — Articulation */}
-      <section className="space-y-4">
+      {/* Step 2 — Vehicle */}
+      <section className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
         <div className="flex items-center gap-3">
-          <StepBadge n={4} />
-          <h2 className="text-text-primary font-heading font-semibold text-lg">Articulation & Behavior</h2>
-        </div>
-        <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-6">
-          <div className="space-y-2">
-            <p className="text-text-secondary text-sm font-medium">Movement Timing</p>
-            <div className="flex flex-wrap gap-2">
-              {(['drops', 'even', 'finale'] as Placement[]).map(p => (
-                <Chip key={p} on={placement === p} onClick={() => setPlacement(p)} small>
-                  {p === 'drops' ? 'At drops' : p === 'even' ? 'Even spacing' : 'Grand finale'}
-                </Chip>
-              ))}
-            </div>
-            <p className="text-text-secondary/60 text-xs">{PLACE_HELP[placement]}</p>
+          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+            <Car size={14} className="text-accent-red" />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="space-y-2">
-              <label className="text-text-secondary text-sm font-medium block">Mirror Flicks</label>
-              <select value={mirrors} onChange={e => setMirrors(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-electric-blue/50 cursor-pointer transition-colors">
-                <option value={0}>Off</option>
-                {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (<option key={n} value={n}>&times; {n}</option>))}
-              </select>
-              <p className="text-text-secondary/50 text-xs">One flick = both mirrors fold in, then back out (~2s each way). Max 10 flicks.</p>
-            </div>
-            <div className="space-y-2">
-              <label className="text-text-secondary text-sm font-medium block">Window Bounces</label>
-              <select value={windows} onChange={e => setWindows(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-electric-blue/50 cursor-pointer transition-colors">
-                <option value={0}>Off</option>
-                <option value={1}>&times; 1</option>
-                <option value={2}>&times; 2</option>
-              </select>
-              <p className="text-text-secondary/50 text-xs">All four windows roll down at show start and stay down.</p>
-            </div>
-            <div className="space-y-2">
-              <label className="text-text-secondary text-sm font-medium block">Charge Port</label>
-              <select value={chargeMode} onChange={e => setChargeMode(e.target.value as ChargeMode)} className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-electric-blue/50 cursor-pointer transition-colors">
-                <option value="none">Off</option>
-                <option value="open">Open only</option>
-                <option value="show">Open + rainbow + close</option>
-              </select>
-              <p className="text-text-secondary/50 text-xs">Rainbow opens early, LED flashes at chorus, closes at end.</p>
-            </div>
-            <div className="space-y-2">
-              <label className="text-text-secondary text-sm font-medium block">
-                Trunk / Liftgate <span className="text-text-secondary/40">(powered frunk on Cybertruck)</span>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">Step 2 — Your Vehicle</h2>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {(Object.keys(MODEL_NAMES) as ModelId[]).map(m => (
+            <Chip key={m} on={model === m} onClick={() => setModel(m)}>{MODEL_NAMES[m]}</Chip>
+          ))}
+        </div>
+        <p className="text-text-secondary text-sm">{modelNote[model]}</p>
+      </section>
+
+      {/* Step 3 — Color theme */}
+      <section className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+            <Palette size={14} className="text-accent-red" />
+          </div>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">Step 3 — Color Theme</h2>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {(Object.keys(THEME_NOTES) as ThemeId[]).map(t => (
+            <Chip key={t} on={themeId === t} onClick={() => setThemeId(t)} small>
+              {t === 'dynamic' ? 'Dynamic' : t === 'usa' ? 'USA' : t === 'stpat' ? "St. Pat's" : t === 'valentine' ? 'Valentine' : t === 'halloween' ? 'Halloween' : t === 'christmas' ? 'Christmas' : 'Custom'}
+            </Chip>
+          ))}
+        </div>
+        <p className="text-text-secondary text-sm">{THEME_NOTES[themeId]}</p>
+        {themeId === 'custom' && (
+          <div className="flex items-center gap-3 pt-1">
+            {customColors.map((c, i) => (
+              <label key={i} className="relative cursor-pointer">
+                <div className="w-9 h-9 rounded-full border-2 border-border overflow-hidden" style={{ background: c }}>
+                  <input
+                    type="color"
+                    value={c}
+                    onChange={e => setCustomColors(prev => { const n = [...prev]; n[i] = e.target.value; return n; })}
+                    className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                  />
+                </div>
               </label>
-              <div className="flex gap-2">
-                <select
-                  value={trunkMode}
-                  onChange={e => { const m = e.target.value as TrunkMode; setTrunkMode(m); if (m === 'dance' && trunkCount > 2) setTrunkCount(2); }}
-                  className="flex-1 bg-midnight border border-border text-text-primary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-electric-blue/50 cursor-pointer transition-colors"
-                >
-                  <option value="none">Off</option>
-                  <option value="full">Full open/close (~14s open)</option>
-                  <option value="half">Half open/close (~3.5s)</option>
-                  <option value="dance">Dance oscillate</option>
-                </select>
-                <select
-                  value={trunkCount}
-                  disabled={trunkMode === 'none'}
-                  onChange={e => setTrunkCount(parseInt(e.target.value))}
-                  className="w-20 bg-midnight border border-border text-text-primary rounded-xl px-3 py-2.5 text-sm outline-none focus:border-electric-blue/50 disabled:opacity-30 cursor-pointer disabled:cursor-default transition-colors"
-                >
-                  {Array.from({ length: trunkCountMax }, (_, i) => i + 1).map(n => (<option key={n} value={n}>&times; {n}</option>))}
-                </select>
-              </div>
+            ))}
+            <span className="text-text-secondary/60 text-sm">Click a swatch to change</span>
+          </div>
+        )}
+      </section>
+
+      {/* Step 4 — Articulation */}
+      <section className="bg-charcoal border border-border rounded-2xl p-6 space-y-5">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+            <Sliders size={14} className="text-accent-red" />
+          </div>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">Step 4 — Articulation</h2>
+        </div>
+        <div className="space-y-2">
+          <p className="text-text-secondary text-sm font-medium">Movement Timing</p>
+          <div className="flex flex-wrap gap-2">
+            {(['drops', 'even', 'finale'] as Placement[]).map(p => (
+              <Chip key={p} on={placement === p} onClick={() => setPlacement(p)} small>
+                {p === 'drops' ? 'At Drops' : p === 'even' ? 'Even Spacing' : 'Grand Finale'}
+              </Chip>
+            ))}
+          </div>
+          <p className="text-text-secondary/60 text-xs">{PLACE_HELP[placement]}</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="space-y-1.5">
+            <label className="text-text-secondary text-sm font-medium block">Mirror Flicks</label>
+            <select value={mirrors} onChange={e => setMirrors(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+              <option value={0}>Off</option>
+              {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (<option key={n} value={n}>x {n}</option>))}
+            </select>
+            <p className="text-text-secondary/50 text-[11px]">Max 10 flicks.</p>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-text-secondary text-sm font-medium block">Window Bounces</label>
+            <select value={windows} onChange={e => setWindows(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+              <option value={0}>Off</option>
+              <option value={1}>x 1</option>
+              <option value={2}>x 2</option>
+            </select>
+            <p className="text-text-secondary/50 text-[11px]">All windows roll.</p>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-text-secondary text-sm font-medium block">Charge Port</label>
+            <select value={chargeMode} onChange={e => setChargeMode(e.target.value as ChargeMode)} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+              <option value="none">Off</option>
+              <option value="open">Open only</option>
+              <option value="show">Open + Rainbow + Close</option>
+            </select>
+            <p className="text-text-secondary/50 text-[11px]">Rainbow opens early, flashes at chorus, closes at end.</p>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-text-secondary text-sm font-medium block">Trunk / Liftgate</label>
+            <div className="flex gap-2">
+              <select
+                value={trunkMode}
+                onChange={e => { const m = e.target.value as TrunkMode; setTrunkMode(m); if (m === 'dance' && trunkCount > 2) setTrunkCount(2); }}
+                className="flex-1 bg-midnight border border-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors"
+              >
+                <option value="none">Off</option>
+                <option value="full">Full open/close</option>
+                <option value="half">Half open/close</option>
+                <option value="dance">Dance oscillate</option>
+              </select>
+              <select
+                value={trunkCount}
+                disabled={trunkMode === 'none'}
+                onChange={e => setTrunkCount(parseInt(e.target.value))}
+                className="w-16 bg-midnight border border-border text-text-primary rounded-lg px-2 py-2 text-sm outline-none focus:border-electric-cyan/50 disabled:opacity-30 cursor-pointer transition-colors"
+              >
+                {Array.from({ length: trunkCountMax }, (_, i) => i + 1).map(n => (<option key={n} value={n}>x {n}</option>))}
+              </select>
             </div>
+            <p className="text-text-secondary/50 text-[11px]">Powered trunk on Cybertruck.</p>
           </div>
         </div>
       </section>
 
-      {/* Step 5 — Generate */}
-      <section className="space-y-4">
-        <div className="flex items-center gap-3">
-          <StepBadge n={5} />
-          <h2 className="text-text-primary font-heading font-semibold text-lg">Generate Your Show</h2>
-        </div>
-        <div className="bg-charcoal border border-border rounded-2xl p-5 space-y-4">
+      {/* Generate Bar */}
+      <section className="space-y-3">
+        <div className="bg-charcoal border border-border rounded-2xl p-4 space-y-3">
           <LightBar progress={progress} phase={phase} />
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2 min-h-5">
-              {phase === 'analyzing' && <Cpu size={13} className="text-electric-blue animate-pulse shrink-0" />}
-              {phase === 'done' && <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />}
-              <p className="text-text-secondary text-xs">{barLabel || (decoded ? 'Ready to generate.' : 'Upload a song to begin.')}</p>
-            </div>
-            <button
-              disabled={!decoded || phase === 'analyzing'}
-              onClick={generate}
-              className="flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 disabled:bg-steel disabled:text-text-secondary/40 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-xl px-6 py-3 transition-all duration-150 cursor-pointer glow-red disabled:shadow-none"
-            >
-              <Zap size={16} />
-              {user ? 'Generate Light Show' : 'Sign up to generate'}
-              <ArrowRight size={14} />
-            </button>
+          <div className="flex items-center gap-2 min-h-5">
+            {phase === 'analyzing' && <Cpu size={13} className="text-electric-cyan animate-pulse shrink-0" />}
+            {phase === 'done' && <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />}
+            <p className="text-text-secondary text-xs">{barLabel || (decoded ? 'Ready to generate.' : 'Upload a song to begin.')}</p>
+            {phase === 'analyzing' && <span className="text-electric-cyan text-xs ml-auto font-mono">{Math.round(progress * 100)}%</span>}
           </div>
-          <p className="text-text-secondary/50 text-xs text-right">1 credit per show</p>
         </div>
+        <button
+          disabled={!decoded || phase === 'analyzing'}
+          onClick={generate}
+          className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-accent-red to-accent-red/90 hover:from-accent-red hover:to-accent-red disabled:from-charcoal disabled:to-charcoal disabled:text-text-secondary/30 disabled:cursor-not-allowed text-white font-display font-bold text-sm sm:text-base uppercase tracking-wider rounded-2xl py-4 transition-all duration-150 cursor-pointer glow-red disabled:shadow-none"
+        >
+          <Zap size={18} />
+          {user ? 'Generate Light Shows' : 'Sign up to generate'}
+        </button>
+        <p className="text-text-secondary/50 text-xs text-center">1 Credit per show &bull; .fseq format</p>
       </section>
 
       {/* Results */}
       {outputs.length > 0 && (
         <section className="space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-text-secondary/60">Your shows</h2>
-            <p className="text-text-secondary/50 text-xs">{songInfo}</p>
+            <h2 className="text-sm font-display font-bold uppercase tracking-wide text-text-primary">AI Show Presets</h2>
+            <p className="text-text-secondary/60 text-xs">{songInfo}</p>
           </div>
           {downloadError && (
             <div className="flex items-start gap-2 bg-accent-red/10 border border-accent-red/20 rounded-xl px-4 py-3 text-accent-red text-sm">
@@ -770,7 +769,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               {downloadError}
             </div>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             {outputs.map((output) => (
               <ResultCard
                 key={output.r.id}
@@ -789,40 +788,45 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         </section>
       )}
 
-      {/* How to use */}
-      <section className="space-y-4 border-t border-border pt-12">
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-text-secondary/60">How to use your show</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { n: '1', title: 'Prepare USB', body: "Format as exFAT, FAT32, or MS-DOS FAT. No TeslaCam or firmware files." },
-            { n: '2', title: 'Copy Show', body: "Download the .zip and unzip it. You'll get a LightShow folder with .fseq + audio." },
-            { n: '3', title: 'Plug In & Play', body: 'Insert into your Tesla USB port. Open Toybox → Light Show → Schedule Show.' },
-            { n: '4', title: 'Multiple Shows', body: 'Rename each set (e.g. bass.fseq + bass.mp3) inside the same LightShow folder.' },
-          ].map(step => (
-            <div key={step.n} className="bg-steel border border-border rounded-2xl p-5 flex flex-col gap-3 card-hover">
-              <div className="w-8 h-8 rounded-lg bg-electric-blue/10 border border-electric-blue/25 text-electric-blue font-bold text-sm flex items-center justify-center">{step.n}</div>
-              <div>
-                <p className="text-text-primary font-medium text-sm">{step.title}</p>
-                <p className="text-text-secondary text-sm mt-1 leading-relaxed">{step.body}</p>
+      {/* How it works + Compatibility */}
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* How it works */}
+        <div className="lg:col-span-2 bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">How to use your show</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { n: '1', title: 'Prepare USB', body: "Format as exFAT, FAT32, or MS-DOS FAT. No TeslaCam or firmware files." },
+              { n: '2', title: 'Copy Show', body: "Download .zip, unzip it. You'll get a LightShow folder with .fseq + audio." },
+              { n: '3', title: 'Plug In & Play', body: 'Insert into your Tesla USB port. Toybox > Light Show > Schedule Show.' },
+              { n: '4', title: 'Multiple Shows', body: 'Rename each pair (bass.fseq + bass.mp3) inside the same LightShow folder.' },
+            ].map(step => (
+              <div key={step.n} className="flex gap-3">
+                <div className="w-6 h-6 rounded bg-electric-cyan/15 border border-electric-cyan/25 text-electric-cyan font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">{step.n}</div>
+                <div>
+                  <p className="text-text-primary text-sm font-medium">{step.title}</p>
+                  <p className="text-text-secondary text-xs mt-0.5 leading-relaxed">{step.body}</p>
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+        {/* Compatibility */}
+        <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">The details</h2>
+          <div className="space-y-3 text-sm">
+            <div>
+              <p className="text-text-primary font-medium text-xs">Supported Vehicles</p>
+              <p className="text-text-secondary text-xs mt-0.5">Model S (2021+), Model 3, Model 3 Highland, Model Y, Model Y Juniper, Model X (2021+), Cybertruck</p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Compatibility */}
-      <section className="bg-charcoal border border-border rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
-        <div>
-          <p className="text-text-primary font-medium mb-1.5">Supported Vehicles</p>
-          <p className="text-text-secondary leading-relaxed">Model S (2021+), Model 3, Model 3 Highland, Model Y, Model Y Juniper, Model X (2021+), Cybertruck (v11.0+).</p>
-        </div>
-        <div>
-          <p className="text-text-primary font-medium mb-1.5">Audio Format</p>
-          <p className="text-text-secondary leading-relaxed">MP3 or WAV, 44.1 kHz recommended. 48 kHz files will drift. Shows up to 4 hours.</p>
-        </div>
-        <div>
-          <p className="text-text-primary font-medium mb-1.5">Command Limits</p>
-          <p className="text-text-secondary leading-relaxed">Thermal limits enforced automatically. Commands are kept within Tesla's official caps.</p>
+            <div>
+              <p className="text-text-primary font-medium text-xs">Audio Format</p>
+              <p className="text-text-secondary text-xs mt-0.5">MP3 or WAV, 44.1 kHz. 48 kHz drifts. Shows up to 4 hours.</p>
+            </div>
+            <div>
+              <p className="text-text-primary font-medium text-xs">Command Limits</p>
+              <p className="text-text-secondary text-xs mt-0.5">Thermal limits enforced automatically. Within Tesla's official caps.</p>
+            </div>
+          </div>
         </div>
       </section>
     </main>

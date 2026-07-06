@@ -25,7 +25,7 @@ function VideoCard({ video, canDelete, onDelete }: {
   };
 
   return (
-    <div className="bg-steel border border-border rounded-2xl overflow-hidden hover:border-electric-blue/30 transition-colors duration-200">
+    <div className="bg-steel border border-border rounded-2xl overflow-hidden hover:border-electric-cyan/30 transition-colors duration-200">
       <div className="relative aspect-video bg-black group">
         {url && (
           <video
@@ -160,11 +160,11 @@ export default function GalleryPage() {
               onChange={e => setTitle(e.target.value)}
               maxLength={80}
               required
-              className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+              className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
             />
             <div
               onClick={() => fileInputRef.current?.click()}
-              className={`flex items-center gap-3 bg-midnight border border-dashed rounded-xl px-4 py-3 cursor-pointer transition-colors duration-150 ${file ? 'border-emerald-500/40' : 'border-border hover:border-electric-blue/30'}`}
+              className={`flex items-center gap-3 bg-midnight border border-dashed rounded-xl px-4 py-3 cursor-pointer transition-colors duration-150 ${file ? 'border-emerald-500/40' : 'border-border hover:border-electric-cyan/30'}`}
             >
               <Upload size={16} className="text-text-secondary shrink-0" />
               <span className="text-sm text-text-secondary truncate">{file ? file.name : 'Upload MP4, WebM, or MOV — max 100 MB'}</span>

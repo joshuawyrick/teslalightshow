@@ -105,12 +105,12 @@ export default function MyDownloadsPage() {
           {downloads.map(dl => (
             <div
               key={dl.id}
-              className="bg-steel border border-border hover:border-electric-blue/30 rounded-2xl p-4 flex items-center gap-4 transition-colors duration-150"
+              className="bg-steel border border-border hover:border-electric-cyan/30 rounded-2xl p-4 flex items-center gap-4 transition-colors duration-150"
             >
               <div className="w-10 h-10 rounded-xl bg-midnight border border-border flex items-center justify-center shrink-0">
                 {dl.is_snippet
                   ? <Scissors size={16} className="text-emerald-400" />
-                  : <Download size={16} className="text-electric-blue" />
+                  : <Download size={16} className="text-electric-cyan" />
                 }
               </div>
               <div className="flex-1 min-w-0">
@@ -129,7 +129,7 @@ export default function MyDownloadsPage() {
               <button
                 onClick={() => redownload(dl)}
                 disabled={redownloading === dl.id}
-                className="shrink-0 flex items-center gap-1.5 bg-charcoal hover:bg-slate border border-border hover:border-electric-blue/30 text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl px-4 py-2 transition-colors duration-150"
+                className="shrink-0 flex items-center gap-1.5 bg-charcoal hover:bg-slate border border-border hover:border-electric-cyan/30 text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl px-4 py-2 transition-colors duration-150"
               >
                 {redownloading === dl.id
                   ? <><Loader2 size={13} className="animate-spin" /> Loading…</>

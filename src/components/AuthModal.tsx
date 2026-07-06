@@ -94,7 +94,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
             <p className="text-text-secondary text-sm mt-1">We sent a password reset link to <span className="text-text-secondary/60">{email}</span></p>
             <button
               onClick={() => { setMode('signin'); setResetSent(false); setError(''); }}
-              className="mt-4 flex items-center gap-1.5 mx-auto text-electric-blue hover:text-electric-blue/80 text-sm transition-colors"
+              className="mt-4 flex items-center gap-1.5 mx-auto text-electric-cyan hover:text-electric-cyan/80 text-sm transition-colors"
             >
               <ArrowLeft size={14} /> Back to login
             </button>
@@ -110,7 +110,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
-                  className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/40 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+                  className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/40 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                 />
               </div>
               {mode !== 'forgot' && (
@@ -123,7 +123,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                     onChange={e => setPassword(e.target.value)}
                     required
                     minLength={6}
-                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/40 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-blue/50 transition-colors"
+                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/40 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                   />
                 </div>
               )}
@@ -150,7 +150,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                 <button
                   type="button"
                   onClick={() => { setMode('forgot'); setError(''); }}
-                  className="text-text-secondary/60 hover:text-electric-blue text-xs transition-colors"
+                  className="text-text-secondary/60 hover:text-electric-cyan text-xs transition-colors"
                 >
                   Forgot password?
                 </button>
@@ -160,18 +160,18 @@ export default function AuthModal({ onClose }: AuthModalProps) {
             <p className="text-center text-text-secondary text-sm">
               {mode === 'signup' ? (
                 <>Already have an account?{' '}
-                  <button type="button" onClick={() => { setMode('signin'); setError(''); }} className="text-electric-blue hover:text-electric-blue/80 transition-colors">
+                  <button type="button" onClick={() => { setMode('signin'); setError(''); }} className="text-electric-cyan hover:text-electric-cyan/80 transition-colors">
                     Log in
                   </button>
                 </>
               ) : mode === 'signin' ? (
                 <>No account?{' '}
-                  <button type="button" onClick={() => { setMode('signup'); setError(''); }} className="text-electric-blue hover:text-electric-blue/80 transition-colors">
+                  <button type="button" onClick={() => { setMode('signup'); setError(''); }} className="text-electric-cyan hover:text-electric-cyan/80 transition-colors">
                     Sign up free
                   </button>
                 </>
               ) : (
-                <button type="button" onClick={() => { setMode('signin'); setError(''); }} className="flex items-center gap-1.5 mx-auto text-electric-blue hover:text-electric-blue/80 transition-colors">
+                <button type="button" onClick={() => { setMode('signin'); setError(''); }} className="flex items-center gap-1.5 mx-auto text-electric-cyan hover:text-electric-cyan/80 transition-colors">
                   <ArrowLeft size={14} /> Back to login
                 </button>
               )}

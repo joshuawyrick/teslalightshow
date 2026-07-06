@@ -14,33 +14,58 @@ export default function SuccessPage({ sessionId, onNavigate }: SuccessPageProps)
 
   useEffect(() => {
     if (!sessionId) { setStatus('error'); return; }
-    // Poll profile until credits reflect the purchase (webhook may be slightly delayed)
-    let attempts = 0;
-    const poll = async () => {
-      await refreshProfile();
-      attempts++;
-      if (attempts < 8) setTimeout(poll, 1500);
-      else setStatus('ok');
-    };
+    let cancelled = false;
 
-    const checkSession = async () => {
+    const verifyAndApplyCredits = async () => {
       try {
-        const { data: purchase } = await supabase
-          .from('purchases')
-          .select('id')
-          .eq('stripe_session_id', sessionId)
-          .maybeSingle();
-        if (purchase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) { setStatus('error'); return; }
+
+        // Call verify-session edge function which checks Stripe and applies credits
+        const { data, error } = await supabase.functions.invoke('verify-session', {
+          body: { session_id: sessionId },
+        });
+
+        if (cancelled) return;
+
+        if (error) {
+          console.error('verify-session error:', error);
+          setStatus('error');
+          return;
+        }
+
+        if (data?.status === 'credits_applied' || data?.status === 'already_applied') {
           await refreshProfile();
           setStatus('ok');
+        } else if (data?.status === 'not_paid') {
+          // Payment not yet confirmed by Stripe, retry a few times
+          let attempts = 0;
+          const retry = async () => {
+            if (cancelled) return;
+            attempts++;
+            const { data: retryData } = await supabase.functions.invoke('verify-session', {
+              body: { session_id: sessionId },
+            });
+            if (retryData?.status === 'credits_applied' || retryData?.status === 'already_applied') {
+              await refreshProfile();
+              setStatus('ok');
+            } else if (attempts < 5) {
+              setTimeout(retry, 2000);
+            } else {
+              setStatus('ok');
+            }
+          };
+          setTimeout(retry, 2000);
         } else {
-          poll();
+          setStatus('ok');
         }
       } catch {
-        setStatus('ok'); // show success anyway; credits will appear after webhook
+        if (!cancelled) setStatus('error');
       }
     };
-    checkSession();
+
+    verifyAndApplyCredits();
+    return () => { cancelled = true; };
   }, [sessionId, refreshProfile]);
 
   return (

@@ -61,7 +61,7 @@ export default function SuccessPage({ sessionId, onNavigate }: SuccessPageProps)
             <p className="text-white font-bold text-xl">Payment confirmed!</p>
             <p className="text-white/50 text-sm">Your credits have been added to your account. Go generate some shows.</p>
             <button
-              onClick={() => onNavigate('/')}
+              onClick={() => { window.history.replaceState({}, '', window.location.pathname); onNavigate('/'); }}
               className="flex items-center justify-center gap-2 w-full bg-tesla-600 hover:bg-tesla-500 text-white font-semibold rounded-xl py-3 transition-colors duration-150"
             >
               Go to generator <ArrowRight size={16} />

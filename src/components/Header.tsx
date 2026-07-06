@@ -39,7 +39,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           <img
             src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
             alt="TeslaLightShows.com"
-            className="h-14 w-auto"
+            className="h-9 w-auto"
           />
         </button>
 

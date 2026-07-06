@@ -13,6 +13,14 @@ import { SNIPPET_SECONDS } from '../config';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
 
+function uint8ToBase64(bytes: Uint8Array): string {
+  const chars = new Array<string>(bytes.length);
+  for (let i = 0; i < bytes.length; i++) {
+    chars[i] = String.fromCharCode(bytes[i]);
+  }
+  return btoa(chars.join(''));
+}
+
 // ---- Types ----
 type ModelId = 'model3' | 'highland' | 'modely' | 'juniper' | 'models' | 'modelx' | 'cybertruck';
 type ThemeId = 'dynamic' | 'usa' | 'stpat' | 'valentine' | 'halloween' | 'christmas' | 'custom';
@@ -375,13 +383,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated.');
-      const snippetBytes = output.snippetFseq;
-      let snippetBinary = '';
-      const chunkSize = 8192;
-      for (let i = 0; i < snippetBytes.length; i += chunkSize) {
-        snippetBinary += String.fromCharCode(...snippetBytes.subarray(i, i + chunkSize));
-      }
-      const fseqB64 = btoa(snippetBinary);
+      const fseqB64 = uint8ToBase64(output.snippetFseq);
       const res = await fetch(`${SUPABASE_URL}/functions/v1/use-snippet`, {
         method: 'POST',
         headers: {
@@ -431,14 +433,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated.');
-      // Convert fseq to base64 — use chunked approach to avoid stack overflow on large files
-      const bytes = output.fseq;
-      let binary = '';
-      const chunkSize = 8192;
-      for (let i = 0; i < bytes.length; i += chunkSize) {
-        binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
-      }
-      const fseqB64 = btoa(binary);
+      const fseqB64 = uint8ToBase64(output.fseq);
       const res = await fetch(`${SUPABASE_URL}/functions/v1/spend-credit`, {
         method: 'POST',
         headers: {

@@ -375,7 +375,13 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('Not authenticated.');
-      const fseqB64 = btoa(String.fromCharCode(...output.snippetFseq));
+      const snippetBytes = output.snippetFseq;
+      let snippetBinary = '';
+      const chunkSize = 8192;
+      for (let i = 0; i < snippetBytes.length; i += chunkSize) {
+        snippetBinary += String.fromCharCode(...snippetBytes.subarray(i, i + chunkSize));
+      }
+      const fseqB64 = btoa(snippetBinary);
       const res = await fetch(`${SUPABASE_URL}/functions/v1/use-snippet`, {
         method: 'POST',
         headers: {

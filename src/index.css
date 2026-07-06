@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .bg-white\/8 {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+  .bg-white\/4 {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+  .bg-white\/2 {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  .bg-white\/3 {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+}
+
+/* Force dark background on native select dropdowns */
+select option {
+  background-color: #1c1f27;
+  color: #ffffff;
+}
+
+select option:checked,
+select option:hover {
+  background-color: #2a2d38;
+}
+
+/* Light bar idle chase animation */
+@keyframes lb-chase {
+  0%   { opacity: 0.12; background-color: rgb(56 189 248 / 0.5); }
+  50%  { opacity: 0.9;  background-color: rgb(56 189 248); box-shadow: 0 0 6px rgb(56 189 248); }
+  100% { opacity: 0.12; background-color: rgb(56 189 248 / 0.5); }
+}
+
+.lightbar-idle {
+  background-color: rgba(255,255,255,0.06);
+  animation: lb-chase 3s ease-in-out infinite;
+  animation-delay: calc(var(--lb-i) * 50ms);
+}

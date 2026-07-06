@@ -25,7 +25,7 @@ function VideoCard({ video, canDelete, onDelete }: {
   };
 
   return (
-    <div className="bg-white/3 border border-white/8 rounded-2xl overflow-hidden hover:border-white/15 transition-colors duration-200">
+    <div className="bg-steel border border-border rounded-2xl overflow-hidden hover:border-electric-blue/30 transition-colors duration-200">
       <div className="relative aspect-video bg-black group">
         {url && (
           <video
@@ -46,11 +46,11 @@ function VideoCard({ video, canDelete, onDelete }: {
         </button>
       </div>
       <div className="p-4 flex items-center justify-between gap-3">
-        <p className="text-white font-medium text-sm truncate">{video.title}</p>
+        <p className="text-text-primary font-medium text-sm truncate">{video.title}</p>
         {canDelete && (
           <button
             onClick={() => onDelete(video.id)}
-            className="shrink-0 text-white/30 hover:text-tesla-400 transition-colors duration-150 p-1.5 hover:bg-tesla-500/10 rounded-lg"
+            className="shrink-0 text-text-secondary hover:text-accent-red transition-colors duration-150 p-1.5 hover:bg-accent-red/10 rounded-lg"
           >
             <Trash2 size={15} />
           </button>
@@ -143,15 +143,15 @@ export default function GalleryPage() {
   };
 
   return (
-    <main className="max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-10">
+    <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 space-y-10">
       <div>
-        <h1 className="text-2xl font-bold text-white">Gallery</h1>
-        <p className="text-white/40 text-sm mt-1">Tesla light shows from the community.</p>
+        <h1 className="text-2xl font-bold text-text-primary font-heading">Gallery</h1>
+        <p className="text-text-secondary text-sm mt-1">Tesla light shows from the community.</p>
       </div>
 
       {user && (
-        <div className="bg-white/3 border border-white/8 rounded-2xl p-6 space-y-4">
-          <h2 className="text-white font-semibold text-sm">Share your show</h2>
+        <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+          <h2 className="text-text-primary font-semibold text-sm">Share your show</h2>
           <form onSubmit={upload} className="space-y-3">
             <input
               type="text"
@@ -160,18 +160,18 @@ export default function GalleryPage() {
               onChange={e => setTitle(e.target.value)}
               maxLength={80}
               required
-              className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+              className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-electric-blue/50 transition-colors"
             />
             <div
               onClick={() => fileInputRef.current?.click()}
-              className={`flex items-center gap-3 bg-white/5 border border-dashed rounded-xl px-4 py-3 cursor-pointer transition-colors duration-150 ${file ? 'border-emerald-500/40' : 'border-white/15 hover:border-white/30'}`}
+              className={`flex items-center gap-3 bg-midnight border border-dashed rounded-xl px-4 py-3 cursor-pointer transition-colors duration-150 ${file ? 'border-emerald-500/40' : 'border-border hover:border-electric-blue/30'}`}
             >
-              <Upload size={16} className="text-white/30 shrink-0" />
-              <span className="text-sm text-white/50 truncate">{file ? file.name : 'Upload MP4, WebM, or MOV — max 100 MB'}</span>
+              <Upload size={16} className="text-text-secondary shrink-0" />
+              <span className="text-sm text-text-secondary truncate">{file ? file.name : 'Upload MP4, WebM, or MOV — max 100 MB'}</span>
               <input ref={fileInputRef} type="file" accept="video/mp4,video/webm,video/quicktime,.mov" onChange={handleFileChange} className="sr-only" />
             </div>
             {error && (
-              <div className="flex items-start gap-2 bg-tesla-500/10 border border-tesla-500/20 rounded-xl px-3 py-2.5 text-tesla-300 text-sm">
+              <div className="flex items-start gap-2 bg-accent-red/10 border border-accent-red/20 rounded-xl px-3 py-2.5 text-accent-red text-sm">
                 <AlertCircle size={14} className="shrink-0 mt-0.5" /> {error}
               </div>
             )}
@@ -181,7 +181,7 @@ export default function GalleryPage() {
             <button
               type="submit"
               disabled={uploading || !file || !title.trim()}
-              className="flex items-center gap-2 bg-tesla-600 hover:bg-tesla-500 disabled:bg-white/5 disabled:text-white/30 text-white text-sm font-semibold rounded-xl px-5 py-2.5 transition-colors duration-150"
+              className="flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 glow-red disabled:bg-white/5 disabled:text-text-secondary/30 text-white text-sm font-semibold rounded-xl px-5 py-2.5 transition-colors duration-150"
             >
               {uploading ? <><Loader2 size={14} className="animate-spin" /> Uploading…</> : <><Upload size={14} /> Upload video</>}
             </button>
@@ -191,11 +191,11 @@ export default function GalleryPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 size={24} className="animate-spin text-white/30" />
+          <Loader2 size={24} className="animate-spin text-text-secondary/50" />
         </div>
       ) : videos.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-white/30">No videos yet. Be the first to share your show!</p>
+          <p className="text-text-secondary/60">No videos yet. Be the first to share your show!</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -45,13 +45,13 @@ interface AdminEntry {
 
 function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="bg-white/3 border border-white/8 rounded-2xl p-5 flex items-center gap-4">
-      <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+    <div className="bg-steel border border-border rounded-2xl p-5 flex items-center gap-4">
+      <div className="w-10 h-10 rounded-xl bg-midnight border border-border flex items-center justify-center shrink-0">
         {icon}
       </div>
       <div>
-        <p className="text-white/40 text-xs font-medium">{label}</p>
-        <p className="text-white font-bold text-xl mt-0.5">{value}</p>
+        <p className="text-text-secondary/60 text-xs font-medium">{label}</p>
+        <p className="text-text-primary font-bold text-xl mt-0.5">{value}</p>
       </div>
     </div>
   );
@@ -214,7 +214,7 @@ export default function AdminPage() {
   if (!user || !profile?.is_admin) {
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20 text-center">
-        <p className="text-white/50">Access denied.</p>
+        <p className="text-text-secondary/50">Access denied.</p>
       </div>
     );
   }
@@ -224,29 +224,29 @@ export default function AdminPage() {
   );
 
   return (
-    <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-10">
+    <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 space-y-10">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
-            <p className="text-white/40 text-sm mt-1">TeslaLightShows.com management</p>
+            <h1 className="text-2xl text-text-primary font-heading">Admin Dashboard</h1>
+            <p className="text-text-secondary text-sm mt-1">TeslaLightShows.com management</p>
           </div>
           <RoleBadge role={callerRole} />
         </div>
-        <button onClick={fetchData} disabled={loading} className="flex items-center gap-1.5 text-white/40 hover:text-white text-sm transition-colors">
+        <button onClick={fetchData} disabled={loading} className="flex items-center gap-1.5 text-text-secondary hover:text-text-primary text-sm transition-colors">
           <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Refresh
         </button>
       </div>
 
       {error && (
-        <div className="flex items-start gap-2 bg-tesla-500/10 border border-tesla-500/20 rounded-xl px-4 py-3 text-tesla-300 text-sm">
+        <div className="flex items-start gap-2 bg-accent-red/10 border border-accent-red/20 rounded-xl px-4 py-3 text-accent-red text-sm">
           <AlertCircle size={15} className="shrink-0 mt-0.5" /> {error}
         </div>
       )}
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 size={24} className="animate-spin text-white/30" />
+          <Loader2 size={24} className="animate-spin text-text-secondary/50" />
         </div>
       ) : (
         <>
@@ -254,52 +254,52 @@ export default function AdminPage() {
           {stats && (
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <StatCard icon={<DollarSign size={18} className="text-emerald-400" />} label="Total Revenue" value={`$${(stats.totalRevenueCents / 100).toFixed(2)}`} />
-              <StatCard icon={<Users size={18} className="text-tesla-400" />} label="Total Users" value={stats.totalUsers.toLocaleString()} />
+              <StatCard icon={<Users size={18} className="text-electric-blue" />} label="Total Users" value={stats.totalUsers.toLocaleString()} />
               <StatCard icon={<Download size={18} className="text-sky-400" />} label="Total Downloads" value={stats.totalDownloads.toLocaleString()} />
             </div>
           )}
 
           {/* Grant credits — hidden for viewers */}
           {canEdit && (
-            <div className="bg-white/3 border border-white/8 rounded-2xl p-6 space-y-4">
-              <h2 className="text-white font-semibold text-sm">Grant Credits</h2>
+            <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+              <h2 className="text-text-primary font-semibold text-sm">Grant Credits</h2>
               <form onSubmit={grantCredits} className="flex flex-wrap gap-3 items-end">
                 <div className="flex-1 min-w-[200px] space-y-1">
-                  <label className="text-white/40 text-xs">User email</label>
+                  <label className="text-text-secondary text-xs">User email</label>
                   <input
                     type="email"
                     placeholder="user@example.com"
                     value={grantEmail}
                     onChange={e => setGrantEmail(e.target.value)}
                     required
-                    className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors"
                   />
                 </div>
                 <div className="w-24 space-y-1">
-                  <label className="text-white/40 text-xs">Credits</label>
+                  <label className="text-text-secondary text-xs">Credits</label>
                   <input
                     type="number"
                     min={1}
                     max={100}
                     value={grantAmount}
                     onChange={e => setGrantAmount(parseInt(e.target.value) || 1)}
-                    className="w-full bg-white/5 border border-white/12 text-white rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                    className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors"
                   />
                 </div>
                 <div className="flex-1 min-w-[140px] space-y-1">
-                  <label className="text-white/40 text-xs">Note (optional)</label>
+                  <label className="text-text-secondary text-xs">Note (optional)</label>
                   <input
                     type="text"
                     placeholder="Contest winner"
                     value={grantNote}
                     onChange={e => setGrantNote(e.target.value)}
-                    className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={granting}
-                  className="flex items-center gap-2 bg-tesla-600 hover:bg-tesla-500 disabled:bg-white/5 disabled:text-white/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+                  className="flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 disabled:bg-steel disabled:text-text-secondary/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
                 >
                   {granting ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
                   Grant
@@ -311,29 +311,29 @@ export default function AdminPage() {
 
           {/* Recent purchases */}
           <div className="space-y-3">
-            <h2 className="text-white font-semibold text-sm">Recent Purchases (last 20)</h2>
-            <div className="bg-white/3 border border-white/8 rounded-2xl overflow-hidden">
+            <h2 className="text-text-primary font-semibold text-sm">Recent Purchases (last 20)</h2>
+            <div className="bg-steel border border-border rounded-2xl overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/8">
-                      <th className="text-left text-white/30 font-medium px-4 py-3">User</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Package</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Credits</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Amount</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Date</th>
+                    <tr className="border-b border-border">
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">User</th>
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Package</th>
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Credits</th>
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Amount</th>
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Date</th>
                     </tr>
                   </thead>
                   <tbody>
                     {purchases.length === 0 ? (
-                      <tr><td colSpan={5} className="text-center text-white/20 px-4 py-6">No purchases yet.</td></tr>
+                      <tr><td colSpan={5} className="text-center text-text-secondary/30 px-4 py-6">No purchases yet.</td></tr>
                     ) : purchases.map(p => (
-                      <tr key={p.id} className="border-b border-white/5 last:border-0">
-                        <td className="px-4 py-3 text-white/60 font-mono text-xs truncate max-w-[160px]">{p.email}</td>
-                        <td className="px-4 py-3 text-white/70">{p.package_name}</td>
+                      <tr key={p.id} className="border-b border-border/50 last:border-0">
+                        <td className="px-4 py-3 text-text-secondary font-mono text-xs truncate max-w-[160px]">{p.email}</td>
+                        <td className="px-4 py-3 text-text-primary">{p.package_name}</td>
                         <td className="px-4 py-3 text-emerald-400 font-semibold">+{p.credits_purchased}</td>
-                        <td className="px-4 py-3 text-white/70">${(p.amount_cents / 100).toFixed(2)}</td>
-                        <td className="px-4 py-3 text-white/40 text-xs">{new Date(p.created_at).toLocaleDateString()}</td>
+                        <td className="px-4 py-3 text-text-primary">${(p.amount_cents / 100).toFixed(2)}</td>
+                        <td className="px-4 py-3 text-text-secondary text-xs">{new Date(p.created_at).toLocaleDateString()}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -345,44 +345,44 @@ export default function AdminPage() {
           {/* Users table */}
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-3 flex-wrap">
-              <h2 className="text-white font-semibold text-sm">All Users ({users.length})</h2>
+              <h2 className="text-text-primary font-semibold text-sm">All Users ({users.length})</h2>
               <div className="relative">
-                <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary/50 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Search email..."
                   value={userSearch}
                   onChange={e => setUserSearch(e.target.value)}
-                  className="bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl pl-8 pr-3 py-1.5 text-sm outline-none focus:border-tesla-500/50 w-48 transition-colors"
+                  className="bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl pl-8 pr-3 py-1.5 text-sm outline-none focus:border-electric-blue/50 w-48 transition-colors"
                 />
               </div>
             </div>
-            <div className="bg-white/3 border border-white/8 rounded-2xl overflow-hidden">
+            <div className="bg-steel border border-border rounded-2xl overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/8">
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Email</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Credits</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Snippet</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Role</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Joined</th>
+                    <tr className="border-b border-border">
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Email</th>
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Credits</th>
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Snippet</th>
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Role</th>
+                      <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Joined</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredUsers.length === 0 ? (
-                      <tr><td colSpan={5} className="text-center text-white/20 px-4 py-6">No users found.</td></tr>
+                      <tr><td colSpan={5} className="text-center text-text-secondary/30 px-4 py-6">No users found.</td></tr>
                     ) : filteredUsers.map(u => (
-                      <tr key={u.id} className="border-b border-white/5 last:border-0">
-                        <td className="px-4 py-3 text-white/70 font-mono text-xs max-w-[200px] truncate">{u.email}</td>
+                      <tr key={u.id} className="border-b border-border/50 last:border-0">
+                        <td className="px-4 py-3 text-text-secondary font-mono text-xs max-w-[200px] truncate">{u.email}</td>
                         <td className="px-4 py-3">
-                          <span className={`font-semibold ${u.credits > 0 ? 'text-emerald-400' : 'text-white/30'}`}>{u.credits}</span>
+                          <span className={`font-semibold ${u.credits > 0 ? 'text-emerald-400' : 'text-text-secondary/30'}`}>{u.credits}</span>
                         </td>
-                        <td className="px-4 py-3 text-white/40">{u.snippet_used ? 'Used' : 'Available'}</td>
+                        <td className="px-4 py-3 text-text-secondary/60">{u.snippet_used ? 'Used' : 'Available'}</td>
                         <td className="px-4 py-3">
-                          {u.admin_role ? <RoleBadge role={u.admin_role} /> : <span className="text-white/20">--</span>}
+                          {u.admin_role ? <RoleBadge role={u.admin_role} /> : <span className="text-text-secondary/30">--</span>}
                         </td>
-                        <td className="px-4 py-3 text-white/40 text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
+                        <td className="px-4 py-3 text-text-secondary text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -393,28 +393,28 @@ export default function AdminPage() {
 
           {/* Gallery videos */}
           <div className="space-y-3">
-            <h2 className="text-white font-semibold text-sm">Gallery Videos ({videos.length})</h2>
+            <h2 className="text-text-primary font-semibold text-sm">Gallery Videos ({videos.length})</h2>
             {videos.length === 0 ? (
-              <p className="text-white/30 text-sm">No gallery videos.</p>
+              <p className="text-text-secondary/50 text-sm">No gallery videos.</p>
             ) : (
-              <div className="bg-white/3 border border-white/8 rounded-2xl overflow-hidden">
+              <div className="bg-steel border border-border rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="border-b border-white/8">
-                        <th className="text-left text-white/30 font-medium px-4 py-3">Title</th>
-                        <th className="text-left text-white/30 font-medium px-4 py-3">Uploaded</th>
+                      <tr className="border-b border-border">
+                        <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Title</th>
+                        <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Uploaded</th>
                         {canEdit && <th className="px-4 py-3"></th>}
                       </tr>
                     </thead>
                     <tbody>
                       {videos.map(v => (
-                        <tr key={v.id} className="border-b border-white/5 last:border-0">
-                          <td className="px-4 py-3 text-white/70 max-w-[280px] truncate">{v.title}</td>
-                          <td className="px-4 py-3 text-white/40 text-xs">{new Date(v.created_at).toLocaleDateString()}</td>
+                        <tr key={v.id} className="border-b border-border/50 last:border-0">
+                          <td className="px-4 py-3 text-text-primary max-w-[280px] truncate">{v.title}</td>
+                          <td className="px-4 py-3 text-text-secondary text-xs">{new Date(v.created_at).toLocaleDateString()}</td>
                           {canEdit && (
                             <td className="px-4 py-3 text-right">
-                              <button onClick={() => deleteVideo(v)} className="text-white/30 hover:text-tesla-400 transition-colors p-1.5 hover:bg-tesla-500/10 rounded-lg">
+                              <button onClick={() => deleteVideo(v)} className="text-text-secondary/50 hover:text-accent-red hover:bg-accent-red/10 transition-colors p-1.5 rounded-lg">
                                 <Trash2 size={14} />
                               </button>
                             </td>
@@ -433,28 +433,28 @@ export default function AdminPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <ShieldCheck size={16} className="text-amber-400" />
-                <h2 className="text-white font-semibold text-sm">Manage Admins</h2>
+                <h2 className="text-text-primary font-semibold text-sm">Manage Admins</h2>
               </div>
 
-              <div className="bg-white/3 border border-white/8 rounded-2xl p-6 space-y-4">
+              <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
                 <form onSubmit={manageAdmin} className="flex flex-wrap gap-3 items-end">
                   <div className="flex-1 min-w-[200px] space-y-1">
-                    <label className="text-white/40 text-xs">User email</label>
+                    <label className="text-text-secondary text-xs">User email</label>
                     <input
                       type="email"
                       placeholder="user@example.com"
                       value={adminEmail}
                       onChange={e => setAdminEmail(e.target.value)}
                       required
-                      className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                      className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors"
                     />
                   </div>
                   <div className="w-32 space-y-1">
-                    <label className="text-white/40 text-xs">Role</label>
+                    <label className="text-text-secondary text-xs">Role</label>
                     <select
                       value={adminRole}
                       onChange={e => setAdminRole(e.target.value)}
-                      className="w-full bg-white/5 border border-white/12 text-white rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors appearance-none"
+                      className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-blue/50 transition-colors appearance-none"
                     >
                       <option value="viewer">Viewer</option>
                       <option value="editor">Editor</option>
@@ -463,7 +463,7 @@ export default function AdminPage() {
                   <button
                     type="submit"
                     disabled={managingAdmin}
-                    className="flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:bg-white/5 disabled:text-white/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+                    className="flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:bg-steel disabled:text-text-secondary/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
                   >
                     {managingAdmin ? <Loader2 size={14} className="animate-spin" /> : <UserPlus size={14} />}
                     Add Admin
@@ -474,28 +474,28 @@ export default function AdminPage() {
 
               {/* Current admins list */}
               {admins.length > 0 && (
-                <div className="bg-white/3 border border-white/8 rounded-2xl overflow-hidden">
+                <div className="bg-steel border border-border rounded-2xl overflow-hidden">
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
-                        <tr className="border-b border-white/8">
-                          <th className="text-left text-white/30 font-medium px-4 py-3">Email</th>
-                          <th className="text-left text-white/30 font-medium px-4 py-3">Role</th>
-                          <th className="text-left text-white/30 font-medium px-4 py-3">Added</th>
+                        <tr className="border-b border-border">
+                          <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Email</th>
+                          <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Role</th>
+                          <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Added</th>
                           <th className="px-4 py-3"></th>
                         </tr>
                       </thead>
                       <tbody>
                         {admins.map(a => (
-                          <tr key={a.id} className="border-b border-white/5 last:border-0">
-                            <td className="px-4 py-3 text-white/70 font-mono text-xs">{a.email}</td>
+                          <tr key={a.id} className="border-b border-border/50 last:border-0">
+                            <td className="px-4 py-3 text-text-secondary font-mono text-xs">{a.email}</td>
                             <td className="px-4 py-3"><RoleBadge role={a.admin_role} /></td>
-                            <td className="px-4 py-3 text-white/40 text-xs">{new Date(a.created_at).toLocaleDateString()}</td>
+                            <td className="px-4 py-3 text-text-secondary text-xs">{new Date(a.created_at).toLocaleDateString()}</td>
                             <td className="px-4 py-3 text-right">
                               {a.admin_role !== 'owner' && (
                                 <button
                                   onClick={() => revokeAdmin(a.email)}
-                                  className="text-white/30 hover:text-tesla-400 transition-colors p-1.5 hover:bg-tesla-500/10 rounded-lg"
+                                  className="text-text-secondary/50 hover:text-accent-red hover:bg-accent-red/10 transition-colors p-1.5 rounded-lg"
                                   title="Revoke admin access"
                                 >
                                   <X size={14} />

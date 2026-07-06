@@ -66,35 +66,35 @@ export default function AuthModal({ onClose }: AuthModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#13151b] border border-white/15 rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-white/8">
+      <div className="relative bg-charcoal border border-border rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden">
+        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border">
           <div>
-            <h2 className="text-white font-bold text-lg">{heading}</h2>
-            <p className="text-white/40 text-sm mt-0.5">{subtitle}</p>
+            <h2 className="text-text-primary font-heading font-bold text-lg">{heading}</h2>
+            <p className="text-text-secondary text-sm mt-0.5">{subtitle}</p>
           </div>
-          <button onClick={onClose} className="text-white/40 hover:text-white transition-colors">
+          <button onClick={onClose} className="text-text-secondary/60 hover:text-text-secondary transition-colors">
             <X size={18} />
           </button>
         </div>
 
         {success ? (
           <div className="px-6 py-10 text-center">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto mb-3">
-              <Mail size={20} className="text-emerald-400" />
+            <div className="w-12 h-12 rounded-full bg-accent-red/15 border border-accent-red/30 flex items-center justify-center mx-auto mb-3">
+              <Mail size={20} className="text-accent-red" />
             </div>
-            <p className="text-white font-semibold">Account created!</p>
-            <p className="text-white/40 text-sm mt-1">Signing you in now...</p>
+            <p className="text-text-primary font-semibold">Account created!</p>
+            <p className="text-text-secondary text-sm mt-1">Signing you in now...</p>
           </div>
         ) : resetSent ? (
           <div className="px-6 py-10 text-center">
-            <div className="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto mb-3">
-              <Mail size={20} className="text-emerald-400" />
+            <div className="w-12 h-12 rounded-full bg-accent-red/15 border border-accent-red/30 flex items-center justify-center mx-auto mb-3">
+              <Mail size={20} className="text-accent-red" />
             </div>
-            <p className="text-white font-semibold">Check your inbox</p>
-            <p className="text-white/40 text-sm mt-1">We sent a password reset link to <span className="text-white/60">{email}</span></p>
+            <p className="text-text-primary font-semibold">Check your inbox</p>
+            <p className="text-text-secondary text-sm mt-1">We sent a password reset link to <span className="text-text-secondary/60">{email}</span></p>
             <button
               onClick={() => { setMode('signin'); setResetSent(false); setError(''); }}
-              className="mt-4 flex items-center gap-1.5 mx-auto text-tesla-400 hover:text-tesla-300 text-sm transition-colors"
+              className="mt-4 flex items-center gap-1.5 mx-auto text-electric-blue hover:text-electric-blue/80 text-sm transition-colors"
             >
               <ArrowLeft size={14} /> Back to login
             </button>
@@ -103,19 +103,19 @@ export default function AuthModal({ onClose }: AuthModalProps) {
           <form onSubmit={submit} className="px-6 pt-5 pb-6 space-y-4">
             <div className="space-y-3">
               <div className="relative">
-                <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-secondary/50 pointer-events-none" />
                 <input
                   type="email"
                   placeholder="Email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
-                  className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                  className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/40 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-blue/50 transition-colors"
                 />
               </div>
               {mode !== 'forgot' && (
                 <div className="relative">
-                  <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                  <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-secondary/50 pointer-events-none" />
                   <input
                     type="password"
                     placeholder="Password"
@@ -123,14 +123,14 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                     onChange={e => setPassword(e.target.value)}
                     required
                     minLength={6}
-                    className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                    className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/40 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-blue/50 transition-colors"
                   />
                 </div>
               )}
             </div>
 
             {error && (
-              <div className="flex items-start gap-2 bg-tesla-500/10 border border-tesla-500/20 rounded-xl px-3 py-2.5 text-tesla-300 text-sm">
+              <div className="flex items-start gap-2 bg-accent-red/10 border border-accent-red/20 rounded-xl px-3 py-2.5 text-accent-red text-sm">
                 <AlertCircle size={15} className="shrink-0 mt-0.5" />
                 {error}
               </div>
@@ -139,7 +139,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 bg-tesla-600 hover:bg-tesla-500 disabled:bg-white/5 disabled:text-white/30 text-white font-semibold rounded-xl py-3 text-sm transition-colors duration-150"
+              className="w-full flex items-center justify-center gap-2 bg-accent-red hover:bg-accent-red/90 glow-red disabled:bg-text-secondary/10 disabled:text-text-secondary/30 text-text-primary font-semibold rounded-xl py-3 text-sm transition-colors duration-150"
             >
               {loading ? <Loader2 size={16} className="animate-spin" /> : null}
               {mode === 'signup' ? 'Create account' : mode === 'signin' ? 'Log in' : 'Send reset link'}
@@ -150,28 +150,28 @@ export default function AuthModal({ onClose }: AuthModalProps) {
                 <button
                   type="button"
                   onClick={() => { setMode('forgot'); setError(''); }}
-                  className="text-white/30 hover:text-white/50 text-xs transition-colors"
+                  className="text-text-secondary/60 hover:text-electric-blue text-xs transition-colors"
                 >
                   Forgot password?
                 </button>
               </p>
             )}
 
-            <p className="text-center text-white/40 text-sm">
+            <p className="text-center text-text-secondary text-sm">
               {mode === 'signup' ? (
                 <>Already have an account?{' '}
-                  <button type="button" onClick={() => { setMode('signin'); setError(''); }} className="text-tesla-400 hover:text-tesla-300 transition-colors">
+                  <button type="button" onClick={() => { setMode('signin'); setError(''); }} className="text-electric-blue hover:text-electric-blue/80 transition-colors">
                     Log in
                   </button>
                 </>
               ) : mode === 'signin' ? (
                 <>No account?{' '}
-                  <button type="button" onClick={() => { setMode('signup'); setError(''); }} className="text-tesla-400 hover:text-tesla-300 transition-colors">
+                  <button type="button" onClick={() => { setMode('signup'); setError(''); }} className="text-electric-blue hover:text-electric-blue/80 transition-colors">
                     Sign up free
                   </button>
                 </>
               ) : (
-                <button type="button" onClick={() => { setMode('signin'); setError(''); }} className="flex items-center gap-1.5 mx-auto text-tesla-400 hover:text-tesla-300 transition-colors">
+                <button type="button" onClick={() => { setMode('signin'); setError(''); }} className="flex items-center gap-1.5 mx-auto text-electric-blue hover:text-electric-blue/80 transition-colors">
                   <ArrowLeft size={14} /> Back to login
                 </button>
               )}

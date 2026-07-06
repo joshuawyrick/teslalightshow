@@ -70,10 +70,10 @@ function AppInner() {
     if (checkoutStatus === 'cancel') {
       return (
         <div className="min-h-[60vh] flex items-center justify-center px-4">
-          <div className="bg-white/3 border border-white/10 rounded-2xl p-10 max-w-md w-full text-center space-y-4">
-            <p className="text-white font-bold text-xl">Purchase cancelled</p>
-            <p className="text-white/40 text-sm">No charge was made. You can buy credits any time from the generator.</p>
-            <button onClick={() => { window.history.replaceState({}, '', window.location.pathname); navigate('/'); }} className="w-full bg-white/8 hover:bg-white/12 border border-white/10 text-white font-semibold rounded-xl py-3 transition-colors duration-150">
+          <div className="bg-charcoal border border-border rounded-2xl p-10 max-w-md w-full text-center space-y-4">
+            <p className="text-text-primary font-bold text-xl font-heading">Purchase cancelled</p>
+            <p className="text-text-secondary text-sm">No charge was made. You can buy credits any time from the generator.</p>
+            <button onClick={() => { window.history.replaceState({}, '', window.location.pathname); navigate('/'); }} className="w-full bg-steel hover:bg-slate border border-border text-text-primary font-semibold rounded-xl py-3 transition-all duration-150">
               Back to generator
             </button>
           </div>
@@ -90,30 +90,38 @@ function AppInner() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0c10] text-white font-sans">
-      <Header
-        currentPath={path}
-        onNavigate={navigate}
-        onAuthClick={() => setShowAuth(true)}
-      />
+    <div className="min-h-screen bg-midnight text-text-primary font-body relative">
+      <div className="app-bg-glow" />
+      <div className="relative z-10">
+        <Header
+          currentPath={path}
+          onNavigate={navigate}
+          onAuthClick={() => setShowAuth(true)}
+        />
 
-      {renderPage()}
+        {renderPage()}
 
-      <footer className="border-t border-white/8 mt-16 py-8 px-4">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-tesla-500/20 border border-tesla-500/30 flex items-center justify-center">
-              <Zap size={11} className="text-tesla-400" />
+        <footer className="border-t border-border mt-16 py-8 px-4">
+          <div className="max-w-[1320px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-6 h-6 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+                <Zap size={12} className="text-accent-red" />
+              </div>
+              <span className="text-text-secondary text-sm font-heading font-semibold tracking-tight">
+                Tesla<span className="text-text-primary">LightShows</span><span className="text-accent-red">.com</span>
+              </span>
             </div>
-            <span className="text-white/20 text-xs" style={{ fontFamily: "'Orbitron', sans-serif" }}>
-              TeslaLightShows.com
-            </span>
+            <p className="text-text-secondary/60 text-xs text-center">
+              Generates files in Tesla's official FSEQ v2.0 format. Not affiliated with Tesla, Inc.
+            </p>
+            <div className="flex items-center gap-5">
+              <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Terms</button>
+              <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Privacy</button>
+              <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Support</button>
+            </div>
           </div>
-          <p className="text-white/20 text-xs text-center">
-            Generates files in Tesla's official FSEQ v2.0 format. Not affiliated with Tesla, Inc.
-          </p>
-        </div>
-      </footer>
+        </footer>
+      </div>
 
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
       {showPricing && <PricingModal onClose={() => setShowPricing(false)} />}

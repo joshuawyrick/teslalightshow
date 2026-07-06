@@ -6,6 +6,8 @@
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
+    background-color: #0B0F14;
+    color: #EDEFF3;
   }
 }
 
@@ -24,26 +26,80 @@
   }
 }
 
+/* Ambient background glow */
+.app-bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 75% 20%, rgba(45, 140, 255, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 30% 30%, rgba(255, 59, 48, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 80%, rgba(45, 140, 255, 0.03) 0%, transparent 70%);
+}
+
 /* Force dark background on native select dropdowns */
 select option {
-  background-color: #1c1f27;
-  color: #ffffff;
+  background-color: #12161C;
+  color: #EDEFF3;
 }
 
 select option:checked,
 select option:hover {
-  background-color: #2a2d38;
+  background-color: #182129;
 }
 
 /* Light bar idle chase animation */
 @keyframes lb-chase {
-  0%   { opacity: 0.12; background-color: rgb(56 189 248 / 0.5); }
-  50%  { opacity: 0.9;  background-color: rgb(56 189 248); box-shadow: 0 0 6px rgb(56 189 248); }
-  100% { opacity: 0.12; background-color: rgb(56 189 248 / 0.5); }
+  0%   { opacity: 0.12; background-color: rgba(45, 140, 255, 0.5); }
+  50%  { opacity: 0.9;  background-color: #2D8CFF; box-shadow: 0 0 6px #2D8CFF; }
+  100% { opacity: 0.12; background-color: rgba(45, 140, 255, 0.5); }
 }
 
 .lightbar-idle {
   background-color: rgba(255,255,255,0.06);
   animation: lb-chase 3s ease-in-out infinite;
   animation-delay: calc(var(--lb-i) * 50ms);
+}
+
+/* Button glow effects */
+.glow-red {
+  box-shadow: 0 0 20px rgba(255, 59, 48, 0.25), 0 0 40px rgba(255, 59, 48, 0.1);
+}
+
+.glow-red:hover {
+  box-shadow: 0 0 25px rgba(255, 59, 48, 0.35), 0 0 50px rgba(255, 59, 48, 0.15);
+}
+
+.glow-blue {
+  box-shadow: 0 0 15px rgba(45, 140, 255, 0.3), 0 0 30px rgba(45, 140, 255, 0.1);
+}
+
+/* Card hover lift */
+.card-hover {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B0F14;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2F3947;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a4555;
 }

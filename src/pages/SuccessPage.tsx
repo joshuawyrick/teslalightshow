@@ -70,12 +70,12 @@ export default function SuccessPage({ sessionId, onNavigate }: SuccessPageProps)
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <div className="bg-white/3 border border-white/10 rounded-2xl p-10 max-w-md w-full text-center space-y-5">
+      <div className="bg-charcoal border border-border rounded-2xl p-10 max-w-md w-full text-center space-y-5">
         {status === 'loading' && (
           <>
-            <Loader2 size={40} className="animate-spin text-white/30 mx-auto" />
-            <p className="text-white font-semibold">Confirming your purchase…</p>
-            <p className="text-white/40 text-sm">Just a moment while we apply your credits.</p>
+            <Loader2 size={40} className="animate-spin text-text-secondary/50 mx-auto" />
+            <p className="text-text-primary font-heading font-semibold">Confirming your purchase…</p>
+            <p className="text-text-secondary text-sm">Just a moment while we apply your credits.</p>
           </>
         )}
         {status === 'ok' && (
@@ -83,11 +83,11 @@ export default function SuccessPage({ sessionId, onNavigate }: SuccessPageProps)
             <div className="w-16 h-16 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto">
               <CheckCircle2 size={32} className="text-emerald-400" />
             </div>
-            <p className="text-white font-bold text-xl">Payment confirmed!</p>
-            <p className="text-white/50 text-sm">Your credits have been added to your account. Go generate some shows.</p>
+            <p className="text-text-primary font-heading font-bold text-xl">Payment confirmed!</p>
+            <p className="text-text-secondary text-sm">Your credits have been added to your account. Go generate some shows.</p>
             <button
               onClick={() => { window.location.href = window.location.pathname + '#/'; }}
-              className="flex items-center justify-center gap-2 w-full bg-tesla-600 hover:bg-tesla-500 text-white font-semibold rounded-xl py-3 transition-colors duration-150"
+              className="flex items-center justify-center gap-2 w-full bg-accent-red hover:bg-accent-red/90 text-white glow-red font-semibold rounded-xl py-3 transition-colors duration-150"
             >
               Go to generator <ArrowRight size={16} />
             </button>
@@ -95,14 +95,14 @@ export default function SuccessPage({ sessionId, onNavigate }: SuccessPageProps)
         )}
         {status === 'error' && (
           <>
-            <div className="w-16 h-16 rounded-2xl bg-tesla-500/15 border border-tesla-500/30 flex items-center justify-center mx-auto">
-              <XCircle size={32} className="text-tesla-400" />
+            <div className="w-16 h-16 rounded-2xl bg-accent-red/15 border border-accent-red/30 flex items-center justify-center mx-auto">
+              <XCircle size={32} className="text-accent-red" />
             </div>
-            <p className="text-white font-bold text-xl">Something went wrong</p>
-            <p className="text-white/50 text-sm">We couldn't confirm your session. If you were charged, your credits will appear shortly — contact us if they don't show up.</p>
+            <p className="text-text-primary font-heading font-bold text-xl">Something went wrong</p>
+            <p className="text-text-secondary text-sm">We couldn't confirm your session. If you were charged, your credits will appear shortly — contact us if they don't show up.</p>
             <button
               onClick={() => onNavigate('/')}
-              className="flex items-center justify-center gap-2 w-full bg-white/8 hover:bg-white/12 border border-white/10 text-white font-semibold rounded-xl py-3 transition-colors duration-150"
+              className="flex items-center justify-center gap-2 w-full bg-steel hover:bg-slate border border-border text-text-primary font-semibold rounded-xl py-3 transition-colors duration-150"
             >
               Back to home
             </button>

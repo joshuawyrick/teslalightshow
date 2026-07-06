@@ -149,9 +149,9 @@ function AppInner() {
           <div className="border-t border-border py-6 px-4 sm:px-6">
             <div className="max-w-[1320px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
               <img
-                src="/ChatGPT_Image_Jul_6,_2026,_03_28_39_PM.png"
+                src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
                 alt="TeslaLightShows.com"
-                className="h-8 w-auto"
+                className="h-9 w-auto"
               />
               <p className="text-text-secondary/60 text-xs text-center">
                 Music. Energy. Harmony. Your Tesla. &bull; Not affiliated with Tesla, Inc. &bull; FSEQ v2.0 format

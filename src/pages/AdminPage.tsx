@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Users, DollarSign, Download, Loader2, AlertCircle, Search, Plus, Trash2, RefreshCw } from 'lucide-react';
+import { Users, DollarSign, Download, Loader2, AlertCircle, Search, Plus, Trash2, RefreshCw, ShieldCheck, UserPlus, X } from 'lucide-react';
 import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -15,6 +15,7 @@ interface AdminUser {
   credits: number;
   snippet_used: boolean;
   is_admin: boolean;
+  admin_role: string | null;
   created_at: string;
 }
 
@@ -35,6 +36,13 @@ interface AdminVideo {
   created_at: string;
 }
 
+interface AdminEntry {
+  id: string;
+  email: string;
+  admin_role: string;
+  created_at: string;
+}
+
 function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="bg-white/3 border border-white/8 rounded-2xl p-5 flex items-center gap-4">
@@ -49,20 +57,46 @@ function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string
   );
 }
 
+function RoleBadge({ role }: { role: string }) {
+  const colors: Record<string, string> = {
+    owner: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+    editor: 'bg-sky-500/15 text-sky-400 border-sky-500/30',
+    viewer: 'bg-white/5 text-white/50 border-white/15',
+  };
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium border ${colors[role] ?? colors.viewer}`}>
+      {role}
+    </span>
+  );
+}
+
 export default function AdminPage() {
   const { user, profile } = useAuth();
+  const [callerRole, setCallerRole] = useState<string>('viewer');
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [purchases, setPurchases] = useState<AdminPurchase[]>([]);
   const [videos, setVideos] = useState<AdminVideo[]>([]);
+  const [admins, setAdmins] = useState<AdminEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [userSearch, setUserSearch] = useState('');
+
+  // Grant credits state
   const [grantEmail, setGrantEmail] = useState('');
   const [grantAmount, setGrantAmount] = useState(1);
   const [grantNote, setGrantNote] = useState('');
   const [granting, setGranting] = useState(false);
   const [grantMsg, setGrantMsg] = useState('');
+
+  // Manage admins state
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminRole, setAdminRole] = useState<string>('viewer');
+  const [managingAdmin, setManagingAdmin] = useState(false);
+  const [adminMsg, setAdminMsg] = useState('');
+
+  const canEdit = callerRole === 'owner' || callerRole === 'editor';
+  const isOwner = callerRole === 'owner';
 
   const fetchData = useCallback(async () => {
     if (!user || !profile?.is_admin) return;
@@ -84,10 +118,12 @@ export default function AdminPage() {
         throw new Error(body.error || `Request failed (${res.status})`);
       }
       const data = await res.json();
+      setCallerRole(data.callerRole ?? 'viewer');
       setStats(data.stats);
       setUsers(data.users);
       setPurchases(data.purchases);
       setVideos(data.videos);
+      setAdmins(data.admins ?? []);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -97,6 +133,23 @@ export default function AdminPage() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
+  const callAdminAction = async (body: Record<string, unknown>) => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) throw new Error('Not authenticated');
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-grants`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+        'Apikey': SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify(body),
+    });
+    const result = await res.json();
+    if (!res.ok || result.error) throw new Error(result.error || 'Request failed');
+    return result;
+  };
+
   const grantCredits = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user || !grantEmail.trim() || grantAmount < 1) return;
@@ -104,20 +157,8 @@ export default function AdminPage() {
     setGrantMsg('');
     setError('');
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('Not authenticated');
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/admin-grants`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
-          'Apikey': SUPABASE_ANON_KEY,
-        },
-        body: JSON.stringify({ action: 'grant', email: grantEmail.trim(), credits: grantAmount, note: grantNote.trim() || null }),
-      });
-      const body = await res.json();
-      if (!res.ok || !body.success) throw new Error(body.error || 'Grant failed');
-      setGrantMsg(`Granted ${grantAmount} credit${grantAmount !== 1 ? 's' : ''} to ${body.recipient_email}.`);
+      const result = await callAdminAction({ action: 'grant', email: grantEmail.trim(), credits: grantAmount, note: grantNote.trim() || null });
+      setGrantMsg(`Granted ${grantAmount} credit${grantAmount !== 1 ? 's' : ''} to ${result.recipient_email || grantEmail}.`);
       setGrantEmail('');
       setGrantNote('');
       fetchData();
@@ -129,9 +170,45 @@ export default function AdminPage() {
   };
 
   const deleteVideo = async (video: AdminVideo) => {
-    await supabase.storage.from('gallery').remove([video.storage_path]);
-    await supabase.from('gallery_videos').delete().eq('id', video.id);
-    setVideos(prev => prev.filter(v => v.id !== video.id));
+    setError('');
+    try {
+      await callAdminAction({ action: 'delete_video', video_id: video.id, storage_path: video.storage_path });
+      setVideos(prev => prev.filter(v => v.id !== video.id));
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
+
+  const manageAdmin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!adminEmail.trim()) return;
+    setManagingAdmin(true);
+    setAdminMsg('');
+    setError('');
+    try {
+      const result = await callAdminAction({ action: 'manage_admin', email: adminEmail.trim(), role: adminRole });
+      if (result.success === false) throw new Error(result.error);
+      setAdminMsg(`Set ${adminEmail} to ${adminRole} role.`);
+      setAdminEmail('');
+      fetchData();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setManagingAdmin(false);
+    }
+  };
+
+  const revokeAdmin = async (email: string) => {
+    setError('');
+    setAdminMsg('');
+    try {
+      const result = await callAdminAction({ action: 'manage_admin', email, role: null });
+      if (result.success === false) throw new Error(result.error);
+      setAdminMsg(`Revoked admin access for ${email}.`);
+      fetchData();
+    } catch (err) {
+      setError((err as Error).message);
+    }
   };
 
   if (!user || !profile?.is_admin) {
@@ -149,9 +226,12 @@ export default function AdminPage() {
   return (
     <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-10">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
-          <p className="text-white/40 text-sm mt-1">TeslaLightShows.com management.</p>
+        <div className="flex items-center gap-3">
+          <div>
+            <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
+            <p className="text-white/40 text-sm mt-1">TeslaLightShows.com management</p>
+          </div>
+          <RoleBadge role={callerRole} />
         </div>
         <button onClick={fetchData} disabled={loading} className="flex items-center gap-1.5 text-white/40 hover:text-white text-sm transition-colors">
           <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Refresh
@@ -179,53 +259,55 @@ export default function AdminPage() {
             </div>
           )}
 
-          {/* Grant credits */}
-          <div className="bg-white/3 border border-white/8 rounded-2xl p-6 space-y-4">
-            <h2 className="text-white font-semibold text-sm">Grant Credits</h2>
-            <form onSubmit={grantCredits} className="flex flex-wrap gap-3 items-end">
-              <div className="flex-1 min-w-[200px] space-y-1">
-                <label className="text-white/40 text-xs">User email</label>
-                <input
-                  type="email"
-                  placeholder="user@example.com"
-                  value={grantEmail}
-                  onChange={e => setGrantEmail(e.target.value)}
-                  required
-                  className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
-                />
-              </div>
-              <div className="w-24 space-y-1">
-                <label className="text-white/40 text-xs">Credits</label>
-                <input
-                  type="number"
-                  min={1}
-                  max={100}
-                  value={grantAmount}
-                  onChange={e => setGrantAmount(parseInt(e.target.value) || 1)}
-                  className="w-full bg-white/5 border border-white/12 text-white rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
-                />
-              </div>
-              <div className="flex-1 min-w-[140px] space-y-1">
-                <label className="text-white/40 text-xs">Note (optional)</label>
-                <input
-                  type="text"
-                  placeholder="Contest winner"
-                  value={grantNote}
-                  onChange={e => setGrantNote(e.target.value)}
-                  className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={granting}
-                className="flex items-center gap-2 bg-tesla-600 hover:bg-tesla-500 disabled:bg-white/5 disabled:text-white/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
-              >
-                {granting ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
-                Grant
-              </button>
-            </form>
-            {grantMsg && <p className="text-emerald-400 text-sm">{grantMsg}</p>}
-          </div>
+          {/* Grant credits — hidden for viewers */}
+          {canEdit && (
+            <div className="bg-white/3 border border-white/8 rounded-2xl p-6 space-y-4">
+              <h2 className="text-white font-semibold text-sm">Grant Credits</h2>
+              <form onSubmit={grantCredits} className="flex flex-wrap gap-3 items-end">
+                <div className="flex-1 min-w-[200px] space-y-1">
+                  <label className="text-white/40 text-xs">User email</label>
+                  <input
+                    type="email"
+                    placeholder="user@example.com"
+                    value={grantEmail}
+                    onChange={e => setGrantEmail(e.target.value)}
+                    required
+                    className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                  />
+                </div>
+                <div className="w-24 space-y-1">
+                  <label className="text-white/40 text-xs">Credits</label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={100}
+                    value={grantAmount}
+                    onChange={e => setGrantAmount(parseInt(e.target.value) || 1)}
+                    className="w-full bg-white/5 border border-white/12 text-white rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                  />
+                </div>
+                <div className="flex-1 min-w-[140px] space-y-1">
+                  <label className="text-white/40 text-xs">Note (optional)</label>
+                  <input
+                    type="text"
+                    placeholder="Contest winner"
+                    value={grantNote}
+                    onChange={e => setGrantNote(e.target.value)}
+                    className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={granting}
+                  className="flex items-center gap-2 bg-tesla-600 hover:bg-tesla-500 disabled:bg-white/5 disabled:text-white/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+                >
+                  {granting ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
+                  Grant
+                </button>
+              </form>
+              {grantMsg && <p className="text-emerald-400 text-sm">{grantMsg}</p>}
+            </div>
+          )}
 
           {/* Recent purchases */}
           <div className="space-y-3">
@@ -268,7 +350,7 @@ export default function AdminPage() {
                 <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
                 <input
                   type="text"
-                  placeholder="Search email…"
+                  placeholder="Search email..."
                   value={userSearch}
                   onChange={e => setUserSearch(e.target.value)}
                   className="bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl pl-8 pr-3 py-1.5 text-sm outline-none focus:border-tesla-500/50 w-48 transition-colors"
@@ -283,7 +365,7 @@ export default function AdminPage() {
                       <th className="text-left text-white/30 font-medium px-4 py-3">Email</th>
                       <th className="text-left text-white/30 font-medium px-4 py-3">Credits</th>
                       <th className="text-left text-white/30 font-medium px-4 py-3">Snippet</th>
-                      <th className="text-left text-white/30 font-medium px-4 py-3">Admin</th>
+                      <th className="text-left text-white/30 font-medium px-4 py-3">Role</th>
                       <th className="text-left text-white/30 font-medium px-4 py-3">Joined</th>
                     </tr>
                   </thead>
@@ -297,7 +379,9 @@ export default function AdminPage() {
                           <span className={`font-semibold ${u.credits > 0 ? 'text-emerald-400' : 'text-white/30'}`}>{u.credits}</span>
                         </td>
                         <td className="px-4 py-3 text-white/40">{u.snippet_used ? 'Used' : 'Available'}</td>
-                        <td className="px-4 py-3 text-white/40">{u.is_admin ? <span className="text-tesla-400 font-semibold">Yes</span> : '—'}</td>
+                        <td className="px-4 py-3">
+                          {u.admin_role ? <RoleBadge role={u.admin_role} /> : <span className="text-white/20">--</span>}
+                        </td>
                         <td className="px-4 py-3 text-white/40 text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
                       </tr>
                     ))}
@@ -320,7 +404,7 @@ export default function AdminPage() {
                       <tr className="border-b border-white/8">
                         <th className="text-left text-white/30 font-medium px-4 py-3">Title</th>
                         <th className="text-left text-white/30 font-medium px-4 py-3">Uploaded</th>
-                        <th className="px-4 py-3"></th>
+                        {canEdit && <th className="px-4 py-3"></th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -328,11 +412,13 @@ export default function AdminPage() {
                         <tr key={v.id} className="border-b border-white/5 last:border-0">
                           <td className="px-4 py-3 text-white/70 max-w-[280px] truncate">{v.title}</td>
                           <td className="px-4 py-3 text-white/40 text-xs">{new Date(v.created_at).toLocaleDateString()}</td>
-                          <td className="px-4 py-3 text-right">
-                            <button onClick={() => deleteVideo(v)} className="text-white/30 hover:text-tesla-400 transition-colors p-1.5 hover:bg-tesla-500/10 rounded-lg">
-                              <Trash2 size={14} />
-                            </button>
-                          </td>
+                          {canEdit && (
+                            <td className="px-4 py-3 text-right">
+                              <button onClick={() => deleteVideo(v)} className="text-white/30 hover:text-tesla-400 transition-colors p-1.5 hover:bg-tesla-500/10 rounded-lg">
+                                <Trash2 size={14} />
+                              </button>
+                            </td>
+                          )}
                         </tr>
                       ))}
                     </tbody>
@@ -341,6 +427,90 @@ export default function AdminPage() {
               </div>
             )}
           </div>
+
+          {/* Manage Admins — owner only */}
+          {isOwner && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-amber-400" />
+                <h2 className="text-white font-semibold text-sm">Manage Admins</h2>
+              </div>
+
+              <div className="bg-white/3 border border-white/8 rounded-2xl p-6 space-y-4">
+                <form onSubmit={manageAdmin} className="flex flex-wrap gap-3 items-end">
+                  <div className="flex-1 min-w-[200px] space-y-1">
+                    <label className="text-white/40 text-xs">User email</label>
+                    <input
+                      type="email"
+                      placeholder="user@example.com"
+                      value={adminEmail}
+                      onChange={e => setAdminEmail(e.target.value)}
+                      required
+                      className="w-full bg-white/5 border border-white/12 text-white placeholder-white/25 rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors"
+                    />
+                  </div>
+                  <div className="w-32 space-y-1">
+                    <label className="text-white/40 text-xs">Role</label>
+                    <select
+                      value={adminRole}
+                      onChange={e => setAdminRole(e.target.value)}
+                      className="w-full bg-white/5 border border-white/12 text-white rounded-xl px-3 py-2 text-sm outline-none focus:border-tesla-500/50 transition-colors appearance-none"
+                    >
+                      <option value="viewer">Viewer</option>
+                      <option value="editor">Editor</option>
+                    </select>
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={managingAdmin}
+                    className="flex items-center gap-2 bg-amber-600 hover:bg-amber-500 disabled:bg-white/5 disabled:text-white/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+                  >
+                    {managingAdmin ? <Loader2 size={14} className="animate-spin" /> : <UserPlus size={14} />}
+                    Add Admin
+                  </button>
+                </form>
+                {adminMsg && <p className="text-emerald-400 text-sm">{adminMsg}</p>}
+              </div>
+
+              {/* Current admins list */}
+              {admins.length > 0 && (
+                <div className="bg-white/3 border border-white/8 rounded-2xl overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-white/8">
+                          <th className="text-left text-white/30 font-medium px-4 py-3">Email</th>
+                          <th className="text-left text-white/30 font-medium px-4 py-3">Role</th>
+                          <th className="text-left text-white/30 font-medium px-4 py-3">Added</th>
+                          <th className="px-4 py-3"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {admins.map(a => (
+                          <tr key={a.id} className="border-b border-white/5 last:border-0">
+                            <td className="px-4 py-3 text-white/70 font-mono text-xs">{a.email}</td>
+                            <td className="px-4 py-3"><RoleBadge role={a.admin_role} /></td>
+                            <td className="px-4 py-3 text-white/40 text-xs">{new Date(a.created_at).toLocaleDateString()}</td>
+                            <td className="px-4 py-3 text-right">
+                              {a.admin_role !== 'owner' && (
+                                <button
+                                  onClick={() => revokeAdmin(a.email)}
+                                  className="text-white/30 hover:text-tesla-400 transition-colors p-1.5 hover:bg-tesla-500/10 rounded-lg"
+                                  title="Revoke admin access"
+                                >
+                                  <X size={14} />
+                                </button>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </>
       )}
     </main>

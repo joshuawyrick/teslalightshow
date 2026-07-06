@@ -4,6 +4,7 @@ export interface Profile {
   credits: number;
   snippet_used: boolean;
   is_admin: boolean;
+  admin_role: 'owner' | 'editor' | 'viewer' | null;
   created_at: string;
 }
 

@@ -4,11 +4,13 @@ import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import AuthModal from './components/AuthModal';
 import PricingModal from './components/PricingModal';
+import ResetPasswordModal from './components/ResetPasswordModal';
 import GeneratorPage from './pages/GeneratorPage';
 import MyDownloadsPage from './pages/MyDownloadsPage';
 import GalleryPage from './pages/GalleryPage';
 import AdminPage from './pages/AdminPage';
 import SuccessPage from './pages/SuccessPage';
+import { supabase } from './lib/supabase';
 
 // ---- Simple hash-based router ----
 function getHashPath(): string {
@@ -34,11 +36,22 @@ function AppInner() {
   const [path, setPath] = useState<string>(() => getHashPath());
   const [showAuth, setShowAuth] = useState(false);
   const [showPricing, setShowPricing] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
 
   useEffect(() => {
     const onHash = () => setPath(getHashPath());
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  // Listen for PASSWORD_RECOVERY event from Supabase
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setShowResetPassword(true);
+      }
+    });
+    return () => subscription.unsubscribe();
   }, []);
 
   const navigate = (to: string) => {
@@ -104,6 +117,7 @@ function AppInner() {
 
       {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
       {showPricing && <PricingModal onClose={() => setShowPricing(false)} />}
+      {showResetPassword && <ResetPasswordModal onClose={() => setShowResetPassword(false)} />}
     </div>
   );
 }

@@ -7,6 +7,13 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
+function json(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json" },
+  });
+}
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 200, headers: corsHeaders });
@@ -20,49 +27,41 @@ Deno.serve(async (req: Request) => {
 
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
-      return new Response(JSON.stringify({ error: "Missing auth" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ error: "Missing auth" }, 401);
     }
 
     const { data: { user }, error: authErr } = await supabase.auth.getUser(
       authHeader.replace("Bearer ", ""),
     );
     if (authErr || !user) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ error: "Unauthorized" }, 401);
     }
 
-    // Verify admin server-side
+    // Verify admin server-side and get role
     const { data: adminProfile } = await supabase
       .from("profiles")
-      .select("is_admin")
+      .select("is_admin, admin_role")
       .eq("id", user.id)
       .maybeSingle();
 
     if (!adminProfile?.is_admin) {
-      return new Response(JSON.stringify({ error: "Forbidden" }), {
-        status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      return json({ error: "Forbidden" }, 403);
     }
 
+    const callerRole = adminProfile.admin_role as string;
     const url = new URL(req.url);
 
-    // GET dashboard data
+    // GET dashboard data — all admin roles can view
     if (req.method === "GET" && url.searchParams.get("action") === "dashboard") {
-      const [usersRes, purchasesRes, downloadsRes, videosRes] = await Promise.all([
-        supabase.from("profiles").select("id, email, credits, snippet_used, is_admin, created_at").order("created_at", { ascending: false }).limit(500),
+      const [usersRes, purchasesRes, downloadsRes, videosRes, adminsRes] = await Promise.all([
+        supabase.from("profiles").select("id, email, credits, snippet_used, is_admin, admin_role, created_at").order("created_at", { ascending: false }).limit(500),
         supabase.from("purchases").select("id, user_id, package_name, credits_purchased, amount_cents, created_at, profiles(email)").order("created_at", { ascending: false }).limit(20),
         supabase.from("downloads").select("id", { count: "exact", head: true }),
         supabase.from("gallery_videos").select("id, user_id, title, storage_path, created_at").order("created_at", { ascending: false }),
+        supabase.from("profiles").select("id, email, admin_role, created_at").not("admin_role", "is", null).order("created_at", { ascending: true }),
       ]);
 
-      const totalRevenueCents = (purchasesRes.data ?? []).reduce(
-        (sum: number, p: { amount_cents: number }) => sum + (p.amount_cents ?? 0), 0
-      );
-
-      // Recalculate total revenue from ALL purchases (not just last 20)
+      // Recalculate total revenue from ALL purchases
       const { data: allPurchases } = await supabase
         .from("purchases")
         .select("amount_cents");
@@ -83,7 +82,8 @@ Deno.serve(async (req: Request) => {
         created_at: p.created_at,
       }));
 
-      return new Response(JSON.stringify({
+      return json({
+        callerRole,
         stats: {
           totalRevenueCents: totalRev,
           totalUsers: (usersRes.data ?? []).length,
@@ -92,22 +92,24 @@ Deno.serve(async (req: Request) => {
         users: usersRes.data ?? [],
         purchases,
         videos: videosRes.data ?? [],
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        admins: adminsRes.data ?? [],
       });
     }
 
-    // POST: grant credits or other admin actions
+    // POST: actions that require editor or owner role
     if (req.method === "POST") {
       const body = await req.json();
       const { action } = body;
 
+      // Viewers cannot perform any POST actions
+      if (callerRole === "viewer") {
+        return json({ error: "Viewers have read-only access" }, 403);
+      }
+
       if (action === "grant") {
         const { email, credits, note } = body;
         if (!email || !credits || credits < 1) {
-          return new Response(JSON.stringify({ error: "email and credits required" }), {
-            status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
-          });
+          return json({ error: "email and credits required" }, 400);
         }
 
         const { data: result, error: grantErr } = await supabase.rpc("admin_grant_credits", {
@@ -118,27 +120,56 @@ Deno.serve(async (req: Request) => {
         });
 
         if (grantErr) {
-          return new Response(JSON.stringify({ error: grantErr.message }), {
-            status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
-          });
+          return json({ error: grantErr.message }, 500);
         }
 
-        return new Response(JSON.stringify(result), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+        return json(result);
       }
 
-      return new Response(JSON.stringify({ error: "Unknown action" }), {
-        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+      if (action === "manage_admin") {
+        // Only owner can manage admins
+        if (callerRole !== "owner") {
+          return json({ error: "Only the owner can manage admin roles" }, 403);
+        }
+
+        const { email, role } = body;
+        if (!email) {
+          return json({ error: "email is required" }, 400);
+        }
+        if (role !== null && role !== "editor" && role !== "viewer" && role !== "owner") {
+          return json({ error: "role must be editor, viewer, owner, or null to revoke" }, 400);
+        }
+
+        const { data: result, error: roleErr } = await supabase.rpc("set_admin_role", {
+          p_admin_uid: user.id,
+          p_target_email: email,
+          p_role: role,
+        });
+
+        if (roleErr) {
+          return json({ error: roleErr.message }, 500);
+        }
+
+        return json(result);
+      }
+
+      if (action === "delete_video") {
+        const { video_id, storage_path } = body;
+        if (!video_id || !storage_path) {
+          return json({ error: "video_id and storage_path required" }, 400);
+        }
+
+        await supabase.storage.from("gallery").remove([storage_path]);
+        await supabase.from("gallery_videos").delete().eq("id", video_id);
+
+        return json({ success: true });
+      }
+
+      return json({ error: "Unknown action" }, 400);
     }
 
-    return new Response(JSON.stringify({ error: "Method not allowed" }), {
-      status: 405, headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ error: "Method not allowed" }, 405);
   } catch (err) {
-    return new Response(JSON.stringify({ error: (err as Error).message }), {
-      status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return json({ error: (err as Error).message }, 500);
   }
 });

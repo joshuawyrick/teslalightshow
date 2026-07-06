@@ -1,4 +1,4 @@
-import { Zap, LogOut, ShieldCheck, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -31,17 +31,16 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
   return (
     <header className="border-b border-border bg-midnight/90 backdrop-blur-xl sticky top-0 z-30">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-6">
-        {/* Wordmark */}
+        {/* Logo */}
         <button
           onClick={() => { onNavigate('/'); setMobileOpen(false); }}
-          className="flex items-center gap-2.5 shrink-0"
+          className="shrink-0"
         >
-          <div className="w-8 h-8 rounded-lg bg-accent-red/20 border border-accent-red/30 flex items-center justify-center">
-            <Zap size={15} className="text-accent-red" />
-          </div>
-          <span className="text-text-primary font-display font-bold text-base sm:text-lg tracking-tight">
-            Tesla<span className="text-accent-red">Light</span>Shows<span className="text-accent-red">.com</span>
-          </span>
+          <img
+            src="/ChatGPT_Image_Jul_6,_2026,_03_28_39_PM.png"
+            alt="TeslaLightShows.com"
+            className="h-9 sm:h-10 w-auto"
+          />
         </button>
 
         {/* Desktop Nav */}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Zap, Shield, Clock, Cloud, Heart } from 'lucide-react';
+import { Shield, Clock, Cloud, Heart } from 'lucide-react';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import AuthModal from './components/AuthModal';
@@ -148,14 +148,11 @@ function AppInner() {
           {/* Bottom bar */}
           <div className="border-t border-border py-6 px-4 sm:px-6">
             <div className="max-w-[1320px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
-                  <Zap size={13} className="text-accent-red" />
-                </div>
-                <span className="text-sm font-display font-bold tracking-tight">
-                  Tesla<span className="text-accent-red">Light</span>Shows<span className="text-accent-red">.com</span>
-                </span>
-              </div>
+              <img
+                src="/ChatGPT_Image_Jul_6,_2026,_03_28_39_PM.png"
+                alt="TeslaLightShows.com"
+                className="h-8 w-auto"
+              />
               <p className="text-text-secondary/60 text-xs text-center">
                 Music. Energy. Harmony. Your Tesla. &bull; Not affiliated with Tesla, Inc. &bull; FSEQ v2.0 format
               </p>

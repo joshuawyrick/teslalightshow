@@ -686,8 +686,8 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           className="w-full flex items-center justify-center gap-3 bg-tesla-600 hover:bg-tesla-500 disabled:bg-white/5 disabled:text-white/20 disabled:cursor-not-allowed text-white font-semibold text-base rounded-2xl py-4 transition-all duration-150 cursor-pointer shadow-[0_0_30px_rgba(232,33,39,0.2)] hover:shadow-[0_0_40px_rgba(232,33,39,0.35)]"
         >
           <Zap size={18} />
-          {user ? 'Generate light shows' : 'Sign up to generate'}
-          {decoded && <ChevronRight size={18} className="ml-auto opacity-50" />}
+          {user ? 'Generate Light Shows' : 'Sign up to generate'}
+          <ChevronRight size={18} className="opacity-50" />
         </button>
       </section>
 

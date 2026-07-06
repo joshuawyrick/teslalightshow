@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { Upload, Zap, Download, Music, ChevronRight, AlertTriangle, CheckCircle2, Cpu, Lock, Scissors } from 'lucide-react';
+import { Upload, Zap, Download, Music, AlertTriangle, CheckCircle2, Cpu, Lock, Scissors } from 'lucide-react';
 import {
   analyzeAudio,
   renditionsFor,
@@ -687,7 +687,6 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         >
           <Zap size={18} />
           {user ? 'Generate Light Shows' : 'Sign up to generate'}
-          <ChevronRight size={18} className="opacity-50" />
         </button>
       </section>
 

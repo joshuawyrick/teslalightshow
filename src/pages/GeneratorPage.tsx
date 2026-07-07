@@ -495,10 +495,10 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             <p className="text-text-secondary text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium">
               Turn your music into
             </p>
-            <h1 className="metallic-title font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] tracking-tight leading-[1.1]">
-              <span className="bg-gradient-to-b from-white via-gray-200 to-gray-400 bg-clip-text text-transparent drop-shadow-[0_2px_3px_rgba(0,0,0,0.8)]" style={{ textShadow: '0 1px 0 rgba(255,255,255,0.3)' }}>TESLA </span>
-              <span className="bg-gradient-to-b from-[#ff4d4d] via-[#ff1a1a] to-[#8b0000] bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(255,0,0,0.4)]" style={{ WebkitTextStroke: '0.5px rgba(255,100,100,0.2)' }}>LIGHT </span>
-              <span className="bg-gradient-to-b from-[#00f5ff] via-[#00c8d4] to-[#005f66] bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,245,255,0.4)]" style={{ WebkitTextStroke: '0.5px rgba(0,200,220,0.2)' }}>SHOWS</span>
+            <h1 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] tracking-tight leading-[1.1]">
+              <span className="metallic-text metallic-silver" data-text="TESLA">TESLA </span>
+              <span className="metallic-text metallic-red" data-text="LIGHT">LIGHT </span>
+              <span className="metallic-text metallic-cyan" data-text="SHOWS">SHOWS</span>
             </h1>
             <p className="text-text-secondary text-sm sm:text-base leading-relaxed max-w-md">
               Upload any song. Our AI maps every beat, drop, and detail to a custom light show for your Tesla.

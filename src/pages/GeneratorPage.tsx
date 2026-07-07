@@ -84,7 +84,7 @@ function LightBar({ progress, phase }: { progress: number; phase: 'idle' | 'anal
               phase === 'idle'
                 ? 'lightbar-idle'
                 : lit
-                  ? phase === 'analyzing' ? 'bg-electric-cyan shadow-[0_0_4px_#00E5FF]' : 'bg-emerald-400 shadow-[0_0_4px_#34d399]'
+                  ? 'bg-electric-cyan shadow-[0_0_4px_#00E5FF]'
                   : 'bg-charcoal'
             }`}
             style={phase === 'idle' ? { '--lb-i': i } as React.CSSProperties : undefined}
@@ -186,17 +186,17 @@ function ResultCard({ output, audioFile, audioBytes, snippetUsed, credits, onDow
           <button
             onClick={() => onDownloadPaid(output)}
             disabled={isBusy || downloadingId !== null}
-            className="flex-1 flex items-center justify-center gap-2 bg-accent-red hover:bg-accent-red/90 disabled:bg-charcoal disabled:text-text-secondary/50 text-white text-sm font-semibold rounded-xl px-3 py-2.5 transition-all duration-150 glow-red"
+            className="flex-1 flex items-center justify-center gap-2 bg-electric-cyan hover:bg-electric-cyan/90 disabled:bg-charcoal disabled:text-text-secondary/50 text-midnight text-sm font-semibold rounded-xl px-3 py-2.5 transition-all duration-150 glow-cyan"
           >
-            {isBusy ? <><Cpu size={13} className="animate-spin" /> Saving...</> : <>1 Credit</>}
+            {isBusy ? <><Cpu size={13} className="animate-spin" /> Saving...</> : <>Purchase Credit</>}
           </button>
         ) : (
           <button
             onClick={onBuyCredits}
-            className="flex-1 flex items-center justify-center gap-2 bg-steel hover:bg-slate border border-border hover:border-accent-red/50 text-text-secondary hover:text-text-primary text-sm font-semibold rounded-xl px-3 py-2.5 transition-all duration-150"
+            className="flex-1 flex items-center justify-center gap-2 bg-electric-cyan hover:bg-electric-cyan/90 text-midnight text-sm font-semibold rounded-xl px-3 py-2.5 transition-all duration-150 glow-cyan"
           >
             <Lock size={13} />
-            1 Credit
+            Purchase Credit
           </button>
         )}
         <button
@@ -745,7 +745,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           <LightBar progress={progress} phase={phase} />
           <div className="flex items-center gap-2 min-h-5">
             {phase === 'analyzing' && <Cpu size={13} className="text-electric-cyan animate-pulse shrink-0" />}
-            {phase === 'done' && <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />}
+            {phase === 'done' && <CheckCircle2 size={13} className="text-electric-cyan shrink-0" />}
             <p className="text-text-secondary text-xs">{barLabel || (decoded ? 'Ready to generate.' : 'Upload a song to begin.')}</p>
             {phase === 'analyzing' && <span className="text-electric-cyan text-xs ml-auto font-mono">{Math.round(progress * 100)}%</span>}
           </div>

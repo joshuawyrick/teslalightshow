@@ -462,7 +462,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         <div className="hero-glow" />
         <div className="flex flex-col lg:flex-row items-center">
           {/* Left content */}
-          <div className="relative z-10 p-5 sm:p-8 md:p-10 lg:p-12 lg:w-[55%] space-y-4 sm:space-y-5">
+          <div className="relative z-10 p-5 sm:p-8 md:p-10 lg:p-12 lg:w-[55%] flex flex-col items-center text-center space-y-4 sm:space-y-5">
             <div className="flex flex-col items-center">
               <p className="text-text-secondary text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium">
                 Turn your music into
@@ -473,11 +473,11 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
                 className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto mt-4"
               />
             </div>
-            <p className="text-text-secondary text-sm sm:text-base leading-relaxed max-w-md">
+            <p className="text-text-secondary text-sm sm:text-base leading-relaxed max-w-md mx-auto">
               Upload any song. Our AI maps every beat, drop, and detail to a custom light show for your Tesla.
             </p>
             {/* Trust badges */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-5 pt-2">
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5 pt-2">
               <div className="flex items-center gap-2">
                 <Sparkles size={14} className="text-electric-cyan shrink-0" />
                 <div>
@@ -501,13 +501,13 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               </div>
             </div>
             {!user && (
-              <div className="flex items-center gap-2 bg-electric-cyan/10 border border-electric-cyan/25 rounded-full px-3 sm:px-4 py-2 text-electric-cyan text-xs sm:text-sm">
+              <div className="flex items-center justify-center gap-2 bg-electric-cyan/10 border border-electric-cyan/25 rounded-full px-3 sm:px-4 py-2 text-electric-cyan text-xs sm:text-sm">
                 <CheckCircle2 size={14} className="shrink-0" />
                 <span>Sign up free — get a 20-second snippet to try on your Tesla</span>
               </div>
             )}
             {user && !snippetUsed && (
-              <div className="flex items-center gap-2 bg-electric-cyan/10 border border-electric-cyan/25 rounded-full px-3 sm:px-4 py-2 text-electric-cyan text-xs sm:text-sm">
+              <div className="flex items-center justify-center gap-2 bg-electric-cyan/10 border border-electric-cyan/25 rounded-full px-3 sm:px-4 py-2 text-electric-cyan text-xs sm:text-sm">
                 <Scissors size={14} className="shrink-0" />
                 <span>Your free {SNIPPET_SECONDS}s snippet is waiting — generate a show to claim it</span>
               </div>

@@ -495,11 +495,11 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             <p className="text-text-secondary text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium">
               Turn your music into
             </p>
-            <h1 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl xl:text-[4.5rem] tracking-tight leading-[0.95]" style={{ fontStyle: 'italic' }}>
-              <span className="block chrome-text chrome-silver skew-x-[-4deg]" data-text="TESLA">TESLA</span>
-              <span className="block chrome-text chrome-red skew-x-[-4deg]" data-text="LIGHT">LIGHT</span>
-              <span className="block chrome-text chrome-blue skew-x-[-4deg]" data-text="SHOWS">SHOWS</span>
-            </h1>
+            <img
+              src="/ChatGPT_Image_Jul_6,_2026,_08_50_30_PM copy.png"
+              alt="Tesla Light Shows"
+              className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto"
+            />
             <p className="text-text-secondary text-sm sm:text-base leading-relaxed max-w-md">
               Upload any song. Our AI maps every beat, drop, and detail to a custom light show for your Tesla.
             </p>

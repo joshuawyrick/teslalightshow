@@ -496,7 +496,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               Turn your music into
             </p>
             <img
-              src="/Tesla-Light-Show.png"
+              src="/tesla-light-show-generator.png"
               alt="Tesla Light Shows"
               className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto"
             />

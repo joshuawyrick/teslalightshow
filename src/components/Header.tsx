@@ -30,8 +30,73 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
 
   return (
     <header className="border-b border-border bg-midnight/90 backdrop-blur-xl sticky top-0 z-30">
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-6">
-        {/* Logo */}
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-4 hidden md:grid grid-cols-3 items-center">
+        {/* Left - Generator + secondary links */}
+        <nav className="flex items-center gap-8 justify-self-start">
+          {navLink('/', 'Generator')}
+          {user && navLink('/downloads', 'My Shows')}
+          {profile?.is_admin && navLink('/admin', 'Admin')}
+        </nav>
+
+        {/* Center - Logo */}
+        <button
+          onClick={() => { onNavigate('/'); setMobileOpen(false); }}
+          className="justify-self-center shrink-0"
+        >
+          <img
+            src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
+            alt="TeslaLightShows.com"
+            className="h-[2.59rem] w-auto"
+          />
+        </button>
+
+        {/* Right - Gallery + Auth */}
+        <div className="flex items-center gap-8 justify-self-end">
+          {navLink('/gallery', 'Gallery')}
+          <div className="flex items-center gap-3">
+            {user && profile ? (
+              <>
+                <div className="flex items-center gap-2 bg-charcoal border border-border rounded-full px-4 py-1.5">
+                  <span className={`text-sm font-bold ${profile.credits > 0 ? 'text-electric-cyan' : 'text-text-secondary/50'}`}>
+                    {profile.credits}
+                  </span>
+                  <span className="text-text-secondary text-xs">Credits</span>
+                </div>
+                <div className="flex items-center gap-2 bg-charcoal border border-border rounded-full px-3 py-1.5">
+                  <div className="w-5 h-5 rounded-full bg-accent-red/20 flex items-center justify-center">
+                    <span className="text-accent-red text-[10px] font-bold">{profile.email?.charAt(0).toUpperCase()}</span>
+                  </div>
+                  <span className="text-text-secondary text-xs max-w-[100px] truncate">{profile.email}</span>
+                </div>
+                <button
+                  onClick={signOut}
+                  className="text-text-secondary hover:text-text-primary text-sm transition-colors duration-150 ml-1"
+                >
+                  <LogOut size={16} />
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={onAuthClick}
+                  className="text-text-secondary hover:text-text-primary text-sm font-medium transition-colors duration-150"
+                >
+                  Log in
+                </button>
+                <button
+                  onClick={onAuthClick}
+                  className="bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-all duration-150 glow-red"
+                >
+                  Sign up free
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile header */}
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-4 flex md:hidden items-center justify-between">
         <button
           onClick={() => { onNavigate('/'); setMobileOpen(false); }}
           className="shrink-0"
@@ -42,60 +107,9 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
             className="h-[2.59rem] w-auto"
           />
         </button>
-
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLink('/', 'Generator')}
-          {navLink('/gallery', 'Gallery')}
-          {user && navLink('/downloads', 'My Shows')}
-          {profile?.is_admin && navLink('/admin', 'Admin')}
-        </nav>
-
-        {/* Auth area */}
-        <div className="hidden md:flex items-center gap-3 shrink-0">
-          {user && profile ? (
-            <>
-              <div className="flex items-center gap-2 bg-charcoal border border-border rounded-full px-4 py-1.5">
-                <span className={`text-sm font-bold ${profile.credits > 0 ? 'text-electric-cyan' : 'text-text-secondary/50'}`}>
-                  {profile.credits}
-                </span>
-                <span className="text-text-secondary text-xs">Credits</span>
-              </div>
-              <div className="flex items-center gap-2 bg-charcoal border border-border rounded-full px-3 py-1.5">
-                <div className="w-5 h-5 rounded-full bg-accent-red/20 flex items-center justify-center">
-                  <span className="text-accent-red text-[10px] font-bold">{profile.email?.charAt(0).toUpperCase()}</span>
-                </div>
-                <span className="text-text-secondary text-xs max-w-[100px] truncate">{profile.email}</span>
-              </div>
-              <button
-                onClick={signOut}
-                className="text-text-secondary hover:text-text-primary text-sm transition-colors duration-150 ml-1"
-              >
-                <LogOut size={16} />
-              </button>
-            </>
-          ) : (
-            <>
-              <button
-                onClick={onAuthClick}
-                className="text-text-secondary hover:text-text-primary text-sm font-medium transition-colors duration-150"
-              >
-                Log in
-              </button>
-              <button
-                onClick={onAuthClick}
-                className="bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-all duration-150 glow-red"
-              >
-                Sign up free
-              </button>
-            </>
-          )}
-        </div>
-
-        {/* Mobile menu toggle */}
         <button
           onClick={() => setMobileOpen(v => !v)}
-          className="md:hidden text-text-secondary hover:text-text-primary transition-colors"
+          className="text-text-secondary hover:text-text-primary transition-colors"
         >
           {mobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>

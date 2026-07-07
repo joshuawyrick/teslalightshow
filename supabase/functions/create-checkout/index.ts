@@ -43,27 +43,12 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    const { packageId, promoCode } = await req.json();
+    const { packageId } = await req.json();
     const pkg = PACKAGES[packageId];
     if (!pkg) {
       return new Response(JSON.stringify({ error: "Invalid package" }), {
         status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
-    }
-
-    let discounts: { promotion_code: string }[] | undefined;
-    if (promoCode && typeof promoCode === "string") {
-      const promoCodes = await stripe.promotionCodes.list({
-        code: promoCode.trim().toUpperCase(),
-        active: true,
-        limit: 1,
-      });
-      if (promoCodes.data.length === 0) {
-        return new Response(JSON.stringify({ error: "Invalid or expired promo code" }), {
-          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
-      discounts = [{ promotion_code: promoCodes.data[0].id }];
     }
 
     const origin = req.headers.get("origin") ?? "https://teslalightshows.com";
@@ -78,7 +63,7 @@ Deno.serve(async (req: Request) => {
         quantity: 1,
       }],
       mode: "payment",
-      ...(discounts ? { discounts } : { allow_promotion_codes: true }),
+      allow_promotion_codes: true,
       success_url: `${origin}/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/?checkout=cancel`,
       metadata: {

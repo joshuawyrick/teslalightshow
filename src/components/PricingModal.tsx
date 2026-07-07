@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Loader2, CheckCircle2, Zap, Tag } from 'lucide-react';
+import { X, Loader2, CheckCircle2, Zap } from 'lucide-react';
 import { PACKAGES } from '../config';
 import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
 
@@ -10,7 +10,6 @@ interface PricingModalProps {
 export default function PricingModal({ onClose }: PricingModalProps) {
   const [loading, setLoading] = useState<string | null>(null);
   const [error, setError] = useState('');
-  const [promoCode, setPromoCode] = useState('');
 
   const purchase = async (packageId: string) => {
     setError('');
@@ -29,7 +28,7 @@ export default function PricingModal({ onClose }: PricingModalProps) {
           'Authorization': `Bearer ${session.access_token}`,
           'Apikey': SUPABASE_ANON_KEY,
         },
-        body: JSON.stringify({ packageId, promoCode: promoCode.trim() || undefined }),
+        body: JSON.stringify({ packageId }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
@@ -102,17 +101,6 @@ export default function PricingModal({ onClose }: PricingModalProps) {
               {error}
             </div>
           )}
-
-          <div className="relative">
-            <Tag size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-secondary/50 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Promo code (optional)"
-              value={promoCode}
-              onChange={e => setPromoCode(e.target.value.toUpperCase())}
-              className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/40 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-electric-cyan/50 transition-colors uppercase tracking-wide"
-            />
-          </div>
 
           <p className="text-text-secondary text-xs text-center pt-1">
             Powered by Stripe. Secure checkout. No subscription.

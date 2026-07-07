@@ -489,21 +489,23 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       {/* Hero */}
       <section className="relative overflow-hidden bg-charcoal border border-border rounded-2xl">
         <div className="hero-glow" />
-        <div className="flex flex-col lg:flex-row items-center">
+        <div className="flex flex-col lg:flex-row items-stretch">
           {/* Left content */}
-          <div className="relative z-10 p-5 sm:p-8 md:p-10 lg:p-12 lg:w-[55%] space-y-4 sm:space-y-5">
-            <p className="text-text-secondary text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium">
+          <div className="relative z-10 p-5 sm:p-8 md:p-10 lg:p-12 lg:w-[55%] space-y-4 sm:space-y-5 flex flex-col justify-center">
+            <p className="text-text-secondary text-[10px] sm:text-xs uppercase tracking-[0.25em] font-medium">
               Turn your music into
             </p>
-            <h1 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] tracking-tight leading-[1.1]">
+            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] tracking-tight leading-[1.05]">
               <span className="text-text-primary">TESLA </span>
-              <span className="bg-gradient-to-r from-accent-red via-accent-red to-electric-cyan bg-clip-text text-transparent">LIGHT SHOWS</span>
+              <span className="text-electric-cyan">LIGHT</span>
+              <br />
+              <span className="text-accent-red">SHOWS</span>
             </h1>
             <p className="text-text-secondary text-sm sm:text-base leading-relaxed max-w-md">
               Upload any song. Our AI maps every beat, drop, and detail to a custom light show for your Tesla.
             </p>
             {/* Trust badges */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-5 pt-2">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
               <div className="flex items-center gap-2">
                 <Sparkles size={14} className="text-electric-cyan shrink-0" />
                 <div>
@@ -527,26 +529,26 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               </div>
             </div>
             {!user && (
-              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 sm:px-4 py-2 text-emerald-300 text-xs sm:text-sm">
+              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 sm:px-4 py-2 text-emerald-300 text-xs sm:text-sm w-fit">
                 <CheckCircle2 size={14} className="shrink-0" />
                 <span>Sign up free — get a 20-second snippet to try on your Tesla</span>
               </div>
             )}
             {user && !snippetUsed && (
-              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 sm:px-4 py-2 text-emerald-300 text-xs sm:text-sm">
+              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 sm:px-4 py-2 text-emerald-300 text-xs sm:text-sm w-fit">
                 <Scissors size={14} className="shrink-0" />
                 <span>Your free {SNIPPET_SECONDS}s snippet is waiting — generate a show to claim it</span>
               </div>
             )}
           </div>
           {/* Right - Tesla image */}
-          <div className="relative lg:w-[45%] h-48 sm:h-80 lg:h-auto lg:min-h-[340px] w-full overflow-hidden">
+          <div className="relative lg:w-[45%] h-56 sm:h-80 lg:h-auto lg:min-h-[380px] w-full overflow-hidden">
             <img
-              src="/tesla-hero.webp"
-              alt="Tesla Model 3 front view with glowing lights"
-              className="absolute inset-0 w-full h-full object-cover object-center opacity-90"
+              src="/image copy copy copy.png"
+              alt="Tesla with dramatic lighting and light show effects"
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent lg:via-charcoal/40" />
+            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-charcoal via-charcoal/50 to-transparent" />
           </div>
         </div>
       </section>

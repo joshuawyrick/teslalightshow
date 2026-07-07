@@ -109,7 +109,7 @@ export default function MyDownloadsPage() {
             >
               <div className="w-10 h-10 rounded-xl bg-midnight border border-border flex items-center justify-center shrink-0">
                 {dl.is_snippet
-                  ? <Scissors size={16} className="text-emerald-400" />
+                  ? <Scissors size={16} className="text-electric-cyan" />
                   : <Download size={16} className="text-electric-cyan" />
                 }
               </div>
@@ -117,7 +117,7 @@ export default function MyDownloadsPage() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="text-text-primary font-medium text-sm truncate max-w-[200px] sm:max-w-[280px]">{dl.song_name}</p>
                   {dl.is_snippet && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded-full shrink-0">
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-electric-cyan/15 text-electric-cyan border border-electric-cyan/25 px-2 py-0.5 rounded-full shrink-0">
                       snippet
                     </span>
                   )}

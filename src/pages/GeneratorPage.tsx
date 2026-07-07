@@ -119,8 +119,6 @@ interface RenditionOutput {
 
 interface ResultCardProps {
   output: RenditionOutput;
-  audioFile: File;
-  audioBytes: Uint8Array;
   snippetUsed: boolean;
   credits: number;
   onDownloadFree: (output: RenditionOutput) => void;
@@ -129,24 +127,9 @@ interface ResultCardProps {
   downloadingId: string | null;
 }
 
-function ResultCard({ output, audioFile, audioBytes, snippetUsed, credits, onDownloadFree, onDownloadPaid, onBuyCredits, downloadingId }: ResultCardProps) {
+function ResultCard({ output, snippetUsed, credits, onDownloadFree, onDownloadPaid, onBuyCredits, downloadingId }: ResultCardProps) {
   const { r } = output;
   const isBusy = downloadingId === r.id;
-
-  const downloadLocal = (bytes: Uint8Array, suffix: string) => {
-    const slug = audioFile.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/gi, '_').slice(0, 40);
-    const ext = audioFile.name.toLowerCase().split('.').pop() || 'mp3';
-    const zip = makeZip([
-      { name: 'LightShow/lightshow.fseq', data: bytes },
-      { name: `LightShow/lightshow.${ext}`, data: audioBytes },
-    ]);
-    const blob = new Blob([zip], { type: 'application/zip' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `${slug}_${r.id}${suffix}_lightshow.zip`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-  };
 
   if (!snippetUsed) {
     return (
@@ -159,16 +142,10 @@ function ResultCard({ output, audioFile, audioBytes, snippetUsed, credits, onDow
           <button
             onClick={() => onDownloadFree(output)}
             disabled={isBusy || downloadingId !== null}
-            className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:bg-charcoal disabled:text-text-secondary/50 text-white text-sm font-semibold rounded-xl px-3 py-2.5 transition-colors duration-150"
+            className="flex-1 flex items-center justify-center gap-2 bg-electric-cyan hover:bg-electric-cyan/90 disabled:bg-charcoal disabled:text-text-secondary/50 text-midnight text-sm font-semibold rounded-xl px-3 py-2.5 transition-all duration-150 glow-cyan"
           >
             <Scissors size={13} />
             {isBusy ? 'Preparing...' : `Free ${SNIPPET_SECONDS}s`}
-          </button>
-          <button
-            onClick={() => downloadLocal(output.fseq, '')}
-            className="flex items-center justify-center gap-1.5 bg-steel hover:bg-slate text-text-secondary hover:text-text-primary text-xs font-medium rounded-xl px-3 py-2.5 transition-colors duration-150 border border-border"
-          >
-            .fseq only
           </button>
         </div>
       </div>
@@ -199,12 +176,6 @@ function ResultCard({ output, audioFile, audioBytes, snippetUsed, credits, onDow
             Purchase Credit
           </button>
         )}
-        <button
-          onClick={() => downloadLocal(output.fseq, '')}
-          className="flex items-center justify-center gap-1.5 bg-steel hover:bg-slate text-text-secondary hover:text-text-primary text-xs font-medium rounded-xl px-3 py-2.5 transition-colors duration-150 border border-border"
-        >
-          .fseq only
-        </button>
       </div>
     </div>
   );
@@ -530,13 +501,13 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               </div>
             </div>
             {!user && (
-              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 sm:px-4 py-2 text-emerald-300 text-xs sm:text-sm">
+              <div className="flex items-center gap-2 bg-electric-cyan/10 border border-electric-cyan/25 rounded-full px-3 sm:px-4 py-2 text-electric-cyan text-xs sm:text-sm">
                 <CheckCircle2 size={14} className="shrink-0" />
                 <span>Sign up free — get a 20-second snippet to try on your Tesla</span>
               </div>
             )}
             {user && !snippetUsed && (
-              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 sm:px-4 py-2 text-emerald-300 text-xs sm:text-sm">
+              <div className="flex items-center gap-2 bg-electric-cyan/10 border border-electric-cyan/25 rounded-full px-3 sm:px-4 py-2 text-electric-cyan text-xs sm:text-sm">
                 <Scissors size={14} className="shrink-0" />
                 <span>Your free {SNIPPET_SECONDS}s snippet is waiting — generate a show to claim it</span>
               </div>
@@ -574,7 +545,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           onDragLeave={() => setIsDragOver(false)}
           onDrop={handleDrop}
           className={`relative border-2 border-dashed rounded-xl p-5 sm:p-8 flex flex-col items-center gap-3 sm:gap-4 cursor-pointer transition-all duration-200 select-none
-            ${isDragOver ? 'border-electric-cyan/60 bg-electric-cyan/5' : audioFile ? 'border-emerald-500/30 bg-steel' : 'border-border bg-steel hover:border-electric-cyan/30'}`}
+            ${isDragOver ? 'border-electric-cyan/60 bg-electric-cyan/5' : audioFile ? 'border-electric-cyan/30 bg-steel' : 'border-border bg-steel hover:border-electric-cyan/30'}`}
         >
           <input
             ref={fileInputRef}
@@ -584,8 +555,8 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             onChange={e => { if (e.target.files?.[0]) loadFile(e.target.files[0]); }}
           />
           <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border transition-colors duration-200
-            ${audioFile ? 'bg-emerald-500/15 border-emerald-500/30' : 'bg-electric-cyan/10 border-electric-cyan/25'}`}>
-            {audioFile ? <Music size={20} className="text-emerald-400" /> : <Upload size={20} className="text-electric-cyan" />}
+            ${audioFile ? 'bg-electric-cyan/15 border-electric-cyan/30' : 'bg-electric-cyan/10 border-electric-cyan/25'}`}>
+            {audioFile ? <Music size={20} className="text-electric-cyan" /> : <Upload size={20} className="text-electric-cyan" />}
           </div>
           <div className="text-center px-2">
             <p className="text-text-primary font-medium text-sm sm:text-base break-all sm:break-normal">{audioFile ? audioFile.name : 'Drag & drop your MP3 or WAV file here'}</p>
@@ -779,8 +750,6 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               <ResultCard
                 key={output.r.id}
                 output={output}
-                audioFile={audioFile!}
-                audioBytes={audioBytes!}
                 snippetUsed={snippetUsed}
                 credits={credits}
                 onDownloadFree={handleDownloadFree}

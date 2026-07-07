@@ -540,13 +540,15 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             )}
           </div>
           {/* Right - Tesla image */}
-          <div className="relative lg:w-[45%] h-48 sm:h-80 lg:h-auto lg:min-h-[340px] w-full overflow-hidden flex items-center justify-center">
+          <div className="relative lg:w-[45%] h-48 sm:h-80 lg:h-auto lg:min-h-[340px] w-full overflow-hidden">
             <img
-              src="/tesla-juniper-hero-v2.webp"
-              alt="Tesla Model Y Juniper front view with red light bar and glowing headlights"
-              className="relative z-[1] w-[85%] sm:w-[80%] lg:w-[90%] h-auto object-contain drop-shadow-[0_0_40px_rgba(255,45,45,0.3)]"
+              src="/ChatGPT_Image_Jul_6,_2026,_08_34_35_PM.png"
+              alt="Tesla Model Y front view with red and cyan light show effects"
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
-            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-charcoal via-charcoal/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent w-[35%]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/70" />
+            <div className="absolute inset-0 bg-gradient-to-b from-charcoal/50 via-transparent to-charcoal" />
           </div>
         </div>
       </section>

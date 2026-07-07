@@ -103,25 +103,39 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-border bg-charcoal px-4 py-4 space-y-3">
-          {navLink('/', 'Generator')}
-          {navLink('/gallery', 'Gallery')}
-          {user && navLink('/downloads', 'My Shows')}
-          {profile?.is_admin && navLink('/admin', 'Admin')}
-          <div className="pt-3 border-t border-border">
+        <div className="md:hidden border-t border-border bg-charcoal px-5 py-5 space-y-1">
+          <nav className="flex flex-col gap-1">
+            {[{ path: '/', label: 'Generator' }, { path: '/gallery', label: 'Gallery' }, ...(user ? [{ path: '/downloads', label: 'My Shows' }] : []), ...(profile?.is_admin ? [{ path: '/admin', label: 'Admin' }] : [])].map(item => (
+              <button
+                key={item.path}
+                onClick={() => { onNavigate(item.path); setMobileOpen(false); }}
+                className={`text-left text-base font-medium py-3 px-3 rounded-xl transition-all duration-150 ${
+                  currentPath === item.path
+                    ? 'text-electric-cyan bg-electric-cyan/10'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-white/5'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <div className="pt-4 mt-3 border-t border-border">
             {user && profile ? (
-              <div className="space-y-2">
-                <div className="text-text-secondary text-sm">
-                  {profile.email} &bull; <span className={profile.credits > 0 ? 'text-electric-cyan' : 'text-text-secondary/50'}>{profile.credits} credit{profile.credits !== 1 ? 's' : ''}</span>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-3">
+                  <span className="text-text-secondary text-sm truncate max-w-[200px]">{profile.email}</span>
+                  <span className={`text-sm font-bold ${profile.credits > 0 ? 'text-electric-cyan' : 'text-text-secondary/50'}`}>
+                    {profile.credits} credit{profile.credits !== 1 ? 's' : ''}
+                  </span>
                 </div>
-                <button onClick={signOut} className="flex items-center gap-1.5 text-text-secondary hover:text-text-primary text-sm transition-colors">
+                <button onClick={() => { signOut(); setMobileOpen(false); }} className="flex items-center gap-2 text-text-secondary hover:text-text-primary text-sm py-2 px-3 rounded-xl hover:bg-white/5 transition-all w-full">
                   <LogOut size={14} /> Sign out
                 </button>
               </div>
             ) : (
-              <div className="flex gap-3">
-                <button onClick={onAuthClick} className="text-text-secondary hover:text-text-primary text-sm font-medium transition-colors">Log in</button>
-                <button onClick={onAuthClick} className="bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-all glow-red">Sign up free</button>
+              <div className="flex flex-col gap-3 px-3">
+                <button onClick={() => { onAuthClick(); setMobileOpen(false); }} className="w-full bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-3 transition-all glow-red">Sign up free</button>
+                <button onClick={() => { onAuthClick(); setMobileOpen(false); }} className="w-full text-text-secondary hover:text-text-primary text-sm font-medium py-2 transition-colors">Log in</button>
               </div>
             )}
           </div>

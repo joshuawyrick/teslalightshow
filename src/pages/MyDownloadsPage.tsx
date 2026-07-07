@@ -66,19 +66,19 @@ export default function MyDownloadsPage() {
   }
 
   return (
-    <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 space-y-8">
-      <div className="flex items-center justify-between">
+    <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6 sm:space-y-8">
+      <div className="flex items-start sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl text-text-primary font-heading">My Downloads</h1>
-          <p className="text-text-secondary text-sm mt-1">All your generated shows. Re-downloads are always free.</p>
+          <h1 className="text-xl sm:text-2xl text-text-primary font-heading">My Downloads</h1>
+          <p className="text-text-secondary text-xs sm:text-sm mt-1">All your generated shows. Re-downloads are always free.</p>
         </div>
         <button
           onClick={fetchDownloads}
           disabled={loading}
-          className="flex items-center gap-1.5 text-text-secondary hover:text-text-primary text-sm transition-colors"
+          className="flex items-center gap-1.5 text-text-secondary hover:text-text-primary text-sm transition-colors shrink-0"
         >
           <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
-          Refresh
+          <span className="hidden sm:inline">Refresh</span>
         </button>
       </div>
 
@@ -105,7 +105,7 @@ export default function MyDownloadsPage() {
           {downloads.map(dl => (
             <div
               key={dl.id}
-              className="bg-steel border border-border hover:border-electric-cyan/30 rounded-2xl p-4 flex items-center gap-4 transition-colors duration-150"
+              className="bg-steel border border-border hover:border-electric-cyan/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 transition-colors duration-150"
             >
               <div className="w-10 h-10 rounded-xl bg-midnight border border-border flex items-center justify-center shrink-0">
                 {dl.is_snippet
@@ -115,7 +115,7 @@ export default function MyDownloadsPage() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <p className="text-text-primary font-medium text-sm truncate max-w-[280px]">{dl.song_name}</p>
+                  <p className="text-text-primary font-medium text-sm truncate max-w-[200px] sm:max-w-[280px]">{dl.song_name}</p>
                   {dl.is_snippet && (
                     <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 px-2 py-0.5 rounded-full shrink-0">
                       snippet
@@ -129,10 +129,10 @@ export default function MyDownloadsPage() {
               <button
                 onClick={() => redownload(dl)}
                 disabled={redownloading === dl.id}
-                className="shrink-0 flex items-center gap-1.5 bg-charcoal hover:bg-slate border border-border hover:border-electric-cyan/30 text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl px-4 py-2 transition-colors duration-150"
+                className="shrink-0 flex items-center gap-1.5 bg-charcoal hover:bg-slate border border-border hover:border-electric-cyan/30 text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl px-4 py-2.5 transition-colors duration-150 w-full sm:w-auto justify-center"
               >
                 {redownloading === dl.id
-                  ? <><Loader2 size={13} className="animate-spin" /> Loading…</>
+                  ? <><Loader2 size={13} className="animate-spin" /> Loading...</>
                   : <><Download size={13} /> Re-download</>
                 }
               </button>

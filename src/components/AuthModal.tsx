@@ -64,9 +64,9 @@ export default function AuthModal({ onClose }: AuthModalProps) {
     : 'We\'ll send a reset link to your email.';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-charcoal border border-border rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden">
+      <div className="relative bg-charcoal border border-border rounded-t-2xl sm:rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border">
           <div>
             <h2 className="text-text-primary font-heading font-bold text-lg">{heading}</h2>

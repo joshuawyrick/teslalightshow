@@ -485,17 +485,17 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
   void artOpts;
 
   return (
-    <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8 space-y-8">
+    <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8">
       {/* Hero */}
       <section className="relative overflow-hidden bg-charcoal border border-border rounded-2xl">
         <div className="hero-glow" />
         <div className="flex flex-col lg:flex-row items-center">
           {/* Left content */}
-          <div className="relative z-10 p-8 sm:p-10 lg:p-12 lg:w-[55%] space-y-5">
-            <p className="text-text-secondary text-xs sm:text-sm uppercase tracking-[0.2em] font-medium">
+          <div className="relative z-10 p-5 sm:p-8 md:p-10 lg:p-12 lg:w-[55%] space-y-4 sm:space-y-5">
+            <p className="text-text-secondary text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium">
               Turn your music into
             </p>
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] tracking-tight leading-[1.1]">
+            <h1 className="font-display font-extrabold text-2xl sm:text-4xl lg:text-5xl xl:text-[3.5rem] tracking-tight leading-[1.1]">
               <span className="text-text-primary">TESLA </span>
               <span className="bg-gradient-to-r from-accent-red via-accent-red to-electric-cyan bg-clip-text text-transparent">LIGHT SHOWS</span>
             </h1>
@@ -503,23 +503,23 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               Upload any song. Our AI maps every beat, drop, and detail to a custom light show for your Tesla.
             </p>
             {/* Trust badges */}
-            <div className="flex flex-wrap items-center gap-5 pt-2">
+            <div className="flex flex-wrap items-center gap-4 sm:gap-5 pt-2">
               <div className="flex items-center gap-2">
-                <Sparkles size={14} className="text-electric-cyan" />
+                <Sparkles size={14} className="text-electric-cyan shrink-0" />
                 <div>
                   <p className="text-text-primary text-xs font-medium">AI Music Analysis</p>
                   <p className="text-text-secondary text-[10px]">Smart & Accurate</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Car size={14} className="text-electric-cyan" />
+                <Car size={14} className="text-electric-cyan shrink-0" />
                 <div>
                   <p className="text-text-primary text-xs font-medium">Tesla Optimized</p>
                   <p className="text-text-secondary text-[10px]">All Models Supported</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Lock size={14} className="text-electric-cyan" />
+                <Lock size={14} className="text-electric-cyan shrink-0" />
                 <div>
                   <p className="text-text-primary text-xs font-medium">Fast & Secure</p>
                   <p className="text-text-secondary text-[10px]">Your Privacy Matters</p>
@@ -527,34 +527,34 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               </div>
             </div>
             {!user && (
-              <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-4 py-2 text-emerald-300 text-sm">
-                <CheckCircle2 size={14} />
-                Sign up free — get a 20-second snippet to try on your Tesla
+              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 sm:px-4 py-2 text-emerald-300 text-xs sm:text-sm">
+                <CheckCircle2 size={14} className="shrink-0" />
+                <span>Sign up free — get a 20-second snippet to try on your Tesla</span>
               </div>
             )}
             {user && !snippetUsed && (
-              <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-4 py-2 text-emerald-300 text-sm">
-                <Scissors size={14} />
-                Your free {SNIPPET_SECONDS}s snippet is waiting — generate a show to claim it
+              <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 sm:px-4 py-2 text-emerald-300 text-xs sm:text-sm">
+                <Scissors size={14} className="shrink-0" />
+                <span>Your free {SNIPPET_SECONDS}s snippet is waiting — generate a show to claim it</span>
               </div>
             )}
           </div>
           {/* Right - Tesla image */}
-          <div className="relative lg:w-[45%] h-64 sm:h-80 lg:h-auto lg:min-h-[340px] w-full overflow-hidden">
+          <div className="relative lg:w-[45%] h-48 sm:h-80 lg:h-auto lg:min-h-[340px] w-full overflow-hidden">
             <img
               src="/tesla-hero.webp"
               alt="Tesla Model 3 front view with glowing lights"
               className="absolute inset-0 w-full h-full object-cover object-center opacity-90"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent lg:via-charcoal/40" />
+            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent lg:via-charcoal/40" />
           </div>
         </div>
       </section>
 
       {/* Step 1 — Upload */}
-      <section className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+      <section className="bg-charcoal border border-border rounded-2xl p-4 sm:p-6 space-y-4">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center shrink-0">
             <Upload size={14} className="text-accent-red" />
           </div>
           <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">Step 1 — Upload Your Song</h2>
@@ -568,7 +568,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           onDragEnter={e => { e.preventDefault(); setIsDragOver(true); }}
           onDragLeave={() => setIsDragOver(false)}
           onDrop={handleDrop}
-          className={`relative border-2 border-dashed rounded-xl p-8 flex flex-col items-center gap-4 cursor-pointer transition-all duration-200 select-none
+          className={`relative border-2 border-dashed rounded-xl p-5 sm:p-8 flex flex-col items-center gap-3 sm:gap-4 cursor-pointer transition-all duration-200 select-none
             ${isDragOver ? 'border-electric-cyan/60 bg-electric-cyan/5' : audioFile ? 'border-emerald-500/30 bg-steel' : 'border-border bg-steel hover:border-electric-cyan/30'}`}
         >
           <input
@@ -578,16 +578,16 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             className="sr-only"
             onChange={e => { if (e.target.files?.[0]) loadFile(e.target.files[0]); }}
           />
-          <div className={`w-12 h-12 rounded-xl flex items-center justify-center border transition-colors duration-200
+          <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center border transition-colors duration-200
             ${audioFile ? 'bg-emerald-500/15 border-emerald-500/30' : 'bg-electric-cyan/10 border-electric-cyan/25'}`}>
             {audioFile ? <Music size={20} className="text-emerald-400" /> : <Upload size={20} className="text-electric-cyan" />}
           </div>
-          <div className="text-center">
-            <p className="text-text-primary font-medium">{audioFile ? audioFile.name : 'Drag & drop your MP3 or WAV file here'}</p>
-            <p className="text-text-secondary text-sm mt-1">{audioFile ? fileMeta : 'or click to browse (up to 4 hours supported)'}</p>
+          <div className="text-center px-2">
+            <p className="text-text-primary font-medium text-sm sm:text-base break-all sm:break-normal">{audioFile ? audioFile.name : 'Drag & drop your MP3 or WAV file here'}</p>
+            <p className="text-text-secondary text-xs sm:text-sm mt-1">{audioFile ? fileMeta : 'or click to browse (up to 4 hours supported)'}</p>
           </div>
           {!audioFile && (
-            <div className="flex items-center gap-4 text-text-secondary/50 text-xs">
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-text-secondary/50 text-xs">
               <span>MP3, WAV, 44.1 kHz</span>
               <span>Up to 4 hours</span>
               <span>200-Channel FSEQ</span>
@@ -602,7 +602,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             </button>
           )}
           {srWarn && (
-            <div className="flex items-start gap-2 bg-amber-500/10 border border-amber-500/25 rounded-xl px-4 py-3 text-amber-300 text-sm max-w-lg text-left">
+            <div className="flex items-start gap-2 bg-amber-500/10 border border-amber-500/25 rounded-xl px-3 sm:px-4 py-3 text-amber-300 text-xs sm:text-sm text-left">
               <AlertTriangle size={16} className="mt-0.5 shrink-0" />
               {srWarn}
             </div>
@@ -611,9 +611,9 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       </section>
 
       {/* Step 2 — Vehicle */}
-      <section className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+      <section className="bg-charcoal border border-border rounded-2xl p-4 sm:p-6 space-y-4">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center shrink-0">
             <Car size={14} className="text-accent-red" />
           </div>
           <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">Step 2 — Your Vehicle</h2>
@@ -623,13 +623,13 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             <Chip key={m} on={model === m} onClick={() => setModel(m)}>{MODEL_NAMES[m]}</Chip>
           ))}
         </div>
-        <p className="text-text-secondary text-sm">{modelNote[model]}</p>
+        <p className="text-text-secondary text-xs sm:text-sm">{modelNote[model]}</p>
       </section>
 
       {/* Step 3 — Color theme */}
-      <section className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+      <section className="bg-charcoal border border-border rounded-2xl p-4 sm:p-6 space-y-4">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center shrink-0">
             <Palette size={14} className="text-accent-red" />
           </div>
           <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">Step 3 — Color Theme</h2>
@@ -641,7 +641,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             </Chip>
           ))}
         </div>
-        <p className="text-text-secondary text-sm">{THEME_NOTES[themeId]}</p>
+        <p className="text-text-secondary text-xs sm:text-sm">{THEME_NOTES[themeId]}</p>
         {themeId === 'custom' && (
           <div className="flex items-center gap-3 pt-1">
             {customColors.map((c, i) => (
@@ -656,15 +656,15 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
                 </div>
               </label>
             ))}
-            <span className="text-text-secondary/60 text-sm">Click a swatch to change</span>
+            <span className="text-text-secondary/60 text-xs sm:text-sm">Click a swatch to change</span>
           </div>
         )}
       </section>
 
       {/* Step 4 — Articulation */}
-      <section className="bg-charcoal border border-border rounded-2xl p-6 space-y-5">
+      <section className="bg-charcoal border border-border rounded-2xl p-4 sm:p-6 space-y-4 sm:space-y-5">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center shrink-0">
             <Sliders size={14} className="text-accent-red" />
           </div>
           <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">Step 4 — Articulation</h2>
@@ -680,56 +680,56 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           </div>
           <p className="text-text-secondary/60 text-xs">{PLACE_HELP[placement]}</p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div className="space-y-1.5">
-            <label className="text-text-secondary text-sm font-medium block">Mirror Flicks</label>
-            <select value={mirrors} onChange={e => setMirrors(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+            <label className="text-text-secondary text-xs sm:text-sm font-medium block">Mirror Flicks</label>
+            <select value={mirrors} onChange={e => setMirrors(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
               <option value={0}>Off</option>
               {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (<option key={n} value={n}>x {n}</option>))}
             </select>
-            <p className="text-text-secondary/50 text-[11px]">Max 10 flicks.</p>
+            <p className="text-text-secondary/50 text-[11px] hidden sm:block">Max 10 flicks.</p>
           </div>
           <div className="space-y-1.5">
-            <label className="text-text-secondary text-sm font-medium block">Window Bounces</label>
-            <select value={windows} onChange={e => setWindows(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+            <label className="text-text-secondary text-xs sm:text-sm font-medium block">Window Bounces</label>
+            <select value={windows} onChange={e => setWindows(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
               <option value={0}>Off</option>
               <option value={1}>x 1</option>
               <option value={2}>x 2</option>
             </select>
-            <p className="text-text-secondary/50 text-[11px]">All windows roll.</p>
+            <p className="text-text-secondary/50 text-[11px] hidden sm:block">All windows roll.</p>
           </div>
           <div className="space-y-1.5">
-            <label className="text-text-secondary text-sm font-medium block">Charge Port</label>
-            <select value={chargeMode} onChange={e => setChargeMode(e.target.value as ChargeMode)} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+            <label className="text-text-secondary text-xs sm:text-sm font-medium block">Charge Port</label>
+            <select value={chargeMode} onChange={e => setChargeMode(e.target.value as ChargeMode)} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
               <option value="none">Off</option>
               <option value="open">Open only</option>
-              <option value="show">Open + Rainbow + Close</option>
+              <option value="show">Open + Rainbow</option>
             </select>
-            <p className="text-text-secondary/50 text-[11px]">Rainbow opens early, flashes at chorus, closes at end.</p>
+            <p className="text-text-secondary/50 text-[11px] hidden sm:block">Rainbow opens early, flashes at chorus.</p>
           </div>
           <div className="space-y-1.5">
-            <label className="text-text-secondary text-sm font-medium block">Trunk / Liftgate</label>
+            <label className="text-text-secondary text-xs sm:text-sm font-medium block">Trunk / Liftgate</label>
             <div className="flex gap-2">
               <select
                 value={trunkMode}
                 onChange={e => { const m = e.target.value as TrunkMode; setTrunkMode(m); if (m === 'dance' && trunkCount > 2) setTrunkCount(2); }}
-                className="flex-1 bg-midnight border border-border text-text-primary rounded-lg px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors"
+                className="flex-1 bg-midnight border border-border text-text-primary rounded-lg px-2 sm:px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors"
               >
                 <option value="none">Off</option>
-                <option value="full">Full open/close</option>
-                <option value="half">Half open/close</option>
-                <option value="dance">Dance oscillate</option>
+                <option value="full">Full</option>
+                <option value="half">Half</option>
+                <option value="dance">Dance</option>
               </select>
               <select
                 value={trunkCount}
                 disabled={trunkMode === 'none'}
                 onChange={e => setTrunkCount(parseInt(e.target.value))}
-                className="w-16 bg-midnight border border-border text-text-primary rounded-lg px-2 py-2 text-sm outline-none focus:border-electric-cyan/50 disabled:opacity-30 cursor-pointer transition-colors"
+                className="w-14 sm:w-16 bg-midnight border border-border text-text-primary rounded-lg px-2 py-2.5 text-sm outline-none focus:border-electric-cyan/50 disabled:opacity-30 cursor-pointer transition-colors"
               >
                 {Array.from({ length: trunkCountMax }, (_, i) => i + 1).map(n => (<option key={n} value={n}>x {n}</option>))}
               </select>
             </div>
-            <p className="text-text-secondary/50 text-[11px]">Powered trunk on Cybertruck.</p>
+            <p className="text-text-secondary/50 text-[11px] hidden sm:block">Powered trunk on Cybertruck.</p>
           </div>
         </div>
       </section>
@@ -759,9 +759,9 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       {/* Results */}
       {outputs.length > 0 && (
         <section className="space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <h2 className="text-sm font-display font-bold uppercase tracking-wide text-text-primary">AI Show Presets</h2>
-            <p className="text-text-secondary/60 text-xs">{songInfo}</p>
+            <p className="text-text-secondary/60 text-xs leading-relaxed">{songInfo}</p>
           </div>
           {downloadError && (
             <div className="flex items-start gap-2 bg-accent-red/10 border border-accent-red/20 rounded-xl px-4 py-3 text-accent-red text-sm">
@@ -769,7 +769,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               {downloadError}
             </div>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4">
             {outputs.map((output) => (
               <ResultCard
                 key={output.r.id}
@@ -789,11 +789,11 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       )}
 
       {/* How it works + Compatibility */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* How it works */}
-        <div className="lg:col-span-2 bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+        <div className="lg:col-span-2 bg-charcoal border border-border rounded-2xl p-4 sm:p-6 space-y-4">
           <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">How to use your show</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {[
               { n: '1', title: 'Prepare USB', body: "Format as exFAT, FAT32, or MS-DOS FAT. No TeslaCam or firmware files." },
               { n: '2', title: 'Copy Show', body: "Download .zip, unzip it. You'll get a LightShow folder with .fseq + audio." },
@@ -811,7 +811,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           </div>
         </div>
         {/* Compatibility */}
-        <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+        <div className="bg-charcoal border border-border rounded-2xl p-4 sm:p-6 space-y-4">
           <h2 className="text-xs font-semibold uppercase tracking-[0.15em] text-text-secondary">The details</h2>
           <div className="space-y-3 text-sm">
             <div>

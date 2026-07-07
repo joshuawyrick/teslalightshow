@@ -102,58 +102,58 @@ function AppInner() {
         {renderPage()}
 
         {/* Footer */}
-        <footer className="border-t border-border mt-16">
+        <footer className="border-t border-border mt-12 sm:mt-16">
           {/* Trust icons row */}
-          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center">
-                  <Shield size={16} className="text-electric-cyan" />
+          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center shrink-0">
+                  <Shield size={14} className="text-electric-cyan" />
                 </div>
                 <div>
-                  <p className="text-text-primary text-sm font-medium">Trusted & Secure</p>
-                  <p className="text-text-secondary text-xs">Your data is private and safe.</p>
+                  <p className="text-text-primary text-xs sm:text-sm font-medium">Trusted & Secure</p>
+                  <p className="text-text-secondary text-[10px] sm:text-xs hidden sm:block">Your data is private and safe.</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center">
-                  <Clock size={16} className="text-electric-cyan" />
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center shrink-0">
+                  <Clock size={14} className="text-electric-cyan" />
                 </div>
                 <div>
-                  <p className="text-text-primary text-sm font-medium">Lightning Fast</p>
-                  <p className="text-text-secondary text-xs">Shows generated in seconds.</p>
+                  <p className="text-text-primary text-xs sm:text-sm font-medium">Lightning Fast</p>
+                  <p className="text-text-secondary text-[10px] sm:text-xs hidden sm:block">Shows generated in seconds.</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center">
-                  <Cloud size={16} className="text-electric-cyan" />
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center shrink-0">
+                  <Cloud size={14} className="text-electric-cyan" />
                 </div>
                 <div>
-                  <p className="text-text-primary text-sm font-medium">Cloud Powered</p>
-                  <p className="text-text-secondary text-xs">Access anywhere, anytime.</p>
+                  <p className="text-text-primary text-xs sm:text-sm font-medium">Cloud Powered</p>
+                  <p className="text-text-secondary text-[10px] sm:text-xs hidden sm:block">Access anywhere, anytime.</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center">
-                  <Heart size={16} className="text-electric-cyan" />
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-electric-cyan/10 border border-electric-cyan/20 flex items-center justify-center shrink-0">
+                  <Heart size={14} className="text-electric-cyan" />
                 </div>
                 <div>
-                  <p className="text-text-primary text-sm font-medium">For Tesla Fans</p>
-                  <p className="text-text-secondary text-xs">Built by Tesla enthusiasts.</p>
+                  <p className="text-text-primary text-xs sm:text-sm font-medium">For Tesla Fans</p>
+                  <p className="text-text-secondary text-[10px] sm:text-xs hidden sm:block">Built by Tesla enthusiasts.</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Bottom bar */}
-          <div className="border-t border-border py-6 px-4 sm:px-6">
-            <div className="max-w-[1320px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="border-t border-border py-5 sm:py-6 px-4 sm:px-6">
+            <div className="max-w-[1320px] mx-auto flex flex-col items-center gap-4">
               <img
                 src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
                 alt="TeslaLightShows.com"
-                className="h-9 w-auto"
+                className="h-8 sm:h-9 w-auto"
               />
-              <p className="text-text-secondary/60 text-xs text-center">
+              <p className="text-text-secondary/60 text-[10px] sm:text-xs text-center leading-relaxed">
                 Music. Energy. Harmony. Your Tesla. &bull; Not affiliated with Tesla, Inc. &bull; FSEQ v2.0 format
               </p>
               <div className="flex items-center gap-5">

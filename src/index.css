@@ -3,11 +3,37 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     background-color: #0A0C11;
     color: #FFFFFF;
+    overflow-x: hidden;
+  }
+
+  /* Prevent horizontal overflow on mobile */
+  #root {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  /* Better touch targets on mobile */
+  @media (max-width: 640px) {
+    select, button, input[type="file"] {
+      min-height: 44px;
+    }
+  }
+
+  /* Prevent iOS zoom on inputs */
+  @media (max-width: 640px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
   }
 }
 

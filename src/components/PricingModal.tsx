@@ -44,24 +44,24 @@ export default function PricingModal({ onClose }: PricingModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-charcoal border border-border rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border">
+      <div className="relative bg-charcoal border border-border rounded-t-2xl sm:rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+        <div className="flex items-center justify-between px-5 sm:px-6 pt-5 sm:pt-6 pb-4 border-b border-border shrink-0">
           <div>
-            <h2 className="font-heading text-text-primary font-bold text-lg">Get more credits</h2>
-            <p className="text-text-secondary text-sm mt-0.5">Each credit unlocks one full-length light show.</p>
+            <h2 className="font-heading text-text-primary font-bold text-base sm:text-lg">Get more credits</h2>
+            <p className="text-text-secondary text-xs sm:text-sm mt-0.5">Each credit unlocks one full-length light show.</p>
           </div>
-          <button onClick={onClose} className="text-text-secondary hover:text-text-primary transition-colors">
+          <button onClick={onClose} className="text-text-secondary hover:text-text-primary transition-colors p-1">
             <X size={18} />
           </button>
         </div>
 
-        <div className="px-6 py-5 space-y-3">
+        <div className="px-5 sm:px-6 py-5 space-y-3 overflow-y-auto">
           {PACKAGES.map(pkg => (
             <div
               key={pkg.id}
-              className={`relative bg-steel border rounded-xl p-4 flex items-center gap-4 ${
+              className={`relative bg-steel border rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 ${
                 pkg.badge === 'Best Value' ? 'border-accent-red/40' : pkg.badge === 'Popular' ? 'border-electric-cyan/30' : 'border-border'
               }`}
             >
@@ -79,18 +79,20 @@ export default function PricingModal({ onClose }: PricingModalProps) {
                 <p className="text-text-primary font-semibold text-sm">{pkg.name}</p>
                 <p className="text-text-secondary text-xs mt-0.5">{pkg.description}</p>
               </div>
-              <div className="text-right shrink-0">
-                <p className="text-text-primary font-bold text-lg">{pkg.label}</p>
-                <p className="text-text-secondary text-xs">{(pkg.price_cents / pkg.credits / 100).toFixed(2)}/show</p>
+              <div className="flex items-center justify-between sm:flex-col sm:items-end gap-3 sm:gap-0 w-full sm:w-auto shrink-0">
+                <div className="sm:text-right">
+                  <p className="text-text-primary font-bold text-lg">{pkg.label}</p>
+                  <p className="text-text-secondary text-xs">{(pkg.price_cents / pkg.credits / 100).toFixed(2)}/show</p>
+                </div>
+                <button
+                  onClick={() => purchase(pkg.id)}
+                  disabled={loading !== null}
+                  className="shrink-0 flex items-center gap-1.5 bg-accent-red hover:bg-accent-red/90 glow-red disabled:bg-steel disabled:text-text-secondary text-white text-sm font-semibold rounded-xl px-4 py-2.5 transition-colors duration-150"
+                >
+                  {loading === pkg.id ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
+                  Buy
+                </button>
               </div>
-              <button
-                onClick={() => purchase(pkg.id)}
-                disabled={loading !== null}
-                className="shrink-0 flex items-center gap-1.5 bg-accent-red hover:bg-accent-red/90 glow-red disabled:bg-steel disabled:text-text-secondary text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors duration-150"
-              >
-                {loading === pkg.id ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
-                Buy
-              </button>
             </div>
           ))}
 

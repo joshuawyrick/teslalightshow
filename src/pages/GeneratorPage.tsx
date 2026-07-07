@@ -518,7 +518,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             <img
               src="/ChatGPT_Image_Jul_6,_2026,_08_34_35_PM.png"
               alt="Tesla Model Y front view with red and cyan light show effects"
-              className="absolute inset-y-0 left-0 right-4 sm:right-6 lg:right-8 w-[calc(100%-1rem)] sm:w-[calc(100%-1.5rem)] lg:w-[calc(100%-2rem)] h-full object-cover object-center"
+              className="absolute inset-y-0 left-0 right-4 sm:right-6 lg:right-8 w-[calc(100%-1rem)] sm:w-[calc(100%-1.5rem)] lg:w-[calc(100%-2rem)] h-full object-cover object-center rounded-xl"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/60 to-transparent w-[35%]" />
             <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-charcoal/70" />

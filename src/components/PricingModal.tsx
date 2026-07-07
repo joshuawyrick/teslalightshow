@@ -36,7 +36,7 @@ export default function PricingModal({ onClose }: PricingModalProps) {
       }
       const { url } = await res.json();
       if (!url) throw new Error('No checkout URL returned.');
-      window.location.href = url;
+      window.open(url, '_blank');
     } catch (err) {
       setError((err as Error).message);
       setLoading(null);

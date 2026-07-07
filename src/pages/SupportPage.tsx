@@ -96,16 +96,24 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             </h3>
 
             <FaqItem
+              q="How do I set up my USB drive?"
+              a="1. Insert a USB drive into your computer. 2. Format the USB drive as FAT32 or exFAT (not NTFS). 3. After formatting, create a folder at the root of the USB drive called exactly 'LightShow'. 4. All your light show files (.fseq and .mp3) will go inside this LightShow folder."
+            />
+            <FaqItem
               q="How do I load the light show onto my Tesla?"
-              a="1. Download the ZIP file and extract it. 2. Copy the entire 'LightShow' folder to the root of a USB drive formatted as FAT32 or exFAT. The folder should contain 'lightshow.fseq' and your audio file renamed to 'lightshow.mp3' (or .wav/.flac). 3. Insert the USB into your Tesla. 4. Navigate to Toybox > Light Show and select the custom show."
+              a="After setting up your USB (formatted + LightShow folder created): 1. Download your .fseq file and have your matching .mp3 audio file ready. 2. Drag both the .fseq file and the .mp3 file into the 'LightShow' folder on your USB drive. 3. Both files must have the exact same name -- for example, 'iceicebaby.fseq' and 'iceicebaby.mp3'. 4. Eject the USB from your computer and insert it into your Tesla. 5. Navigate to Toybox > Light Show and select the custom show."
+            />
+            <FaqItem
+              q="What should I name my files?"
+              a="Both the .fseq file and the .mp3 file must have exactly the same name (just different extensions). You can name them anything you want -- for example, if the song is 'Ice Ice Baby', you could name them 'iceicebaby.fseq' and 'iceicebaby.mp3'. Just make sure the names match exactly (no spaces recommended)."
             />
             <FaqItem
               q="My light show won't play on my Tesla."
-              a="Common fixes: (1) Make sure your USB drive is formatted as FAT32 or exFAT (not NTFS). (2) Ensure the folder is named exactly 'LightShow' at the root of the drive. (3) Verify the audio file is named 'lightshow.mp3' (or matching extension). (4) Check that your Tesla software is up to date -- Light Show requires version 2021.44.25 or later."
+              a="Common fixes: (1) Make sure your USB drive is formatted as FAT32 or exFAT (not NTFS). (2) Ensure there is a folder named exactly 'LightShow' at the root of the drive. (3) Verify both the .fseq and .mp3 files are inside the LightShow folder and have the exact same filename. (4) Check that your Tesla software is up to date -- Light Show requires version 2021.44.25 or later."
             />
             <FaqItem
               q="Can I have multiple light shows on one USB?"
-              a="Tesla only supports one custom light show per USB drive. To switch between shows, you will need to swap the files on your USB drive or use multiple drives."
+              a="Yes! You can place multiple pairs of files inside the LightShow folder. Each pair must share the same filename (e.g., 'songone.fseq' + 'songone.mp3', 'songtwo.fseq' + 'songtwo.mp3'). Your Tesla will let you choose which show to play."
             />
             <FaqItem
               q="Can I use these for YouTube or commercial purposes?"

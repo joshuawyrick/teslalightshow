@@ -10,7 +10,7 @@ const corsHeaders = {
 
 const PACKAGES: Record<string, { name: string; credits: number; price_cents: number }> = {
   single: { name: "1 Download",  credits: 1,  price_cents: 999  },
-  triple: { name: "3 Downloads", credits: 3,  price_cents: 1999 },
+  triple: { name: "3 Downloads", credits: 3,  price_cents: 2199 },
   ten:    { name: "10 Downloads",credits: 10, price_cents: 4999 },
 };
 

@@ -52,97 +52,99 @@
   }
 }
 
-/* 3D Metallic text effect */
-.metallic-text {
+/* Chrome 3D metallic text — matches reference render */
+.chrome-text {
   position: relative;
-  display: inline-block;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  background-size: 100% 100%;
+  -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.4);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
 }
 
-.metallic-text::before {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: -1;
-  -webkit-text-stroke: 0;
-  background: none;
-  color: transparent;
-}
-
-.metallic-silver {
+.chrome-silver {
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
-    #e8e8e8 15%,
-    #a8a8a8 30%,
-    #d4d4d4 45%,
+    #e0e8f0 0%,
+    #ffffff 8%,
+    #b8c8d8 18%,
+    #4a5a6a 30%,
+    #8898a8 38%,
+    #d0dce8 45%,
     #ffffff 50%,
-    #b0b0b0 65%,
-    #888888 80%,
-    #c0c0c0 95%,
-    #ffffff 100%
+    #a0b0c0 58%,
+    #3a4a5a 68%,
+    #7888a0 78%,
+    #c0d0e0 88%,
+    #e8f0f8 95%,
+    #a8b8c8 100%
   );
   text-shadow:
-    0 1px 0 #ccc,
-    0 2px 0 #bbb,
-    0 3px 0 #aaa,
-    0 4px 0 #999,
-    0 5px 6px rgba(0, 0, 0, 0.6),
-    0 0 15px rgba(255, 255, 255, 0.1);
-  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.15);
+    0 1px 0 #8090a0,
+    0 2px 0 #607080,
+    0 3px 0 #506070,
+    0 4px 0 #405060,
+    0 5px 0 #304050,
+    0 6px 8px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(180, 200, 220, 0.15);
 }
 
-.metallic-red {
+.chrome-red {
   background-image: linear-gradient(
     180deg,
-    #ffaaaa 0%,
-    #ff4444 12%,
-    #cc0000 28%,
-    #ff3333 42%,
-    #ff8888 50%,
-    #cc1111 60%,
-    #880000 75%,
-    #ff2222 88%,
-    #ff6666 100%
+    #ff8888 0%,
+    #ff2020 8%,
+    #cc0000 16%,
+    #660000 28%,
+    #aa0000 36%,
+    #ff3030 44%,
+    #ff6060 50%,
+    #dd0000 58%,
+    #550000 68%,
+    #990000 76%,
+    #ee1111 86%,
+    #ff4040 92%,
+    #cc0000 100%
   );
   text-shadow:
-    0 1px 0 #990000,
-    0 2px 0 #880000,
-    0 3px 0 #770000,
-    0 4px 0 #660000,
-    0 5px 6px rgba(0, 0, 0, 0.6),
-    0 0 20px rgba(255, 50, 50, 0.3);
-  -webkit-text-stroke: 0.5px rgba(255, 100, 100, 0.2);
+    0 1px 0 #880000,
+    0 2px 0 #660000,
+    0 3px 0 #550000,
+    0 4px 0 #440000,
+    0 5px 0 #330000,
+    0 6px 8px rgba(0, 0, 0, 0.7),
+    0 0 25px rgba(255, 0, 0, 0.2);
 }
 
-.metallic-cyan {
+.chrome-blue {
   background-image: linear-gradient(
     180deg,
-    #b3ffff 0%,
-    #00e5ff 12%,
-    #008899 28%,
-    #00ccdd 42%,
-    #88ffff 50%,
-    #00aabb 60%,
-    #005566 75%,
-    #00ddee 88%,
-    #66ffff 100%
+    #88ccff 0%,
+    #2090ff 8%,
+    #0060cc 16%,
+    #002266 28%,
+    #004499 36%,
+    #1080ee 44%,
+    #44aaff 50%,
+    #0070dd 58%,
+    #002255 68%,
+    #003d88 76%,
+    #1188ee 86%,
+    #3399ff 92%,
+    #0060bb 100%
   );
   text-shadow:
-    0 1px 0 #006677,
-    0 2px 0 #005566,
-    0 3px 0 #004455,
-    0 4px 0 #003344,
-    0 5px 6px rgba(0, 0, 0, 0.6),
-    0 0 20px rgba(0, 229, 255, 0.3);
-  -webkit-text-stroke: 0.5px rgba(0, 200, 220, 0.2);
+    0 1px 0 #003366,
+    0 2px 0 #002244,
+    0 3px 0 #001a33,
+    0 4px 0 #001122,
+    0 5px 0 #000a18,
+    0 6px 8px rgba(0, 0, 0, 0.7),
+    0 0 25px rgba(0, 120, 255, 0.2);
 }
 
-.metallic-text::after {
+.chrome-text::after {
   content: attr(data-text);
   position: absolute;
   left: 0;
@@ -150,24 +152,24 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(
-    105deg,
-    transparent 35%,
-    rgba(255, 255, 255, 0.3) 45%,
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.25) 42%,
     rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0.3) 55%,
-    transparent 65%
+    rgba(255, 255, 255, 0.25) 58%,
+    transparent 70%
   );
-  background-size: 250% 100%;
+  background-size: 300% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: shimmer-sweep 3.5s ease-in-out infinite;
+  animation: chrome-shimmer 4s ease-in-out infinite;
   pointer-events: none;
 }
 
-@keyframes shimmer-sweep {
-  0%, 100% { background-position: 250% center; }
-  50% { background-position: -250% center; }
+@keyframes chrome-shimmer {
+  0%, 100% { background-position: 300% center; }
+  50% { background-position: -300% center; }
 }
 
 /* Ambient background glow */

@@ -10,6 +10,9 @@ import MyDownloadsPage from './pages/MyDownloadsPage';
 import GalleryPage from './pages/GalleryPage';
 import AdminPage from './pages/AdminPage';
 import SuccessPage from './pages/SuccessPage';
+import TermsPage from './pages/TermsPage';
+import PrivacyPage from './pages/PrivacyPage';
+import SupportPage from './pages/SupportPage';
 import { supabase } from './lib/supabase';
 
 // ---- Simple hash-based router ----
@@ -85,6 +88,9 @@ function AppInner() {
       case '/downloads': return <MyDownloadsPage />;
       case '/gallery':   return <GalleryPage />;
       case '/admin':     return <AdminPage />;
+      case '/terms':     return <TermsPage onNavigate={navigate} />;
+      case '/privacy':   return <PrivacyPage onNavigate={navigate} />;
+      case '/support':   return <SupportPage onNavigate={navigate} />;
       default:           return <GeneratorPage onOpenAuth={() => setShowAuth(true)} onOpenPricing={() => setShowPricing(true)} />;
     }
   };
@@ -157,9 +163,9 @@ function AppInner() {
                 Music. Energy. Harmony. Your Tesla. &bull; Not affiliated with Tesla, Inc. &bull; FSEQ v2.0 format
               </p>
               <div className="flex items-center gap-5">
-                <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Terms</button>
-                <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Privacy</button>
-                <button className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Support</button>
+                <button onClick={() => navigate('/terms')} className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Terms</button>
+                <button onClick={() => navigate('/privacy')} className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Privacy</button>
+                <button onClick={() => navigate('/support')} className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Support</button>
               </div>
             </div>
           </div>

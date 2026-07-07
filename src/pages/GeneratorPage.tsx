@@ -492,14 +492,16 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         <div className="flex flex-col lg:flex-row items-center">
           {/* Left content */}
           <div className="relative z-10 p-5 sm:p-8 md:p-10 lg:p-12 lg:w-[55%] space-y-4 sm:space-y-5">
-            <p className="text-text-secondary text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium">
-              Turn your music into
-            </p>
-            <img
-              src="/tesla-light-show-generator.png"
-              alt="Tesla Light Shows"
-              className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto"
-            />
+            <div className="flex flex-col items-center">
+              <p className="text-text-secondary text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium">
+                Turn your music into
+              </p>
+              <img
+                src="/tesla-light-show-generator.png"
+                alt="Tesla Light Shows"
+                className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto mt-4"
+              />
+            </div>
             <p className="text-text-secondary text-sm sm:text-base leading-relaxed max-w-md">
               Upload any song. Our AI maps every beat, drop, and detail to a custom light show for your Tesla.
             </p>

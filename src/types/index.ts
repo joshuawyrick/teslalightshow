@@ -34,7 +34,9 @@ export interface GalleryVideo {
   id: string;
   user_id: string;
   title: string;
-  storage_path: string;
+  storage_path: string | null;
+  youtube_id: string | null;
+  description: string | null;
   created_at: string;
 }
 

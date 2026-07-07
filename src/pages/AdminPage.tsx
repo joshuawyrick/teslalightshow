@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Users, DollarSign, Download, Loader2, AlertCircle, Search, Plus, Trash2, RefreshCw, ShieldCheck, UserPlus, X } from 'lucide-react';
+import { Users, DollarSign, Download, Loader2, AlertCircle, Search, Plus, Trash2, RefreshCw, ShieldCheck, UserPlus, X, Video, ExternalLink } from 'lucide-react';
 import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { extractYouTubeId, getYouTubeThumbnail } from '../lib/youtube';
 
 interface AdminStats {
   totalRevenueCents: number;
@@ -32,7 +33,9 @@ interface AdminVideo {
   id: string;
   title: string;
   user_id: string;
-  storage_path: string;
+  storage_path: string | null;
+  youtube_id: string | null;
+  description: string | null;
   created_at: string;
 }
 
@@ -94,6 +97,13 @@ export default function AdminPage() {
   const [adminRole, setAdminRole] = useState<string>('viewer');
   const [managingAdmin, setManagingAdmin] = useState(false);
   const [adminMsg, setAdminMsg] = useState('');
+
+  // YouTube video management state
+  const [ytUrl, setYtUrl] = useState('');
+  const [ytTitle, setYtTitle] = useState('');
+  const [ytDescription, setYtDescription] = useState('');
+  const [addingVideo, setAddingVideo] = useState(false);
+  const [videoMsg, setVideoMsg] = useState('');
 
   const canEdit = callerRole === 'owner' || callerRole === 'editor';
   const isOwner = callerRole === 'owner';
@@ -172,10 +182,43 @@ export default function AdminPage() {
   const deleteVideo = async (video: AdminVideo) => {
     setError('');
     try {
-      await callAdminAction({ action: 'delete_video', video_id: video.id, storage_path: video.storage_path });
+      await callAdminAction({ action: 'delete_video', video_id: video.id, storage_path: video.storage_path || null });
       setVideos(prev => prev.filter(v => v.id !== video.id));
     } catch (err) {
       setError((err as Error).message);
+    }
+  };
+
+  const addYouTubeVideo = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setVideoMsg('');
+    const youtubeId = extractYouTubeId(ytUrl.trim());
+    if (!youtubeId) {
+      setError('Invalid YouTube URL. Paste a full youtube.com or youtu.be link.');
+      return;
+    }
+    if (!ytTitle.trim()) {
+      setError('Title is required.');
+      return;
+    }
+    setAddingVideo(true);
+    try {
+      await callAdminAction({
+        action: 'add_youtube_video',
+        title: ytTitle.trim(),
+        youtube_id: youtubeId,
+        description: ytDescription.trim() || null,
+      });
+      setVideoMsg(`Added "${ytTitle.trim()}" to the gallery.`);
+      setYtUrl('');
+      setYtTitle('');
+      setYtDescription('');
+      fetchData();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setAddingVideo(false);
     }
   };
 
@@ -391,9 +434,77 @@ export default function AdminPage() {
             </div>
           </div>
 
-          {/* Gallery videos */}
-          <div className="space-y-3">
-            <h2 className="text-text-primary font-semibold text-sm">Gallery Videos ({videos.length})</h2>
+          {/* Gallery Video Management */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Video size={16} className="text-accent-red" />
+              <h2 className="text-text-primary font-semibold text-sm">Gallery Videos ({videos.length})</h2>
+            </div>
+
+            {/* Add YouTube Video form — editors/owners only */}
+            {canEdit && (
+              <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
+                <h3 className="text-text-primary font-semibold text-sm">Add YouTube Video</h3>
+                <form onSubmit={addYouTubeVideo} className="space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-text-secondary text-xs">YouTube URL</label>
+                      <input
+                        type="url"
+                        placeholder="https://youtube.com/watch?v=..."
+                        value={ytUrl}
+                        onChange={e => setYtUrl(e.target.value)}
+                        required
+                        className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-text-secondary text-xs">Title</label>
+                      <input
+                        type="text"
+                        placeholder="My Tesla Light Show"
+                        value={ytTitle}
+                        onChange={e => setYtTitle(e.target.value)}
+                        maxLength={80}
+                        required
+                        className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-text-secondary text-xs">Description (optional)</label>
+                    <input
+                      type="text"
+                      placeholder="Short description shown in the gallery"
+                      value={ytDescription}
+                      onChange={e => setYtDescription(e.target.value)}
+                      maxLength={200}
+                      className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
+                    />
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button
+                      type="submit"
+                      disabled={addingVideo}
+                      className="flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 disabled:bg-steel disabled:text-text-secondary/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+                    >
+                      {addingVideo ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
+                      Add to Gallery
+                    </button>
+                    {ytUrl && extractYouTubeId(ytUrl) && (
+                      <img
+                        src={getYouTubeThumbnail(extractYouTubeId(ytUrl)!)}
+                        alt="Thumbnail preview"
+                        className="h-10 rounded-md border border-border"
+                      />
+                    )}
+                  </div>
+                </form>
+                {videoMsg && <p className="text-emerald-400 text-sm">{videoMsg}</p>}
+              </div>
+            )}
+
+            {/* Video list */}
             {videos.length === 0 ? (
               <p className="text-text-secondary/50 text-sm">No gallery videos.</p>
             ) : (
@@ -402,15 +513,44 @@ export default function AdminPage() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-border">
+                        <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Preview</th>
                         <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Title</th>
-                        <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Uploaded</th>
+                        <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Type</th>
+                        <th className="text-left text-text-secondary/60 font-medium px-4 py-3">Added</th>
                         {canEdit && <th className="px-4 py-3"></th>}
                       </tr>
                     </thead>
                     <tbody>
                       {videos.map(v => (
                         <tr key={v.id} className="border-b border-border/50 last:border-0">
-                          <td className="px-4 py-3 text-text-primary max-w-[280px] truncate">{v.title}</td>
+                          <td className="px-4 py-3">
+                            {v.youtube_id ? (
+                              <img
+                                src={getYouTubeThumbnail(v.youtube_id)}
+                                alt=""
+                                className="w-16 h-9 rounded object-cover border border-border"
+                              />
+                            ) : (
+                              <div className="w-16 h-9 rounded bg-midnight border border-border flex items-center justify-center">
+                                <Video size={12} className="text-text-secondary/40" />
+                              </div>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 text-text-primary max-w-[240px] truncate">{v.title}</td>
+                          <td className="px-4 py-3">
+                            {v.youtube_id ? (
+                              <a
+                                href={`https://youtube.com/watch?v=${v.youtube_id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-xs text-accent-red hover:text-accent-red/80 transition-colors"
+                              >
+                                YouTube <ExternalLink size={10} />
+                              </a>
+                            ) : (
+                              <span className="text-xs text-text-secondary/50">Upload</span>
+                            )}
+                          </td>
                           <td className="px-4 py-3 text-text-secondary text-xs">{new Date(v.created_at).toLocaleDateString()}</td>
                           {canEdit && (
                             <td className="px-4 py-3 text-right">

@@ -57,7 +57,7 @@ Deno.serve(async (req: Request) => {
         supabase.from("profiles").select("id, email, credits, snippet_used, is_admin, admin_role, created_at").order("created_at", { ascending: false }).limit(500),
         supabase.from("purchases").select("id, user_id, package_name, credits_purchased, amount_cents, created_at, profiles(email)").order("created_at", { ascending: false }).limit(20),
         supabase.from("downloads").select("id", { count: "exact", head: true }),
-        supabase.from("gallery_videos").select("id, user_id, title, storage_path, created_at").order("created_at", { ascending: false }),
+        supabase.from("gallery_videos").select("id, user_id, title, storage_path, youtube_id, description, created_at").order("created_at", { ascending: false }),
         supabase.from("profiles").select("id, email, admin_role, created_at").not("admin_role", "is", null).order("created_at", { ascending: true }),
       ]);
 
@@ -153,13 +153,43 @@ Deno.serve(async (req: Request) => {
         return json(result);
       }
 
-      if (action === "delete_video") {
-        const { video_id, storage_path } = body;
-        if (!video_id || !storage_path) {
-          return json({ error: "video_id and storage_path required" }, 400);
+      if (action === "add_youtube_video") {
+        const { title, youtube_id, description } = body;
+        if (!title || !youtube_id) {
+          return json({ error: "title and youtube_id required" }, 400);
+        }
+        if (!/^[a-zA-Z0-9_-]{11}$/.test(youtube_id)) {
+          return json({ error: "Invalid YouTube video ID" }, 400);
         }
 
-        await supabase.storage.from("gallery").remove([storage_path]);
+        const { data: newVideo, error: insertErr } = await supabase
+          .from("gallery_videos")
+          .insert({
+            user_id: user.id,
+            title: title.trim(),
+            youtube_id,
+            description: description?.trim() || null,
+            storage_path: null,
+          })
+          .select()
+          .single();
+
+        if (insertErr) {
+          return json({ error: insertErr.message }, 500);
+        }
+
+        return json({ success: true, video: newVideo });
+      }
+
+      if (action === "delete_video") {
+        const { video_id, storage_path } = body;
+        if (!video_id) {
+          return json({ error: "video_id required" }, 400);
+        }
+
+        if (storage_path) {
+          await supabase.storage.from("gallery").remove([storage_path]);
+        }
         await supabase.from("gallery_videos").delete().eq("id", video_id);
 
         return json({ success: true });

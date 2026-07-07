@@ -57,7 +57,7 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             />
             <FaqItem
               q="Does this work on mobile?"
-              a="The generator works best on desktop browsers (Chrome, Firefox, Edge, Safari). Mobile devices may work but can experience slower processing or memory limitations with longer audio files."
+              a="Technically yes, but it is not recommended. The various file types (.fseq, .mp3) are difficult to work with on mobile devices -- you would need to save the files, email them to yourself, then open them on a desktop computer to transfer to a USB drive. Desktop is the ideal way to use TeslaLightShows.com and mobile will not be actively supported."
             />
           </div>
 

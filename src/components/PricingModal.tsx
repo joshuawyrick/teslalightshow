@@ -102,6 +102,23 @@ export default function PricingModal({ onClose }: PricingModalProps) {
             </div>
           )}
 
+          <div className="bg-steel border border-border rounded-xl px-4 py-3 space-y-2">
+            <p className="text-text-primary text-xs font-semibold">Digital Product Notice</p>
+            <p className="text-text-secondary text-[11px] leading-relaxed">
+              This order is for custom digital light show files generated from your uploaded audio. Completed digital orders are generally not refundable once files have been generated or delivered, except where we are unable to fulfill the order or there is a qualifying technical issue.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 pt-1">
+            <button onClick={() => { onClose(); window.location.hash = '/terms'; }} className="text-text-secondary/70 hover:text-text-primary text-[11px] transition-colors">Terms of Service</button>
+            <span className="text-text-secondary/30 text-[10px]">|</span>
+            <button onClick={() => { onClose(); window.location.hash = '/privacy'; }} className="text-text-secondary/70 hover:text-text-primary text-[11px] transition-colors">Privacy Policy</button>
+            <span className="text-text-secondary/30 text-[10px]">|</span>
+            <button onClick={() => { onClose(); window.location.hash = '/refund-policy'; }} className="text-text-secondary/70 hover:text-text-primary text-[11px] transition-colors">Refund Policy</button>
+            <span className="text-text-secondary/30 text-[10px]">|</span>
+            <button onClick={() => { onClose(); window.location.hash = '/copyright-music-upload-policy'; }} className="text-text-secondary/70 hover:text-text-primary text-[11px] transition-colors">Copyright &amp; Music Upload Policy</button>
+          </div>
+
           <p className="text-text-secondary text-xs text-center pt-1">
             Powered by Stripe. Secure checkout. No subscription.
           </p>

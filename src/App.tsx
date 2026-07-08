@@ -13,6 +13,12 @@ import SuccessPage from './pages/SuccessPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import SupportPage from './pages/SupportPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import DisclaimerPage from './pages/DisclaimerPage';
+import RefundPage from './pages/RefundPage';
+import CopyrightPage from './pages/CopyrightPage';
+import FaqPage from './pages/FaqPage';
 import { supabase } from './lib/supabase';
 
 // ---- Simple hash-based router ----
@@ -23,14 +29,6 @@ function getHashPath(): string {
   return path || '/';
 }
 
-function getHashParam(key: string): string | null {
-  const hash = window.location.hash;
-  const qi = hash.indexOf('?');
-  if (qi === -1) return null;
-  return new URLSearchParams(hash.slice(qi + 1)).get(key);
-}
-
-// Also read top-level query params (for Stripe redirects: ?checkout=success&session_id=...)
 function getQueryParam(key: string): string | null {
   return new URLSearchParams(window.location.search).get(key);
 }
@@ -47,7 +45,6 @@ function AppInner() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  // Listen for PASSWORD_RECOVERY event from Supabase
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') {
@@ -60,9 +57,9 @@ function AppInner() {
   const navigate = (to: string) => {
     window.location.hash = to;
     setPath(to);
+    window.scrollTo(0, 0);
   };
 
-  // Detect Stripe checkout result from query params (Stripe appends to root URL)
   const checkoutStatus = getQueryParam('checkout');
   const stripeSessionId = getQueryParam('session_id');
 
@@ -91,9 +88,17 @@ function AppInner() {
       case '/terms':     return <TermsPage onNavigate={navigate} />;
       case '/privacy':   return <PrivacyPage onNavigate={navigate} />;
       case '/support':   return <SupportPage onNavigate={navigate} />;
+      case '/about':     return <AboutPage onNavigate={navigate} />;
+      case '/contact':   return <ContactPage onNavigate={navigate} />;
+      case '/independent-service-disclaimer': return <DisclaimerPage onNavigate={navigate} />;
+      case '/refund-policy': return <RefundPage onNavigate={navigate} />;
+      case '/copyright-music-upload-policy': return <CopyrightPage onNavigate={navigate} />;
+      case '/faq':       return <FaqPage onNavigate={navigate} />;
       default:           return <GeneratorPage onOpenAuth={() => setShowAuth(true)} onOpenPricing={() => setShowPricing(true)} />;
     }
   };
+
+  const isHomePage = path === '/' && !checkoutStatus;
 
   return (
     <div className="min-h-screen bg-midnight text-text-primary font-body relative">
@@ -107,8 +112,20 @@ function AppInner() {
 
         {renderPage()}
 
+        {/* Homepage Independent Service Notice */}
+        {isHomePage && (
+          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 mt-10 sm:mt-12">
+            <div className="border border-border rounded-xl p-4 sm:p-6 bg-charcoal/50">
+              <h3 className="text-text-primary text-sm font-semibold mb-2">Independent Service Notice</h3>
+              <p className="text-text-secondary text-xs leading-relaxed">
+                TeslaLightShows.com is an independent digital service that creates custom light show files intended for compatible Tesla vehicles that support the Light Show feature. TeslaLightShows.com is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Footer */}
-        <footer className="border-t border-border mt-12 sm:mt-16">
+        <footer className="border-t border-border mt-8 sm:mt-12">
           {/* Trust icons row */}
           <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
@@ -117,7 +134,7 @@ function AppInner() {
                   <Shield size={14} className="text-electric-cyan" />
                 </div>
                 <div>
-                  <p className="text-text-primary text-xs sm:text-sm font-medium">Trusted & Secure</p>
+                  <p className="text-text-primary text-xs sm:text-sm font-medium">Trusted &amp; Secure</p>
                   <p className="text-text-secondary text-[10px] sm:text-xs hidden sm:block">Your data is private and safe.</p>
                 </div>
               </div>
@@ -144,28 +161,47 @@ function AppInner() {
                   <Heart size={14} className="text-electric-cyan" />
                 </div>
                 <div>
-                  <p className="text-text-primary text-xs sm:text-sm font-medium">For Tesla Fans</p>
-                  <p className="text-text-secondary text-[10px] sm:text-xs hidden sm:block">Built by Tesla enthusiasts.</p>
+                  <p className="text-text-primary text-xs sm:text-sm font-medium">Independent Service</p>
+                  <p className="text-text-secondary text-[10px] sm:text-xs hidden sm:block">Built for Tesla enthusiasts.</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Bottom bar */}
-          <div className="border-t border-border py-5 sm:py-6 px-4 sm:px-6">
-            <div className="max-w-[1320px] mx-auto flex flex-col items-center gap-4">
+          {/* Fine print + links */}
+          <div className="border-t border-border py-6 sm:py-8 px-4 sm:px-6">
+            <div className="max-w-[1320px] mx-auto flex flex-col items-center gap-5">
               <img
                 src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
                 alt="TeslaLightShows.com"
                 className="h-8 sm:h-9 w-auto"
               />
-              <p className="text-text-secondary/60 text-[10px] sm:text-xs text-center leading-relaxed">
-                Music. Energy. Harmony. Your Tesla. &bull; Not affiliated with Tesla, Inc. &bull; FSEQ v2.0 format
+
+              {/* Fine print disclaimer */}
+              <p className="text-text-secondary/60 text-[10px] sm:text-xs text-center leading-relaxed max-w-3xl">
+                TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. Tesla and related vehicle names are trademarks of Tesla, Inc. References to Tesla are used only to describe compatibility and intended file use.
               </p>
-              <div className="flex items-center gap-5">
-                <button onClick={() => navigate('/terms')} className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Terms</button>
-                <button onClick={() => navigate('/privacy')} className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Privacy</button>
-                <button onClick={() => navigate('/support')} className="text-text-secondary/60 hover:text-text-primary text-xs transition-colors">Support</button>
+              <p className="text-text-secondary/60 text-[10px] sm:text-xs text-center leading-relaxed">
+                TeslaLightShows.com is operated by a California-based sole proprietor. California, United States | support@teslalightshows.com
+              </p>
+
+              {/* Footer link row */}
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+                <button onClick={() => navigate('/about')} className="text-text-secondary/60 hover:text-text-primary text-[11px] sm:text-xs transition-colors">About</button>
+                <span className="text-text-secondary/30 text-[10px]">|</span>
+                <button onClick={() => navigate('/contact')} className="text-text-secondary/60 hover:text-text-primary text-[11px] sm:text-xs transition-colors">Contact</button>
+                <span className="text-text-secondary/30 text-[10px]">|</span>
+                <button onClick={() => navigate('/terms')} className="text-text-secondary/60 hover:text-text-primary text-[11px] sm:text-xs transition-colors">Terms of Service</button>
+                <span className="text-text-secondary/30 text-[10px]">|</span>
+                <button onClick={() => navigate('/privacy')} className="text-text-secondary/60 hover:text-text-primary text-[11px] sm:text-xs transition-colors">Privacy Policy</button>
+                <span className="text-text-secondary/30 text-[10px]">|</span>
+                <button onClick={() => navigate('/refund-policy')} className="text-text-secondary/60 hover:text-text-primary text-[11px] sm:text-xs transition-colors">Refund Policy</button>
+                <span className="text-text-secondary/30 text-[10px]">|</span>
+                <button onClick={() => navigate('/copyright-music-upload-policy')} className="text-text-secondary/60 hover:text-text-primary text-[11px] sm:text-xs transition-colors">Copyright &amp; Music Upload Policy</button>
+                <span className="text-text-secondary/30 text-[10px]">|</span>
+                <button onClick={() => navigate('/independent-service-disclaimer')} className="text-text-secondary/60 hover:text-text-primary text-[11px] sm:text-xs transition-colors">Independent Service Disclaimer</button>
+                <span className="text-text-secondary/30 text-[10px]">|</span>
+                <button onClick={() => navigate('/faq')} className="text-text-secondary/60 hover:text-text-primary text-[11px] sm:text-xs transition-colors">FAQ</button>
               </div>
             </div>
           </div>

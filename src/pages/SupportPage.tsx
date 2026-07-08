@@ -24,10 +24,10 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             respond within 24-48 business hours.
           </p>
           <a
-            href="mailto:josh@teslalightshows.com"
+            href="mailto:support@teslalightshows.com"
             className="inline-block text-electric-cyan text-sm font-medium hover:underline"
           >
-            josh@teslalightshows.com
+            support@teslalightshows.com
           </a>
         </div>
 
@@ -77,11 +77,11 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             />
             <FaqItem
               q="Can I get a refund?"
-              a="Credits are non-refundable once used to download a light show (digital goods delivered immediately). If you purchased credits by mistake and have not used them, contact us within 48 hours at josh@teslalightshows.com for a refund."
+              a="Completed digital orders are generally not refundable once files have been generated or delivered. If you purchased credits by mistake and have not used them, contact us at support@teslalightshows.com and we will review the issue."
             />
             <FaqItem
               q="I was charged but did not receive credits."
-              a="This is rare but can happen if the payment confirmation was interrupted. Contact us at josh@teslalightshows.com with your email and approximate purchase time, and we will resolve it within 24 hours."
+              a="This is rare but can happen if the payment confirmation was interrupted. Contact us at support@teslalightshows.com with your email and approximate purchase time, and we will resolve it within 24 hours."
             />
             <FaqItem
               q="What payment methods do you accept?"
@@ -133,11 +133,11 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             />
             <FaqItem
               q="How do I delete my account?"
-              a="Email josh@teslalightshows.com with your account email and request deletion. We will process your request and remove all associated data within 30 days."
+              a="Email support@teslalightshows.com with your account email and request deletion. We will process your request and remove all associated data within 30 days."
             />
             <FaqItem
               q="Is this affiliated with Tesla?"
-              a="No. TeslaLightShows.com is an independent service and is not affiliated with, endorsed by, or connected to Tesla, Inc. in any way. We simply create compatible files for Tesla's Light Show feature."
+              a="No. TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use."
             />
           </div>
         </div>

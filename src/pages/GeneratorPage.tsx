@@ -234,6 +234,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
   const [outputs, setOutputs] = useState<RenditionOutput[]>([]);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState('');
+  const [uploadConfirmed, setUploadConfirmed] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -488,8 +489,8 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               <div className="flex items-center gap-2">
                 <Car size={14} className="text-electric-cyan shrink-0" />
                 <div>
-                  <p className="text-text-primary text-xs font-medium">Tesla Optimized</p>
-                  <p className="text-text-secondary text-[10px]">All Models Supported</p>
+                  <p className="text-text-primary text-xs font-medium">Tesla Compatible</p>
+                  <p className="text-text-secondary text-[10px]">Designed for Light Show vehicles</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -584,6 +585,20 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             </div>
           )}
         </div>
+        <p className="text-text-secondary/70 text-xs leading-relaxed">
+          By uploading an audio file, you confirm that you own the file or have permission to use it for this purpose. Uploaded audio is used to generate your requested custom light show files.
+        </p>
+        <label className="flex items-start gap-2.5 cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={uploadConfirmed}
+            onChange={e => setUploadConfirmed(e.target.checked)}
+            className="mt-0.5 w-4 h-4 rounded border-border bg-midnight accent-electric-cyan shrink-0"
+          />
+          <span className="text-text-secondary text-xs leading-relaxed">
+            I confirm that I own or have permission to use the audio file I am uploading, and I understand that TeslaLightShows.com is an independent service not affiliated with Tesla, Inc.
+          </span>
+        </label>
       </section>
 
       {/* Step 2 — Vehicle */}
@@ -722,7 +737,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           </div>
         </div>
         <button
-          disabled={!decoded || phase === 'analyzing'}
+          disabled={!decoded || phase === 'analyzing' || !uploadConfirmed}
           onClick={generate}
           className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-accent-red to-accent-red/90 hover:from-accent-red hover:to-accent-red disabled:from-charcoal disabled:to-charcoal disabled:text-text-secondary/30 disabled:cursor-not-allowed text-white font-display font-bold text-sm sm:text-base uppercase tracking-wider rounded-2xl py-4 transition-all duration-150 cursor-pointer glow-red disabled:shadow-none"
         >
@@ -798,7 +813,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             </div>
             <div>
               <p className="text-text-primary font-medium text-xs">Command Limits</p>
-              <p className="text-text-secondary text-xs mt-0.5">Thermal limits enforced automatically. Within Tesla's official caps.</p>
+              <p className="text-text-secondary text-xs mt-0.5">Thermal limits enforced automatically. Designed for Tesla-compatible Light Show file structure.</p>
             </div>
           </div>
         </div>

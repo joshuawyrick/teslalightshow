@@ -1,0 +1,24 @@
+# TeslaLightShows.com
+> TeslaLightShows.com is a web app that generates custom Tesla light shows from any song. Users upload an MP3 or WAV file and the generator creates Tesla-compatible FSEQ light show files using Tesla's official 200-channel format, validated against Tesla's official validator. Works with Model 3 (including Highland), Model Y (including Juniper), Cybertruck, Model S, and Model X. Free 20-second preview snippet available before purchase.
+## How it works
+1. Upload any MP3 or WAV song
+2. The generator analyzes the audio and creates multiple light show renditions
+3. Download Tesla-ready files (.fseq + matching audio)
+4. Put the files in a folder named "LightShow" on a USB drive (FAT32 or exFAT)
+5. Plug the USB into your Tesla and play via Toybox > Light Show
+## Pricing
+- 1 download: $9.99 (one full-length light show)
+- 3 downloads: $21.99 ($7.33 per show)
+- 10 downloads: $49.99 ($5.00 per show)
+- Free 20-second snippet preview available with an account
+- One-time purchases via Stripe. No subscription.
+## Key pages
+- [Light Show Generator](https://teslalightshows.com/tesla-light-show-generator): Upload a song and generate a custom show
+- [How to Add a Custom Light Show to Tesla](https://teslalightshows.com/how-to-add-custom-light-show-to-tesla): Step-by-step USB setup guide
+- [Troubleshooting](https://teslalightshows.com/tesla-light-show-not-working): Fixes for shows not appearing or playing
+- [Best Tesla Light Show Software](https://teslalightshows.com/best-tesla-light-show-software): Comparison of creation methods
+- [FAQ](https://teslalightshows.com/tesla-light-show-faq): Common questions
+- [Supported Models](https://teslalightshows.com/tesla-light-show-models): Model 3, Model Y, Cybertruck, Model S, Model X
+## Notes
+- TeslaLightShows.com is an independent service, not affiliated with Tesla, Inc.
+- Users must own or have rights to uploaded music.

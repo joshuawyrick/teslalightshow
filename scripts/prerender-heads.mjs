@@ -1,5 +1,6 @@
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'fs';
+import { join, resolve } from 'path';
+import { pathToFileURL } from 'url';
 
 const SITE = 'https://teslalightshows.com';
 
@@ -60,4 +61,35 @@ export function prerenderHeads() {
     count++;
   }
   console.log('Prerendered ' + count + ' route heads into ' + dist);
+}
+
+export async function prerenderContent() {
+  const ssrOutDir = resolve('.ssr-out');
+
+  process.env.SSG_BUILD = '1';
+  const { build } = await import('vite');
+  await build({
+    build: { ssr: 'src/entry-server.tsx', outDir: '.ssr-out', emptyOutDir: true },
+    logLevel: 'warn',
+  });
+
+  const bundlePath = pathToFileURL(resolve(ssrOutDir, 'entry-server.js')).href;
+  const { render } = await import(bundlePath);
+
+  let count = 0;
+  for (const [path] of routes) {
+    const filePath = join('dist', path, 'index.html');
+    try {
+      const bodyHtml = await render('/' + path);
+      let html = readFileSync(filePath, 'utf8');
+      html = html.replace('<div id="root"></div>', '<div id="root">' + bodyHtml + '</div>');
+      writeFileSync(filePath, html);
+      count++;
+    } catch (err) {
+      console.warn('SSR failed for /' + path + ':', err.message || err);
+    }
+  }
+
+  rmSync(ssrOutDir, { recursive: true, force: true });
+  console.log('Injected prerendered content into ' + count + ' routes');
 }

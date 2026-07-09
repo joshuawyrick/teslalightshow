@@ -31,6 +31,7 @@ import CustomShowPage from './pages/seo/CustomShowPage';
 import { ModelsHubPage, ModelYPage, Model3Page, CybertruckPage, ModelSXPage } from './pages/seo/ModelPages';
 import { HalloweenPage, ChristmasPage, BirthdayPage, NewYearPage, IdeasPage } from './pages/seo/SeasonalPages';
 import FaqHubPage from './pages/seo/FaqHubPage';
+import NotFoundPage from './pages/NotFoundPage';
 import { supabase } from './lib/supabase';
 
 function HashRedirect() {
@@ -153,7 +154,7 @@ function AppInner() {
             <Route path="/tesla-light-show-gallery" element={<GalleryPage />} />
 
             {/* Fallback */}
-            <Route path="*" element={<GeneratorPage onOpenAuth={() => setShowAuth(true)} onOpenPricing={() => setShowPricing(true)} />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </CheckoutHandler>
 

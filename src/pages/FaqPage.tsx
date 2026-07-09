@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import JsonLd from '../components/JsonLd';
 
 interface FaqPageProps {
   onNavigate: (to: string) => void;
@@ -45,6 +46,15 @@ export default function FaqPage({ onNavigate }: FaqPageProps) {
 
   return (
     <main className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-8">
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": FAQ_ITEMS.map(item => ({
+          "@type": "Question",
+          "name": item.q,
+          "acceptedAnswer": { "@type": "Answer", "text": item.a }
+        }))
+      }} />
       <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary">Frequently Asked Questions</h1>
 
       <div className="space-y-3">

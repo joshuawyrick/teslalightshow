@@ -61,6 +61,35 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
       />
       <JsonLd data={orgJsonLd} />
       <JsonLd data={webAppJsonLd} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://teslalightshows.com/#organization",
+            "name": "TeslaLightShows.com",
+            "url": "https://teslalightshows.com",
+            "logo": "https://teslalightshows.com/tesla-light-show-generator.png",
+            "description": "Independent web app that generates custom Tesla light show FSEQ files from any song. Not affiliated with Tesla, Inc."
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://teslalightshows.com/#website",
+            "url": "https://teslalightshows.com",
+            "name": "TeslaLightShows.com",
+            "publisher": { "@id": "https://teslalightshows.com/#organization" }
+          }
+        ]
+      }} />
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqItems.map(item => ({
+          "@type": "Question",
+          "name": item.q,
+          "acceptedAnswer": { "@type": "Answer", "text": item.a }
+        }))
+      }} />
 
       {/* Hero Section */}
       <section className="max-w-[1320px] mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-6">

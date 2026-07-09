@@ -69,7 +69,7 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
             "@id": "https://teslalightshows.com/#organization",
             "name": "TeslaLightShows.com",
             "url": "https://teslalightshows.com",
-            "logo": "https://teslalightshows.com/tesla-light-show-generator.png",
+            "logo": "https://teslalightshows.com/og-image.jpg",
             "description": "Independent web app that generates custom Tesla light show FSEQ files from any song. Not affiliated with Tesla, Inc."
           },
           {

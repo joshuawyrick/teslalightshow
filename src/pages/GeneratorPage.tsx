@@ -469,7 +469,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
                 Turn your music into
               </p>
               <img
-                src="/tesla-light-show-generator.png"
+                src="/tesla-light-show-generator.webp"
                 alt="Tesla Light Shows"
                 className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto mt-4"
               />
@@ -517,7 +517,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           {/* Right - Tesla image */}
           <div className="relative lg:w-[45%] h-48 sm:h-80 lg:h-auto lg:min-h-[340px] w-full overflow-hidden">
             <img
-              src="/ChatGPT_Image_Jul_6,_2026,_08_34_35_PM.png"
+              src="/tesla-model-y-light-show-hero.webp"
               alt="Tesla Model Y front view with red and cyan light show effects"
               className="absolute inset-y-0 left-0 right-4 sm:right-6 lg:right-8 w-[calc(100%-1rem)] sm:w-[calc(100%-1.5rem)] lg:w-[calc(100%-2rem)] h-full object-cover object-center rounded-xl"
             />

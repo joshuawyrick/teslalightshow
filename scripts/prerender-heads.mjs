@@ -1,8 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
-const dist = 'dist';
-const base = readFileSync(join(dist, 'index.html'), 'utf8');
 const SITE = 'https://teslalightshows.com';
 
 const routes = [
@@ -37,7 +35,7 @@ const routes = [
 
 function esc(s) { return s.replace(/&/g, '&amp;'); }
 
-function buildPage(path, title, desc) {
+function buildPage(base, path, title, desc) {
   const url = SITE + '/' + path;
   let html = base;
   html = html.replace(/<title>[\s\S]*?<\/title>/, '<title>' + esc(title) + '</title>');
@@ -51,11 +49,15 @@ function buildPage(path, title, desc) {
   return html;
 }
 
-let count = 0;
-for (const [path, title, desc] of routes) {
-  const dir = join(dist, path);
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, 'index.html'), buildPage(path, title, desc));
-  count++;
+export function prerenderHeads() {
+  const dist = 'dist';
+  const base = readFileSync(join(dist, 'index.html'), 'utf8');
+  let count = 0;
+  for (const [path, title, desc] of routes) {
+    const dir = join(dist, path);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'index.html'), buildPage(base, path, title, desc));
+    count++;
+  }
+  console.log('Prerendered ' + count + ' route heads into ' + dist);
 }
-console.log('Prerendered ' + count + ' route heads into ' + dist);

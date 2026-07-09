@@ -13,8 +13,9 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLink = (path: string, label: string) => (
-    <button
-      onClick={() => { onNavigate(path); setMobileOpen(false); }}
+    <a
+      href={path}
+      onClick={(e) => { e.preventDefault(); onNavigate(path); setMobileOpen(false); }}
       className={`text-sm font-medium transition-all duration-200 relative py-1 ${
         currentPath === path
           ? 'text-electric-cyan'
@@ -25,22 +26,24 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
       {currentPath === path && (
         <span className="absolute -bottom-3 left-0 right-0 h-0.5 bg-electric-cyan rounded-full shadow-[0_0_6px_#00E5FF]" />
       )}
-    </button>
+    </a>
   );
 
   return (
     <header className="border-b border-border bg-midnight/90 backdrop-blur-xl sticky top-0 z-30">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-4 hidden md:grid grid-cols-3 items-center">
-        {/* Left - Generator + secondary links */}
+        {/* Left nav */}
         <nav className="flex items-center gap-8 justify-self-start">
           {navLink('/', 'Generator')}
+          {navLink('/tesla-light-show-gallery', 'Gallery')}
           {user && navLink('/downloads', 'My Shows')}
           {profile?.is_admin && navLink('/admin', 'Admin')}
         </nav>
 
-        {/* Center - Logo */}
-        <button
-          onClick={() => { onNavigate('/'); setMobileOpen(false); }}
+        {/* Center logo */}
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); onNavigate('/'); setMobileOpen(false); }}
           className="justify-self-center shrink-0"
         >
           <img
@@ -48,11 +51,11 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
             alt="TeslaLightShows.com"
             className="h-[2.85rem] w-auto"
           />
-        </button>
+        </a>
 
-        {/* Right - Gallery + Auth */}
-        <div className="flex items-center gap-8 justify-self-end">
-          {navLink('/gallery', 'Gallery')}
+        {/* Right - CTA + Auth */}
+        <div className="flex items-center gap-6 justify-self-end">
+          {navLink('/how-to-add-custom-light-show-to-tesla', 'How It Works')}
           <div className="flex items-center gap-3">
             {user && profile ? (
               <>
@@ -83,12 +86,13 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
                 >
                   Log in
                 </button>
-                <button
-                  onClick={onAuthClick}
+                <a
+                  href="/tesla-light-show-generator"
+                  onClick={(e) => { e.preventDefault(); onNavigate('/tesla-light-show-generator'); }}
                   className="bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-all duration-150 glow-red"
                 >
-                  Sign up free
-                </button>
+                  Generate My Light Show
+                </a>
               </>
             )}
           </div>
@@ -97,8 +101,9 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
 
       {/* Mobile header */}
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-4 flex md:hidden items-center justify-between">
-        <button
-          onClick={() => { onNavigate('/'); setMobileOpen(false); }}
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); onNavigate('/'); setMobileOpen(false); }}
           className="shrink-0"
         >
           <img
@@ -106,7 +111,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
             alt="TeslaLightShows.com"
             className="h-[2.85rem] w-auto"
           />
-        </button>
+        </a>
         <button
           onClick={() => setMobileOpen(v => !v)}
           className="text-text-secondary hover:text-text-primary transition-colors"
@@ -119,10 +124,17 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
       {mobileOpen && (
         <div className="md:hidden border-t border-border bg-charcoal px-5 py-5 space-y-1">
           <nav className="flex flex-col gap-1">
-            {[{ path: '/', label: 'Generator' }, { path: '/gallery', label: 'Gallery' }, ...(user ? [{ path: '/downloads', label: 'My Shows' }] : []), ...(profile?.is_admin ? [{ path: '/admin', label: 'Admin' }] : [])].map(item => (
-              <button
+            {[
+              { path: '/', label: 'Generator' },
+              { path: '/tesla-light-show-gallery', label: 'Gallery' },
+              { path: '/how-to-add-custom-light-show-to-tesla', label: 'How It Works' },
+              ...(user ? [{ path: '/downloads', label: 'My Shows' }] : []),
+              ...(profile?.is_admin ? [{ path: '/admin', label: 'Admin' }] : []),
+            ].map(item => (
+              <a
                 key={item.path}
-                onClick={() => { onNavigate(item.path); setMobileOpen(false); }}
+                href={item.path}
+                onClick={(e) => { e.preventDefault(); onNavigate(item.path); setMobileOpen(false); }}
                 className={`text-left text-base font-medium py-3 px-3 rounded-xl transition-all duration-150 ${
                   currentPath === item.path
                     ? 'text-electric-cyan bg-electric-cyan/10'
@@ -130,7 +142,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
                 }`}
               >
                 {item.label}
-              </button>
+              </a>
             ))}
           </nav>
           <div className="pt-4 mt-3 border-t border-border">
@@ -148,8 +160,14 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
               </div>
             ) : (
               <div className="flex flex-col gap-3 px-3">
-                <button onClick={() => { onAuthClick(); setMobileOpen(false); }} className="w-full bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-3 transition-all glow-red">Sign up free</button>
-                <button onClick={() => { onAuthClick(); setMobileOpen(false); }} className="w-full text-text-secondary hover:text-text-primary text-sm font-medium py-2 transition-colors">Log in</button>
+                <a
+                  href="/tesla-light-show-generator"
+                  onClick={(e) => { e.preventDefault(); onNavigate('/tesla-light-show-generator'); setMobileOpen(false); }}
+                  className="w-full text-center bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-3 transition-all glow-red"
+                >
+                  Generate My Light Show
+                </a>
+                <button onClick={() => { onAuthClick(); setMobileOpen(false); }} className="w-full text-text-secondary hover:text-text-primary text-sm font-medium py-2 transition-colors">Log in / Sign up</button>
               </div>
             )}
           </div>

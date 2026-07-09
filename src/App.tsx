@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
@@ -6,33 +6,42 @@ import AuthModal from './components/AuthModal';
 import PricingModal from './components/PricingModal';
 import ResetPasswordModal from './components/ResetPasswordModal';
 import Footer from './components/Footer';
-import GeneratorPage from './pages/GeneratorPage';
-import HomePage from './pages/HomePage';
-import MyDownloadsPage from './pages/MyDownloadsPage';
-import GalleryPage from './pages/GalleryPage';
-import AdminPage from './pages/AdminPage';
-import SuccessPage from './pages/SuccessPage';
-import TermsPage from './pages/TermsPage';
-import PrivacyPage from './pages/PrivacyPage';
-import SupportPage from './pages/SupportPage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import DisclaimerPage from './pages/DisclaimerPage';
-import RefundPage from './pages/RefundPage';
-import CopyrightPage from './pages/CopyrightPage';
-import FaqPage from './pages/FaqPage';
-import SeoGeneratorPage from './pages/seo/SeoGeneratorPage';
-import SeoDownloadsPage from './pages/seo/DownloadsPage';
-import HowToPage from './pages/seo/HowToPage';
-import BestSoftwarePage from './pages/seo/BestSoftwarePage';
-import TroubleshootingPage from './pages/seo/TroubleshootingPage';
-import UsbSetupPage from './pages/seo/UsbSetupPage';
-import CustomShowPage from './pages/seo/CustomShowPage';
-import { ModelsHubPage, ModelYPage, Model3Page, CybertruckPage, ModelSXPage } from './pages/seo/ModelPages';
-import { HalloweenPage, ChristmasPage, BirthdayPage, NewYearPage, IdeasPage } from './pages/seo/SeasonalPages';
-import FaqHubPage from './pages/seo/FaqHubPage';
-import NotFoundPage from './pages/NotFoundPage';
 import { supabase } from './lib/supabase';
+
+const GeneratorPage = lazy(() => import('./pages/GeneratorPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
+const MyDownloadsPage = lazy(() => import('./pages/MyDownloadsPage'));
+const GalleryPage = lazy(() => import('./pages/GalleryPage'));
+const AdminPage = lazy(() => import('./pages/AdminPage'));
+const SuccessPage = lazy(() => import('./pages/SuccessPage'));
+const TermsPage = lazy(() => import('./pages/TermsPage'));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
+const SupportPage = lazy(() => import('./pages/SupportPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const DisclaimerPage = lazy(() => import('./pages/DisclaimerPage'));
+const RefundPage = lazy(() => import('./pages/RefundPage'));
+const CopyrightPage = lazy(() => import('./pages/CopyrightPage'));
+const FaqPage = lazy(() => import('./pages/FaqPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const SeoGeneratorPage = lazy(() => import('./pages/seo/SeoGeneratorPage'));
+const SeoDownloadsPage = lazy(() => import('./pages/seo/DownloadsPage'));
+const HowToPage = lazy(() => import('./pages/seo/HowToPage'));
+const BestSoftwarePage = lazy(() => import('./pages/seo/BestSoftwarePage'));
+const TroubleshootingPage = lazy(() => import('./pages/seo/TroubleshootingPage'));
+const UsbSetupPage = lazy(() => import('./pages/seo/UsbSetupPage'));
+const CustomShowPage = lazy(() => import('./pages/seo/CustomShowPage'));
+const ModelsHubPage = lazy(() => import('./pages/seo/ModelPages').then(m => ({ default: m.ModelsHubPage })));
+const ModelYPage = lazy(() => import('./pages/seo/ModelPages').then(m => ({ default: m.ModelYPage })));
+const Model3Page = lazy(() => import('./pages/seo/ModelPages').then(m => ({ default: m.Model3Page })));
+const CybertruckPage = lazy(() => import('./pages/seo/ModelPages').then(m => ({ default: m.CybertruckPage })));
+const ModelSXPage = lazy(() => import('./pages/seo/ModelPages').then(m => ({ default: m.ModelSXPage })));
+const HalloweenPage = lazy(() => import('./pages/seo/SeasonalPages').then(m => ({ default: m.HalloweenPage })));
+const ChristmasPage = lazy(() => import('./pages/seo/SeasonalPages').then(m => ({ default: m.ChristmasPage })));
+const BirthdayPage = lazy(() => import('./pages/seo/SeasonalPages').then(m => ({ default: m.BirthdayPage })));
+const NewYearPage = lazy(() => import('./pages/seo/SeasonalPages').then(m => ({ default: m.NewYearPage })));
+const IdeasPage = lazy(() => import('./pages/seo/SeasonalPages').then(m => ({ default: m.IdeasPage })));
+const FaqHubPage = lazy(() => import('./pages/seo/FaqHubPage'));
 
 function HashRedirect() {
   const navigate = useNavigate();
@@ -117,6 +126,7 @@ function AppInner() {
         />
 
         <CheckoutHandler>
+          <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 border-2 border-electric-cyan border-t-transparent rounded-full animate-spin" /></div>}>
           <Routes>
             <Route path="/" element={<HomePage onOpenAuth={() => setShowAuth(true)} onOpenPricing={() => setShowPricing(true)} />} />
             <Route path="/downloads" element={<MyDownloadsPage />} />
@@ -156,6 +166,7 @@ function AppInner() {
             {/* Fallback */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          </Suspense>
         </CheckoutHandler>
 
         {isHomePage && (

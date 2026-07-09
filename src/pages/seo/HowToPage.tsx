@@ -14,7 +14,7 @@ export default function HowToPage() {
       { "@type": "HowToStep", "name": "Create a folder named LightShow", "text": "At the top level of the USB drive, create a folder named exactly LightShow." },
       { "@type": "HowToStep", "name": "Add the matching files", "text": "Place your .fseq file and matching .mp3 or .wav file inside the LightShow folder." },
       { "@type": "HowToStep", "name": "Plug the USB into your Tesla", "text": "Insert the USB drive into the vehicle's data-capable USB port." },
-      { "@type": "HowToStep", "name": "Open Light Show in Toybox", "text": "Open Toybox, choose Light Show, select your custom show, and follow on-screen instructions." }
+      { "@type": "HowToStep", "name": "Schedule and Play Your Light Show", "text": "In the Tesla app go to Set Schedules > Light Show, select your file from the dropdown, choose Now or a future time (use a future time to sync multiple Teslas), toggle on Dance Moves to enable trunk, mirrors, windows, and charge port animations, then tap Confirm. You can also launch directly from Toybox > Light Show on the touchscreen." }
     ]
   };
 
@@ -65,7 +65,7 @@ export default function HowToPage() {
           { number: '3', title: 'Create a folder named LightShow', text: 'At the top level of the USB drive, create a folder named exactly LightShow (case-sensitive).' },
           { number: '4', title: 'Add the matching files', text: 'Place your .fseq file and matching .mp3 or .wav file inside the LightShow folder. Filenames must match (e.g., mysong.fseq and mysong.mp3).' },
           { number: '5', title: 'Plug the USB into your Tesla', text: 'Insert the USB drive into the vehicle data-capable USB port (not a charge-only port).' },
-          { number: '6', title: 'Open Light Show in Toybox', text: 'Open Toybox, choose Light Show, select your custom show if listed, and follow the on-screen instructions to play.' },
+          { number: '6', title: 'Schedule and Play Your Light Show', text: 'In the Tesla app, go to Set Schedules > Light Show. Select your file from the dropdown (Tesla pre-loaded shows and your custom files appear here). Choose Now to start immediately, or pick a future time to sync multiple Teslas simultaneously. Toggle on Dance Moves to activate trunk, mirrors, windows, and charge port animations. Tap Confirm — a countdown timer appears for scheduled shows. You can also launch directly via Toybox > Light Show on the touchscreen.' },
         ]} />
       </section>
 

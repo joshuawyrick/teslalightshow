@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import AuthModal from './components/AuthModal';
@@ -192,12 +192,10 @@ function AppInner() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <HashRedirect />
-        <ScrollToTop />
-        <AppInner />
-      </AuthProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <HashRedirect />
+      <ScrollToTop />
+      <AppInner />
+    </AuthProvider>
   );
 }

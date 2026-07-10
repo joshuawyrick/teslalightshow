@@ -1,7 +1,9 @@
+import { lazy, Suspense } from 'react';
 import SeoHead from '../../components/SeoHead';
 import JsonLd from '../../components/JsonLd';
 import { FaqAccordion, InternalLinkGrid, IndependentNotice } from '../../components/SeoComponents';
-import GeneratorPage from '../GeneratorPage';
+
+const GeneratorPage = lazy(() => import('../GeneratorPage'));
 
 interface Props {
   onOpenAuth: () => void;
@@ -66,7 +68,9 @@ export default function SeoGeneratorPage({ onOpenAuth, onOpenPricing }: Props) {
         "publisher": { "@id": "https://teslalightshows.com/#organization" }
       }} />
 
-      <GeneratorPage onOpenAuth={onOpenAuth} onOpenPricing={onOpenPricing} />
+      <Suspense fallback={<div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-6 sm:py-8 min-h-[600px]" />}>
+        <GeneratorPage onOpenAuth={onOpenAuth} onOpenPricing={onOpenPricing} />
+      </Suspense>
 
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-12">
         <section className="space-y-4">

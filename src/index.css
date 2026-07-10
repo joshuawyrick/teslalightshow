@@ -87,6 +87,14 @@ select option:hover {
   background-color: rgba(255,255,255,0.06);
   animation: lb-chase 3s ease-in-out infinite;
   animation-delay: calc(var(--lb-i) * 50ms);
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbar-idle {
+    animation: none;
+    opacity: 0.5;
+  }
 }
 
 /* Button glow effects */

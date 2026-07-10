@@ -132,6 +132,8 @@ export default function Footer() {
             alt="TeslaLightShows.com"
             width={233}
             height={36}
+            loading="lazy"
+            decoding="async"
             className="h-8 sm:h-9 w-auto"
           />
           <p className="text-text-secondary/60 text-[10px] sm:text-xs text-center leading-relaxed max-w-3xl">

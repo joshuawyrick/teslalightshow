@@ -270,7 +270,6 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       const fileSR = sniffSampleRate(bytes);
       const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       let dec = await ctx.decodeAudioData(buf.slice(0));
-      ctx.close();
 
       if (dec.sampleRate !== 44100) {
         const origRate = fileSR || dec.sampleRate;
@@ -291,6 +290,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         setSrWarn(`${origRate} Hz detected — automatically converted to 44.1 kHz for Tesla compatibility.`);
       }
 
+      ctx.close();
       setAudioBytes(bytes);
       const mins = Math.floor(dec.duration / 60), secs = Math.round(dec.duration % 60);
       setFileMeta(`${mins}:${String(secs).padStart(2, '0')} · ${(bytes.length / 1048576).toFixed(1)} MB · 44100 Hz${fileSR && fileSR !== 44100 ? ` (converted from ${fileSR} Hz)` : ''}`);

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Download, Scissors, Music, Loader2, RefreshCw, AlertCircle } from 'lucide-react';
+import { Download, Scissors, Music, Loader2, RefreshCw, AlertCircle, Trash2, Clock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import type { Download as DownloadRow } from '../types';
@@ -8,12 +8,28 @@ function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+function daysUntil(iso: string): number {
+  const now = new Date();
+  const target = new Date(iso);
+  return Math.max(0, Math.ceil((target.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+}
+
+function expirationLabel(iso: string): { text: string; urgent: boolean } {
+  const days = daysUntil(iso);
+  if (days === 0) return { text: 'Expires today', urgent: true };
+  if (days === 1) return { text: 'Expires tomorrow', urgent: true };
+  if (days <= 7) return { text: `Expires in ${days} days`, urgent: true };
+  return { text: `Expires ${formatDate(iso)}`, urgent: false };
+}
+
 export default function MyDownloadsPage() {
   const { user } = useAuth();
   const [downloads, setDownloads] = useState<DownloadRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [redownloading, setRedownloading] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   const fetchDownloads = useCallback(async () => {
     if (!user) return;
@@ -57,6 +73,30 @@ export default function MyDownloadsPage() {
     }
   };
 
+  const deleteDownload = async (dl: DownloadRow) => {
+    setDeletingId(dl.id);
+    setError('');
+    try {
+      const { error: storageErr } = await supabase.storage
+        .from('downloads')
+        .remove([dl.storage_path]);
+      if (storageErr) throw new Error(`Storage: ${storageErr.message}`);
+
+      const { error: dbErr } = await supabase
+        .from('downloads')
+        .delete()
+        .eq('id', dl.id);
+      if (dbErr) throw new Error(`Database: ${dbErr.message}`);
+
+      setDownloads(prev => prev.filter(d => d.id !== dl.id));
+      setConfirmDeleteId(null);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   if (!user) {
     return (
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-20 text-center">
@@ -70,7 +110,7 @@ export default function MyDownloadsPage() {
       <div className="flex items-start sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-xl sm:text-2xl text-text-primary font-heading">My Downloads</h1>
-          <p className="text-text-secondary text-xs sm:text-sm mt-1">All your generated shows. Re-downloads are always free.</p>
+          <p className="text-text-secondary text-xs sm:text-sm mt-1">Re-downloads are free. Files expire after 30 days.</p>
         </div>
         <button
           onClick={fetchDownloads}
@@ -102,42 +142,86 @@ export default function MyDownloadsPage() {
         </div>
       ) : (
         <div className="space-y-3">
-          {downloads.map(dl => (
-            <div
-              key={dl.id}
-              className="bg-steel border border-border hover:border-electric-cyan/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 transition-colors duration-150"
-            >
-              <div className="w-10 h-10 rounded-xl bg-midnight border border-border flex items-center justify-center shrink-0">
-                {dl.is_snippet
-                  ? <Scissors size={16} className="text-electric-cyan" />
-                  : <Download size={16} className="text-electric-cyan" />
-                }
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <p className="text-text-primary font-medium text-sm truncate max-w-[200px] sm:max-w-[280px]">{dl.song_name}</p>
-                  {dl.is_snippet && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-electric-cyan/15 text-electric-cyan border border-electric-cyan/25 px-2 py-0.5 rounded-full shrink-0">
-                      snippet
-                    </span>
+          {downloads.map(dl => {
+            const expiry = dl.expires_at ? expirationLabel(dl.expires_at) : null;
+            const isConfirming = confirmDeleteId === dl.id;
+            const isDeleting = deletingId === dl.id;
+
+            return (
+              <div
+                key={dl.id}
+                className="bg-steel border border-border hover:border-electric-cyan/30 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 transition-colors duration-150"
+              >
+                <div className="w-10 h-10 rounded-xl bg-midnight border border-border flex items-center justify-center shrink-0">
+                  {dl.is_snippet
+                    ? <Scissors size={16} className="text-electric-cyan" />
+                    : <Download size={16} className="text-electric-cyan" />
+                  }
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="text-text-primary font-medium text-sm truncate max-w-[200px] sm:max-w-[280px]">{dl.song_name}</p>
+                    {dl.is_snippet && (
+                      <span className="text-[10px] font-bold uppercase tracking-wider bg-electric-cyan/15 text-electric-cyan border border-electric-cyan/25 px-2 py-0.5 rounded-full shrink-0">
+                        snippet
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-text-secondary text-xs mt-0.5">
+                    {dl.rendition_name} · {dl.vehicle_model} · {formatDate(dl.created_at)}
+                  </p>
+                  {expiry && (
+                    <p className={`text-xs mt-1 flex items-center gap-1 ${expiry.urgent ? 'text-amber-400' : 'text-text-secondary/60'}`}>
+                      <Clock size={11} className="shrink-0" />
+                      {expiry.text}
+                    </p>
                   )}
                 </div>
-                <p className="text-text-secondary text-xs mt-0.5">
-                  {dl.rendition_name} · {dl.vehicle_model} · {formatDate(dl.created_at)}
-                </p>
+
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  {isConfirming ? (
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                      <button
+                        onClick={() => deleteDownload(dl)}
+                        disabled={isDeleting}
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 bg-accent-red/15 hover:bg-accent-red/25 border border-accent-red/30 text-accent-red text-sm font-medium rounded-xl px-3 py-2.5 transition-colors duration-150"
+                      >
+                        {isDeleting ? <Loader2 size={13} className="animate-spin" /> : <Trash2 size={13} />}
+                        {isDeleting ? 'Deleting...' : 'Confirm'}
+                      </button>
+                      <button
+                        onClick={() => setConfirmDeleteId(null)}
+                        disabled={isDeleting}
+                        className="flex-1 sm:flex-none flex items-center justify-center text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl px-3 py-2.5 border border-border hover:border-electric-cyan/30 transition-colors duration-150"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => redownload(dl)}
+                        disabled={redownloading === dl.id}
+                        className="shrink-0 flex items-center gap-1.5 bg-charcoal hover:bg-slate border border-border hover:border-electric-cyan/30 text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl px-4 py-2.5 transition-colors duration-150 flex-1 sm:flex-none justify-center"
+                      >
+                        {redownloading === dl.id
+                          ? <><Loader2 size={13} className="animate-spin" /> Loading...</>
+                          : <><Download size={13} /> Re-download</>
+                        }
+                      </button>
+                      <button
+                        onClick={() => setConfirmDeleteId(dl.id)}
+                        className="shrink-0 flex items-center justify-center gap-1.5 bg-charcoal hover:bg-accent-red/10 border border-border hover:border-accent-red/30 text-text-secondary hover:text-accent-red text-sm font-medium rounded-xl px-3 py-2.5 transition-colors duration-150"
+                        title="Delete download"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
-              <button
-                onClick={() => redownload(dl)}
-                disabled={redownloading === dl.id}
-                className="shrink-0 flex items-center gap-1.5 bg-charcoal hover:bg-slate border border-border hover:border-electric-cyan/30 text-text-secondary hover:text-text-primary text-sm font-medium rounded-xl px-4 py-2.5 transition-colors duration-150 w-full sm:w-auto justify-center"
-              >
-                {redownloading === dl.id
-                  ? <><Loader2 size={13} className="animate-spin" /> Loading...</>
-                  : <><Download size={13} /> Re-download</>
-                }
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </main>

@@ -28,6 +28,7 @@ export interface Download {
   storage_path: string;
   is_snippet: boolean;
   created_at: string;
+  expires_at: string;
 }
 
 export interface GalleryVideo {

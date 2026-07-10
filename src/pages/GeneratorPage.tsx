@@ -275,7 +275,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         const origRate = fileSR || dec.sampleRate;
         setConvertingStatus('Resampling to 44.1 kHz...');
         setFileMeta(`Converting ${origRate} Hz to 44.1 kHz for Tesla compatibility...`);
-        dec = resampleTo44100(dec, ctx);
+        dec = await resampleTo44100(dec);
         ctx.close();
 
         if (ext === 'wav') {
@@ -297,8 +297,14 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       const mins = Math.floor(dec.duration / 60), secs = Math.round(dec.duration % 60);
       setFileMeta(`${mins}:${String(secs).padStart(2, '0')} · ${(bytes.length / 1048576).toFixed(1)} MB · 44100 Hz${fileSR && fileSR !== 44100 ? ` (converted from ${fileSR} Hz)` : ''}`);
       setDecoded(dec);
-    } catch {
-      setFileMeta('Could not decode that audio file. Try re-exporting it as a standard MP3 or WAV.');
+    } catch (err) {
+      console.error('[TLS] loadFile error:', err);
+      const msg = err instanceof Error ? err.message : String(err);
+      if (msg.toLowerCase().includes('resample') || msg.toLowerCase().includes('offline') || msg.toLowerCase().includes('convert')) {
+        setFileMeta('Conversion failed. Please convert your file to 44.1 kHz MP3 before uploading, or try a different file.');
+      } else {
+        setFileMeta('Could not decode that audio file. Try re-exporting it as a standard MP3 or WAV.');
+      }
       setDecoded(null);
       setConvertingStatus('');
     }

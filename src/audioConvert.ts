@@ -1,22 +1,19 @@
 import lamejs from '@breezystack/lamejs';
 
-export function resampleTo44100(decoded: AudioBuffer, ctx: AudioContext): AudioBuffer {
+export async function resampleTo44100(decoded: AudioBuffer): Promise<AudioBuffer> {
   if (decoded.sampleRate === 44100) return decoded;
-  const ratio = decoded.sampleRate / 44100;
+  const channels = decoded.numberOfChannels;
   const targetLength = Math.ceil(decoded.duration * 44100);
-  const numChannels = decoded.numberOfChannels;
-  const resampled = ctx.createBuffer(numChannels, targetLength, 44100);
-  for (let c = 0; c < numChannels; c++) {
-    const input = decoded.getChannelData(c);
-    const output = resampled.getChannelData(c);
-    for (let i = 0; i < targetLength; i++) {
-      const srcPos = i * ratio;
-      const srcIdx = Math.floor(srcPos);
-      const frac = srcPos - srcIdx;
-      output[i] = (input[srcIdx] ?? 0) * (1 - frac) + (input[srcIdx + 1] ?? 0) * frac;
-    }
+  const offline = new OfflineAudioContext(channels, targetLength, 44100);
+  const source = offline.createBufferSource();
+  source.buffer = decoded;
+  source.connect(offline.destination);
+  source.start(0);
+  try {
+    return await offline.startRendering();
+  } catch (err) {
+    throw new Error('resample failed: ' + (err instanceof Error ? err.message : String(err)));
   }
-  return resampled;
 }
 
 export function encodeWav(buffer: AudioBuffer): Uint8Array {

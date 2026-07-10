@@ -235,6 +235,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState('');
   const [uploadConfirmed, setUploadConfirmed] = useState(false);
+  const [showCheckReminder, setShowCheckReminder] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -288,6 +289,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
   const generate = useCallback(async () => {
     if (!decoded || !audioFile || !audioBytes) return;
     if (!user) { onOpenAuth(); return; }
+    if (!uploadConfirmed) { setShowCheckReminder(true); return; }
 
     setPhase('analyzing');
     setProgress(0);
@@ -341,7 +343,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       setPhase('idle');
       setBarLabel(`Error — ${(err as Error).message || err}. Check the browser console for details.`);
     }
-  }, [decoded, audioFile, audioBytes, model, currentTheme, placement, mirrors, windows, chargeMode, trunkMode, trunkCount, user, onOpenAuth]);
+  }, [decoded, audioFile, audioBytes, model, currentTheme, placement, mirrors, windows, chargeMode, trunkMode, trunkCount, user, onOpenAuth, uploadConfirmed]);
 
   const handleDownloadFree = useCallback(async (output: RenditionOutput) => {
     if (!user || !profile || !audioFile) return;
@@ -585,20 +587,6 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             </div>
           )}
         </div>
-        <p className="text-text-secondary/70 text-xs leading-relaxed">
-          By uploading an audio file, you confirm that you own the file or have permission to use it for this purpose. Uploaded audio is used to generate your requested custom light show files.
-        </p>
-        <label className="flex items-start gap-2.5 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={uploadConfirmed}
-            onChange={e => setUploadConfirmed(e.target.checked)}
-            className="mt-0.5 w-4 h-4 rounded border-border bg-midnight accent-electric-cyan shrink-0"
-          />
-          <span className="text-text-secondary text-xs leading-relaxed">
-            I confirm that I own or have permission to use the audio file I am uploading, and I understand that TeslaLightShows.com is an independent service not affiliated with Tesla, Inc.
-          </span>
-        </label>
       </section>
 
       {/* Step 2 — Vehicle */}
@@ -736,8 +724,24 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             {phase === 'analyzing' && <span className="text-electric-cyan text-xs ml-auto font-mono">{Math.round(progress * 100)}%</span>}
           </div>
         </div>
+        <label className="flex items-center gap-2.5 cursor-pointer select-none px-1">
+          <input
+            type="checkbox"
+            checked={uploadConfirmed}
+            onChange={e => { setUploadConfirmed(e.target.checked); if (e.target.checked) setShowCheckReminder(false); }}
+            className="w-4 h-4 rounded border-border bg-midnight accent-electric-cyan shrink-0"
+          />
+          <span className="text-text-secondary text-xs leading-relaxed">
+            I have the right to use this song and I know this site isn't made by Tesla
+          </span>
+        </label>
+        {showCheckReminder && (
+          <p className="text-amber-400 text-xs px-1 animate-pulse">
+            Just check the box above and you're good to go!
+          </p>
+        )}
         <button
-          disabled={!decoded || phase === 'analyzing' || !uploadConfirmed}
+          disabled={!decoded || phase === 'analyzing'}
           onClick={generate}
           className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-accent-red to-accent-red/90 hover:from-accent-red hover:to-accent-red disabled:from-charcoal disabled:to-charcoal disabled:text-text-secondary/30 disabled:cursor-not-allowed text-white font-display font-bold text-sm sm:text-base uppercase tracking-wider rounded-2xl py-4 transition-all duration-150 cursor-pointer glow-red disabled:shadow-none"
         >

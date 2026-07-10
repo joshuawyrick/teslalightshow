@@ -131,7 +131,7 @@ export default function BestSoftwarePage() {
         headline="Ready to create your custom light show?"
         text="Upload your MP3 or WAV and generate Tesla-ready FSEQ files without learning xLights or any other software."
         buttonText="Generate My Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
         secondary={{ text: 'How to install on USB', href: '/how-to-add-custom-light-show-to-tesla' }}
       />
 

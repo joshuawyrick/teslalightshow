@@ -102,7 +102,8 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
           </p>
           <div className="flex items-center justify-center gap-3 pt-2">
             <a
-              href="/tesla-light-show-generator"
+              href="#upload"
+              onClick={(e) => { e.preventDefault(); document.getElementById('upload')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
               className="inline-flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all glow-red"
             >
               <Zap size={16} /> Generate My Light Show

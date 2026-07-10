@@ -87,8 +87,8 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
                   Log in
                 </button>
                 <a
-                  href="/tesla-light-show-generator"
-                  onClick={(e) => { e.preventDefault(); onNavigate('/tesla-light-show-generator'); }}
+                  href="/tesla-light-show-generator#upload"
+                  onClick={(e) => { e.preventDefault(); onNavigate('/tesla-light-show-generator#upload'); }}
                   className="bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-all duration-150 glow-red"
                 >
                   Generate My Light Show
@@ -161,8 +161,8 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
             ) : (
               <div className="flex flex-col gap-3 px-3">
                 <a
-                  href="/tesla-light-show-generator"
-                  onClick={(e) => { e.preventDefault(); onNavigate('/tesla-light-show-generator'); setMobileOpen(false); }}
+                  href="/tesla-light-show-generator#upload"
+                  onClick={(e) => { e.preventDefault(); onNavigate('/tesla-light-show-generator#upload'); setMobileOpen(false); }}
                   className="w-full text-center bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-4 py-3 transition-all glow-red"
                 >
                   Generate My Light Show

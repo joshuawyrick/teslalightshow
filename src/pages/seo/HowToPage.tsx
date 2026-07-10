@@ -42,7 +42,7 @@ export default function HowToPage() {
 
       <div className="bg-charcoal border border-electric-cyan/20 rounded-xl p-4 sm:p-5">
         <p className="text-text-secondary text-sm leading-relaxed">
-          If you do not want to manually build the .fseq file, <a href="/tesla-light-show-generator" className="text-electric-cyan hover:underline">TeslaLightShows.com</a> can generate the Tesla-ready files from your uploaded song automatically.
+          If you do not want to manually build the .fseq file, <a href="/tesla-light-show-generator#upload" className="text-electric-cyan hover:underline">TeslaLightShows.com</a> can generate the Tesla-ready files from your uploaded song automatically.
         </p>
       </div>
 
@@ -118,7 +118,7 @@ export default function HowToPage() {
         headline="Want to skip the manual setup?"
         text="Upload your MP3 or WAV and generate a Tesla-ready light show package with matching filenames and folder structure."
         buttonText="Generate My Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
         secondary={{ text: 'Troubleshooting guide', href: '/tesla-light-show-not-working' }}
       />
 

@@ -30,7 +30,7 @@ export default function CustomShowPage() {
         A custom Tesla light show is a light sequence built around your selected audio instead of a generic pre-made download. TeslaLightShows.com helps generate custom light show files from your MP3 or WAV so your show matches the song, beat, and event.
       </AnswerBox>
 
-      <a href="/tesla-light-show-generator" className="inline-flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all glow-red">
+      <a href="/tesla-light-show-generator#upload" className="inline-flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all glow-red">
         Create My Custom Light Show
       </a>
 
@@ -81,7 +81,7 @@ export default function CustomShowPage() {
         headline="Ready to create your custom show?"
         text="Upload your MP3 or WAV file and generate a Tesla-ready light show package in minutes."
         buttonText="Generate My Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
         secondary={{ text: 'See examples', href: '/tesla-light-show-gallery' }}
       />
 

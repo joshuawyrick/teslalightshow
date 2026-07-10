@@ -87,8 +87,17 @@ function CheckoutHandler({ children }: { children: React.ReactNode }) {
 }
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      setTimeout(() => {
+        const el = document.getElementById(hash.slice(1));
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
   return null;
 }
 
@@ -110,7 +119,7 @@ function AppInner() {
 
   const onNavigate = (to: string) => {
     navigate(to);
-    window.scrollTo(0, 0);
+    if (!to.includes('#')) window.scrollTo(0, 0);
   };
 
   const isHomePage = location.pathname === '/' && !new URLSearchParams(location.search).get('checkout');

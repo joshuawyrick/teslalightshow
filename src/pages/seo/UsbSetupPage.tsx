@@ -130,7 +130,7 @@ export default function UsbSetupPage() {
         headline="Need Tesla-ready files?"
         text="Skip the manual file creation. Upload your song and download a properly structured light show package."
         buttonText="Generate My Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
         secondary={{ text: 'Troubleshooting', href: '/tesla-light-show-not-working' }}
       />
 

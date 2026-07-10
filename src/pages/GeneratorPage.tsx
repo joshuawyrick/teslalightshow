@@ -562,7 +562,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       </section>
 
       {/* Step 1 — Upload */}
-      <section className="bg-charcoal border border-border rounded-2xl p-4 sm:p-6 space-y-4">
+      <section id="upload" className="bg-charcoal border border-border rounded-2xl p-4 sm:p-6 space-y-4 scroll-mt-24">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-accent-red/15 border border-accent-red/25 flex items-center justify-center shrink-0">
             <Upload size={14} className="text-accent-red" />

@@ -119,7 +119,7 @@ export default function TroubleshootingPage() {
         headline="Still stuck? Generate a fresh light show package."
         text="Get properly named files with matching extensions and the correct folder structure, ready to copy to USB."
         buttonText="Generate a New Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
         secondary={{ text: 'USB setup guide', href: '/tesla-light-show-usb-setup' }}
       />
 

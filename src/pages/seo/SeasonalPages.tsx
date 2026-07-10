@@ -13,7 +13,7 @@ function SeasonalTemplate({ seoTitle, description, canonical, h1, intro, answerT
         <p className="text-text-secondary text-base leading-relaxed max-w-2xl">{intro}</p>
       </div>
       <AnswerBox>{answerText}</AnswerBox>
-      <a href="/tesla-light-show-generator" className="inline-flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all glow-red">
+      <a href="/tesla-light-show-generator#upload" className="inline-flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all glow-red">
         {ctaText}
       </a>
       <section className="space-y-4">
@@ -46,7 +46,7 @@ function SeasonalTemplate({ seoTitle, description, canonical, h1, intro, answerT
         headline="Create Your Custom Show"
         text="Upload your own legally obtained MP3 or WAV and generate a Tesla-ready light show package."
         buttonText="Generate My Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
         secondary={{ text: 'USB setup guide', href: '/tesla-light-show-usb-setup' }}
       />
       <InternalLinkGrid
@@ -158,7 +158,7 @@ export function IdeasPage() {
         headline="Turn Your Idea into a Show"
         text="Upload your MP3 or WAV and generate a custom Tesla light show in minutes."
         buttonText="Generate My Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
       />
       <IndependentNotice />
     </main>

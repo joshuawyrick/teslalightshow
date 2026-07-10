@@ -4,7 +4,7 @@ const linkGroups = [
   {
     title: 'Create',
     links: [
-      { label: 'Light Show Generator', href: '/tesla-light-show-generator' },
+      { label: 'Light Show Generator', href: '/tesla-light-show-generator#upload' },
       { label: 'Custom Light Shows', href: '/custom-tesla-light-show' },
       { label: 'Download Light Shows', href: '/tesla-light-show-downloads' },
       { label: 'Gallery', href: '/tesla-light-show-gallery' },

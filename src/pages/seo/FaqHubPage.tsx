@@ -88,7 +88,7 @@ export default function FaqHubPage() {
         headline="Ready to create your light show?"
         text="Upload your MP3 or WAV and generate Tesla-ready FSEQ files."
         buttonText="Generate My Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
         secondary={{ text: 'USB setup guide', href: '/tesla-light-show-usb-setup' }}
       />
 

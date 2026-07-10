@@ -16,7 +16,7 @@ export default function NotFoundPage() {
         <a href="/" className="inline-flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all">
           Go to Homepage
         </a>
-        <a href="/tesla-light-show-generator" className="text-electric-cyan hover:underline text-sm font-medium">
+        <a href="/tesla-light-show-generator#upload" className="text-electric-cyan hover:underline text-sm font-medium">
           Try the Light Show Generator
         </a>
       </div>

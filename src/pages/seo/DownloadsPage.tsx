@@ -32,10 +32,10 @@ export default function DownloadsPage() {
       </AnswerBox>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        <a href="/tesla-light-show-generator" className="inline-flex items-center justify-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all glow-red">
+        <a href="/tesla-light-show-generator#upload" className="inline-flex items-center justify-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all glow-red">
           Generate a Custom Download
         </a>
-        <a href="/tesla-light-show-generator" className="inline-flex items-center justify-center gap-2 bg-charcoal border border-border hover:border-electric-cyan/30 text-text-primary text-sm font-semibold rounded-xl px-6 py-3 transition-all">
+        <a href="/tesla-light-show-generator#upload" className="inline-flex items-center justify-center gap-2 bg-charcoal border border-border hover:border-electric-cyan/30 text-text-primary text-sm font-semibold rounded-xl px-6 py-3 transition-all">
           Try a Free 20-Second Sample
         </a>
       </div>
@@ -112,7 +112,7 @@ export default function DownloadsPage() {
         headline="Need Tesla-ready files?"
         text="Create a custom FSEQ package with matching audio and setup instructions from your own song."
         buttonText="Generate My Light Show"
-        href="/tesla-light-show-generator"
+        href="/tesla-light-show-generator#upload"
       />
 
       <IndependentNotice />

@@ -14,6 +14,7 @@ function YouTubeCard({ video }: { video: GalleryVideo }) {
           <iframe
             src={getYouTubeEmbedUrl(video.youtube_id!)}
             className="absolute inset-0 w-full h-full"
+            loading="lazy"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
@@ -25,6 +26,9 @@ function YouTubeCard({ video }: { video: GalleryVideo }) {
             <img
               src={getYouTubeThumbnail(video.youtube_id!)}
               alt={video.title}
+              loading="lazy"
+              width={320}
+              height={180}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">

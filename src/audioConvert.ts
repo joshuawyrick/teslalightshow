@@ -1,5 +1,3 @@
-import lamejs from '@breezystack/lamejs';
-
 export async function resampleTo44100(decoded: AudioBuffer): Promise<AudioBuffer> {
   if (decoded.sampleRate === 44100) return decoded;
   const channels = decoded.numberOfChannels;
@@ -53,10 +51,11 @@ export function encodeWav(buffer: AudioBuffer): Uint8Array {
   return new Uint8Array(out);
 }
 
-export function encodeMp3(
+export async function encodeMp3(
   buffer: AudioBuffer,
   onProgress?: (fraction: number) => void
-): Uint8Array {
+): Promise<Uint8Array> {
+  const lamejs = (await import('@breezystack/lamejs')).default;
   const numChannels = buffer.numberOfChannels;
   const kbps = 192;
   const encoder = new lamejs.Mp3Encoder(numChannels, 44100, kbps);

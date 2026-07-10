@@ -4,14 +4,6 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon-64.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZDVNM32SK0"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ZDVNM32SK0');
-    </script>
     <title>Tesla Light Show Generator | Create Custom Light Shows from Any Song</title>
     <meta name="description" content="Create stunning custom Tesla light shows from any song. AI-powered generator produces FSEQ files for Model S, 3, X, Y, and Cybertruck. Free to try." />
     <meta property="og:type" content="website" />
@@ -26,10 +18,28 @@
     <meta name="twitter:image" content="https://teslalightshows.com/og-image.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://img.youtube.com" />
+    <link rel="dns-prefetch" href="https://img.youtube.com" />
+    <link rel="preload" href="/tesla-light-show-generator.webp" as="image" type="image/webp" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.addEventListener('load', function() {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZDVNM32SK0';
+        s.async = true;
+        document.head.appendChild(s);
+        s.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', 'G-ZDVNM32SK0');
+        };
+      });
+    </script>
   </body>
 </html>

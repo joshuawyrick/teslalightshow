@@ -130,6 +130,8 @@ export default function Footer() {
           <img
             src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
             alt="TeslaLightShows.com"
+            width={233}
+            height={36}
             className="h-8 sm:h-9 w-auto"
           />
           <p className="text-text-secondary/60 text-[10px] sm:text-xs text-center leading-relaxed max-w-3xl">

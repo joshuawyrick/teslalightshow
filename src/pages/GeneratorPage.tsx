@@ -283,7 +283,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           bytes = encodeWav(dec);
         } else {
           setConvertingStatus('Encoding MP3...');
-          bytes = encodeMp3(dec, (p) => {
+          bytes = await encodeMp3(dec, (p) => {
             setConvertingStatus(`Encoding MP3... ${Math.round(p * 100)}%`);
           });
         }
@@ -504,6 +504,9 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               <img
                 src="/tesla-light-show-generator.webp"
                 alt="Tesla Light Shows"
+                width={460}
+                height={259}
+                fetchPriority="high"
                 className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto mt-4"
               />
             </div>

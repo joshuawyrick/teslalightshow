@@ -49,6 +49,8 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           <img
             src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
             alt="TeslaLightShows.com"
+            width={295}
+            height={46}
             className="h-[2.85rem] w-auto"
           />
         </a>
@@ -109,6 +111,8 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           <img
             src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
             alt="TeslaLightShows.com"
+            width={295}
+            height={46}
             className="h-[2.85rem] w-auto"
           />
         </a>

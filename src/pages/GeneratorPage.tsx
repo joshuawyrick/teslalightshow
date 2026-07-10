@@ -12,6 +12,7 @@ import {
 import { SNIPPET_SECONDS } from '../config';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
+import { resampleTo44100, encodeWav, encodeMp3 } from '../audioConvert';
 
 function uint8ToBase64(bytes: Uint8Array): string {
   const chars = new Array<string>(bytes.length);
@@ -236,6 +237,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
   const [downloadError, setDownloadError] = useState('');
   const [uploadConfirmed, setUploadConfirmed] = useState(false);
   const [showCheckReminder, setShowCheckReminder] = useState(false);
+  const [convertingStatus, setConvertingStatus] = useState('');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -260,22 +262,43 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
     setDecoded(null);
     setOutputs([]);
     setPhase('idle');
+    setSrWarn('');
+    setConvertingStatus('');
     try {
       const buf = await f.arrayBuffer();
-      const bytes = new Uint8Array(buf);
-      setAudioBytes(bytes);
+      let bytes = new Uint8Array(buf);
       const fileSR = sniffSampleRate(bytes);
       const ctx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-      const dec = await ctx.decodeAudioData(buf.slice(0));
+      let dec = await ctx.decodeAudioData(buf.slice(0));
       ctx.close();
+
+      if (dec.sampleRate !== 44100) {
+        const origRate = fileSR || dec.sampleRate;
+        setConvertingStatus('Resampling to 44.1 kHz...');
+        setFileMeta(`Converting ${origRate} Hz to 44.1 kHz for Tesla compatibility...`);
+        dec = await resampleTo44100(dec);
+
+        if (ext === 'wav') {
+          setConvertingStatus('Encoding WAV...');
+          bytes = encodeWav(dec);
+        } else {
+          setConvertingStatus('Encoding MP3...');
+          bytes = encodeMp3(dec, (p) => {
+            setConvertingStatus(`Encoding MP3... ${Math.round(p * 100)}%`);
+          });
+        }
+        setConvertingStatus('');
+        setSrWarn(`${origRate} Hz detected — automatically converted to 44.1 kHz for Tesla compatibility.`);
+      }
+
+      setAudioBytes(bytes);
       const mins = Math.floor(dec.duration / 60), secs = Math.round(dec.duration % 60);
-      const warn = fileSR === 48000 ? ' — 48 kHz detected: Tesla requires 44.1 kHz or lights will drift out of sync.' : '';
-      setSrWarn(warn);
-      setFileMeta(`${mins}:${String(secs).padStart(2, '0')} · ${(f.size / 1048576).toFixed(1)} MB · ${fileSR ? fileSR + ' Hz' : 'sample rate unknown'}${warn}`);
+      setFileMeta(`${mins}:${String(secs).padStart(2, '0')} · ${(bytes.length / 1048576).toFixed(1)} MB · 44100 Hz${fileSR && fileSR !== 44100 ? ` (converted from ${fileSR} Hz)` : ''}`);
       setDecoded(dec);
     } catch {
       setFileMeta('Could not decode that audio file. Try re-exporting it as a standard MP3 or WAV.');
       setDecoded(null);
+      setConvertingStatus('');
     }
   }, []);
 
@@ -580,9 +603,15 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
               Change File
             </button>
           )}
-          {srWarn && (
-            <div className="flex items-start gap-2 bg-amber-500/10 border border-amber-500/25 rounded-xl px-3 sm:px-4 py-3 text-amber-300 text-xs sm:text-sm text-left">
-              <AlertTriangle size={16} className="mt-0.5 shrink-0" />
+          {convertingStatus && (
+            <div className="flex items-center gap-2 bg-electric-cyan/10 border border-electric-cyan/25 rounded-xl px-3 sm:px-4 py-3 text-electric-cyan text-xs sm:text-sm">
+              <Cpu size={16} className="animate-pulse shrink-0" />
+              {convertingStatus}
+            </div>
+          )}
+          {srWarn && !convertingStatus && (
+            <div className="flex items-start gap-2 bg-emerald-500/10 border border-emerald-500/25 rounded-xl px-3 sm:px-4 py-3 text-emerald-300 text-xs sm:text-sm text-left">
+              <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
               {srWarn}
             </div>
           )}
@@ -741,7 +770,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           </p>
         )}
         <button
-          disabled={!decoded || phase === 'analyzing'}
+          disabled={!decoded || phase === 'analyzing' || !!convertingStatus}
           onClick={generate}
           className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-accent-red to-accent-red/90 hover:from-accent-red hover:to-accent-red disabled:from-charcoal disabled:to-charcoal disabled:text-text-secondary/30 disabled:cursor-not-allowed text-white font-display font-bold text-sm sm:text-base uppercase tracking-wider rounded-2xl py-4 transition-all duration-150 cursor-pointer glow-red disabled:shadow-none"
         >

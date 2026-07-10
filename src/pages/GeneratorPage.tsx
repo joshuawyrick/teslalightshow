@@ -275,7 +275,8 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         const origRate = fileSR || dec.sampleRate;
         setConvertingStatus('Resampling to 44.1 kHz...');
         setFileMeta(`Converting ${origRate} Hz to 44.1 kHz for Tesla compatibility...`);
-        dec = await resampleTo44100(dec);
+        dec = resampleTo44100(dec, ctx);
+        ctx.close();
 
         if (ext === 'wav') {
           setConvertingStatus('Encoding WAV...');
@@ -288,9 +289,10 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         }
         setConvertingStatus('');
         setSrWarn(`${origRate} Hz detected — automatically converted to 44.1 kHz for Tesla compatibility.`);
+      } else {
+        ctx.close();
       }
 
-      ctx.close();
       setAudioBytes(bytes);
       const mins = Math.floor(dec.duration / 60), secs = Math.round(dec.duration % 60);
       setFileMeta(`${mins}:${String(secs).padStart(2, '0')} · ${(bytes.length / 1048576).toFixed(1)} MB · 44100 Hz${fileSR && fileSR !== 44100 ? ` (converted from ${fileSR} Hz)` : ''}`);

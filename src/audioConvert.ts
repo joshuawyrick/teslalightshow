@@ -1,14 +1,22 @@
 import lamejs from '@breezystack/lamejs';
 
-export async function resampleTo44100(decoded: AudioBuffer): Promise<AudioBuffer> {
-  const channels = decoded.numberOfChannels;
+export function resampleTo44100(decoded: AudioBuffer, ctx: AudioContext): AudioBuffer {
+  if (decoded.sampleRate === 44100) return decoded;
+  const ratio = decoded.sampleRate / 44100;
   const targetLength = Math.ceil(decoded.duration * 44100);
-  const offline = new OfflineAudioContext(channels, targetLength, 44100);
-  const source = offline.createBufferSource();
-  source.buffer = decoded;
-  source.connect(offline.destination);
-  source.start(0);
-  return offline.startRendering();
+  const numChannels = decoded.numberOfChannels;
+  const resampled = ctx.createBuffer(numChannels, targetLength, 44100);
+  for (let c = 0; c < numChannels; c++) {
+    const input = decoded.getChannelData(c);
+    const output = resampled.getChannelData(c);
+    for (let i = 0; i < targetLength; i++) {
+      const srcPos = i * ratio;
+      const srcIdx = Math.floor(srcPos);
+      const frac = srcPos - srcIdx;
+      output[i] = (input[srcIdx] ?? 0) * (1 - frac) + (input[srcIdx + 1] ?? 0) * frac;
+    }
+  }
+  return resampled;
 }
 
 export function encodeWav(buffer: AudioBuffer): Uint8Array {
@@ -17,14 +25,11 @@ export function encodeWav(buffer: AudioBuffer): Uint8Array {
   const numSamples = buffer.length;
   const bytesPerSample = 2;
   const dataSize = numSamples * numChannels * bytesPerSample;
-  const headerSize = 44;
-  const out = new ArrayBuffer(headerSize + dataSize);
+  const out = new ArrayBuffer(44 + dataSize);
   const view = new DataView(out);
-
   const writeStr = (offset: number, str: string) => {
     for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
   };
-
   writeStr(0, 'RIFF');
   view.setUint32(4, 36 + dataSize, true);
   writeStr(8, 'WAVE');
@@ -38,10 +43,8 @@ export function encodeWav(buffer: AudioBuffer): Uint8Array {
   view.setUint16(34, 16, true);
   writeStr(36, 'data');
   view.setUint32(40, dataSize, true);
-
   const channels: Float32Array[] = [];
   for (let c = 0; c < numChannels; c++) channels.push(buffer.getChannelData(c));
-
   let offset = 44;
   for (let i = 0; i < numSamples; i++) {
     for (let c = 0; c < numChannels; c++) {
@@ -50,7 +53,6 @@ export function encodeWav(buffer: AudioBuffer): Uint8Array {
       offset += 2;
     }
   }
-
   return new Uint8Array(out);
 }
 
@@ -59,12 +61,10 @@ export function encodeMp3(
   onProgress?: (fraction: number) => void
 ): Uint8Array {
   const numChannels = buffer.numberOfChannels;
-  const sampleRate = buffer.sampleRate;
   const kbps = 192;
-  const encoder = new lamejs.Mp3Encoder(numChannels, sampleRate, kbps);
+  const encoder = new lamejs.Mp3Encoder(numChannels, 44100, kbps);
   const blockSize = 1152;
   const numSamples = buffer.length;
-
   const toInt16 = (floats: Float32Array): Int16Array => {
     const int16 = new Int16Array(floats.length);
     for (let i = 0; i < floats.length; i++) {
@@ -73,29 +73,22 @@ export function encodeMp3(
     }
     return int16;
   };
-
   const left = toInt16(buffer.getChannelData(0));
   const right = numChannels > 1 ? toInt16(buffer.getChannelData(1)) : left;
-
   const chunks: Uint8Array[] = [];
   const totalBlocks = Math.ceil(numSamples / blockSize);
-
   for (let i = 0; i < numSamples; i += blockSize) {
     const end = Math.min(i + blockSize, numSamples);
-    const leftChunk = left.subarray(i, end);
-    const rightChunk = right.subarray(i, end);
-    const mp3buf = encoder.encodeBuffer(leftChunk, rightChunk);
+    const mp3buf = encoder.encodeBuffer(left.subarray(i, end), right.subarray(i, end));
     if (mp3buf.length > 0) chunks.push(new Uint8Array(mp3buf));
     if (onProgress) {
       const blockIdx = Math.floor(i / blockSize);
       if (blockIdx % 50 === 0) onProgress(blockIdx / totalBlocks);
     }
   }
-
   const flush = encoder.flush();
   if (flush.length > 0) chunks.push(new Uint8Array(flush));
   if (onProgress) onProgress(1);
-
   let totalLen = 0;
   for (const c of chunks) totalLen += c.length;
   const result = new Uint8Array(totalLen);

@@ -67,7 +67,7 @@ export default function PricingPage({ onOpenAuth, onNavigate }: PricingPageProps
         {cards.map((card) => (
           <div
             key={card.tier}
-            className={`relative bg-charcoal border rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center space-y-5 ${
+            className={`relative h-full bg-charcoal border rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center space-y-5 ${
               card.highlight ? 'border-accent-red' : 'border-border'
             }`}
           >

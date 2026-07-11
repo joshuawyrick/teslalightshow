@@ -97,7 +97,7 @@ export default function PricingPage({ onOpenAuth, onNavigate }: PricingPageProps
       <section className="bg-charcoal border border-border rounded-2xl p-8 sm:p-10 text-center space-y-4">
         <h2 className="text-2xl font-display font-bold text-text-primary">Try It Free First</h2>
         <p className="text-text-secondary text-sm leading-relaxed max-w-lg mx-auto">
-          Upload your song and download a free 20-second preview of your light show — no account or payment required.
+          Upload your song and download a free 20-second preview of your light show — just create a free account, no payment required.
         </p>
         <button
           onClick={() => onNavigate('/tesla-light-show-generator#upload')}

@@ -42,6 +42,7 @@ const BirthdayPage = lazy(() => import('./pages/seo/SeasonalPages').then(m => ({
 const NewYearPage = lazy(() => import('./pages/seo/SeasonalPages').then(m => ({ default: m.NewYearPage })));
 const IdeasPage = lazy(() => import('./pages/seo/SeasonalPages').then(m => ({ default: m.IdeasPage })));
 const FaqHubPage = lazy(() => import('./pages/seo/FaqHubPage'));
+const PricingPage = lazy(() => import('./pages/PricingPage'));
 
 function HashRedirect() {
   const navigate = useNavigate();
@@ -148,6 +149,7 @@ function AppInner() {
             <Route path="/refund-policy" element={<RefundPage onNavigate={onNavigate} />} />
             <Route path="/copyright-music-upload-policy" element={<CopyrightPage onNavigate={onNavigate} />} />
             <Route path="/faq" element={<FaqPage onNavigate={onNavigate} />} />
+            <Route path="/pricing" element={<PricingPage onOpenAuth={() => setShowAuth(true)} onNavigate={onNavigate} />} />
 
             {/* SEO Pages */}
             <Route path="/tesla-light-show-generator" element={<SeoGeneratorPage onOpenAuth={() => setShowAuth(true)} onOpenPricing={() => setShowPricing(true)} />} />

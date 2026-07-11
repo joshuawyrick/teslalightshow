@@ -29,6 +29,7 @@ const routes = [
   ['terms', 'Terms of Service | TeslaLightShows.com', 'Read the Terms of Service for TeslaLightShows.com, covering accounts, purchases, downloads, and acceptable use.'],
   ['privacy', 'Privacy Policy | TeslaLightShows.com', 'Read the Privacy Policy for TeslaLightShows.com, covering what data we collect, how it is used, and your privacy choices.'],
   ['faq', 'Frequently Asked Questions | TeslaLightShows.com', 'Answers about TeslaLightShows.com: Tesla affiliation, what we create, music rights, refunds, vehicle compatibility, and support.'],
+  ['pricing', 'Pricing — Custom Tesla Light Shows from $1.50 | TeslaLightShows.com', 'See pricing for custom Tesla light shows. Turn any song into a light show file for your Tesla. Free 20-second preview, credits from $1.50 per show.'],
   ['independent-service-disclaimer', 'Independent Service Disclaimer | TeslaLightShows.com', 'TeslaLightShows.com is an independent service and is not affiliated with, endorsed by, or sponsored by Tesla, Inc.'],
   ['refund-policy', 'Refund Policy | TeslaLightShows.com', 'Read the refund policy for TeslaLightShows.com digital light show purchases, including when refunds are available.'],
   ['copyright-music-upload-policy', 'Copyright and Music Upload Policy | TeslaLightShows.com', 'Read the copyright and music upload policy for TeslaLightShows.com. Users must own or have rights to the music they upload.'],

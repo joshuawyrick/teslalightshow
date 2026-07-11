@@ -36,6 +36,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
         <nav className="flex items-center gap-8 justify-self-start">
           {navLink('/', 'Generator')}
           {navLink('/tesla-light-show-gallery', 'Gallery')}
+          {navLink('/pricing', 'Pricing')}
           {user && navLink('/downloads', 'My Shows')}
           {profile?.is_admin && navLink('/admin', 'Admin')}
         </nav>
@@ -131,6 +132,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
             {[
               { path: '/', label: 'Generator' },
               { path: '/tesla-light-show-gallery', label: 'Gallery' },
+              { path: '/pricing', label: 'Pricing' },
               { path: '/how-to-add-custom-light-show-to-tesla', label: 'How It Works' },
               ...(user ? [{ path: '/downloads', label: 'My Shows' }] : []),
               ...(profile?.is_admin ? [{ path: '/admin', label: 'Admin' }] : []),

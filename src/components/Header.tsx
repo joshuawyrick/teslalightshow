@@ -47,9 +47,9 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           className="justify-self-center shrink-0"
         >
           <img
-            src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
+            src="/logo.webp"
             alt="TeslaLightShows.com"
-            width={295}
+            width={296}
             height={46}
             className="h-[2.85rem] w-auto"
           />
@@ -109,9 +109,9 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           className="shrink-0"
         >
           <img
-            src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
+            src="/logo.webp"
             alt="TeslaLightShows.com"
-            width={295}
+            width={296}
             height={46}
             className="h-[2.85rem] w-auto"
           />

@@ -128,7 +128,7 @@ export default function Footer() {
       <div className="border-t border-border py-6 sm:py-8 px-4 sm:px-6">
         <div className="max-w-[1320px] mx-auto flex flex-col items-center gap-5">
           <img
-            src="/ChatGPT_Image_Jul_6__2026__03_28_39_PM-removebg-preview.png"
+            src="/logo.webp"
             alt="TeslaLightShows.com"
             width={233}
             height={36}

@@ -61,9 +61,9 @@ export default function SeoGeneratorPage({ onOpenAuth, onOpenPricing }: Props) {
         "operatingSystem": "Web",
         "description": "Upload any MP3 or WAV and generate custom Tesla light show FSEQ files for Model S, Model 3, Model X, Model Y, and Cybertruck.",
         "offers": [
-          { "@type": "Offer", "name": "1 Download", "price": "9.99", "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "3 Downloads", "price": "21.99", "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "10 Downloads", "price": "49.99", "priceCurrency": "USD" }
+          { "@type": "Offer", "name": "1 Download", "price": "4.99", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "3 Downloads", "price": "9.99", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "10 Downloads", "price": "14.99", "priceCurrency": "USD" }
         ],
         "publisher": { "@id": "https://teslalightshows.com/#organization" }
       }} />

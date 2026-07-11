@@ -173,6 +173,16 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
         <h2 className="text-xl sm:text-2xl font-display font-bold text-text-primary">Frequently Asked Questions</h2>
         <FaqAccordion items={faqItems} />
       </section>
+
+      {/* Independent Service Notice */}
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 mt-10 sm:mt-12">
+        <div className="border border-border rounded-xl p-4 sm:p-6 bg-charcoal/50">
+          <h3 className="text-text-primary text-sm font-semibold mb-2">Independent Service Notice</h3>
+          <p className="text-text-secondary text-xs leading-relaxed">
+            TeslaLightShows.com is an independent digital service that creates custom light show files intended for compatible Tesla vehicles that support the Light Show feature. TeslaLightShows.com is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use.
+          </p>
+        </div>
+      </div>
     </>
   );
 }

@@ -122,8 +122,6 @@ function AppInner() {
     if (!to.includes('#')) window.scrollTo(0, 0);
   };
 
-  const isHomePage = location.pathname === '/' && !new URLSearchParams(location.search).get('checkout');
-
   return (
     <div className="min-h-screen bg-midnight text-text-primary font-body relative">
       <div className="app-bg-glow" />
@@ -177,17 +175,6 @@ function AppInner() {
           </Routes>
           </Suspense>
         </CheckoutHandler>
-
-        {isHomePage && (
-          <div className="max-w-[1320px] mx-auto px-4 sm:px-6 mt-10 sm:mt-12">
-            <div className="border border-border rounded-xl p-4 sm:p-6 bg-charcoal/50">
-              <h3 className="text-text-primary text-sm font-semibold mb-2">Independent Service Notice</h3>
-              <p className="text-text-secondary text-xs leading-relaxed">
-                TeslaLightShows.com is an independent digital service that creates custom light show files intended for compatible Tesla vehicles that support the Light Show feature. TeslaLightShows.com is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use.
-              </p>
-            </div>
-          </div>
-        )}
 
         <Footer />
       </div>

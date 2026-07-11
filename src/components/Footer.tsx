@@ -112,7 +112,7 @@ export default function Footer() {
                 <ul className="space-y-2">
                   {group.links.map(link => (
                     <li key={link.href}>
-                      <a href={link.href} className="text-text-secondary/70 hover:text-text-primary text-xs transition-colors duration-150">
+                      <a href={link.href} className="text-text-secondary/80 hover:text-text-primary text-xs transition-colors duration-150">
                         {link.label}
                       </a>
                     </li>
@@ -136,13 +136,13 @@ export default function Footer() {
             decoding="async"
             className="h-8 sm:h-9 w-auto"
           />
-          <p className="text-text-secondary/60 text-[10px] sm:text-xs text-center leading-relaxed max-w-3xl">
+          <p className="text-text-secondary/80 text-[10px] sm:text-xs text-center leading-relaxed max-w-3xl">
             TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. Tesla and related vehicle names are trademarks of Tesla, Inc. References to Tesla are used only to describe compatibility and intended file use.
           </p>
-          <p className="text-text-secondary/60 text-[10px] sm:text-xs text-center leading-relaxed">
+          <p className="text-text-secondary/80 text-[10px] sm:text-xs text-center leading-relaxed">
             TeslaLightShows.com is operated by a California-based sole proprietor. California, United States | support@teslalightshows.com
           </p>
-          <p className="text-text-secondary/40 text-[10px] text-center">
+          <p className="text-text-secondary/70 text-[10px] text-center">
             &copy; {new Date().getFullYear()} TeslaLightShows.com. All rights reserved.
           </p>
         </div>

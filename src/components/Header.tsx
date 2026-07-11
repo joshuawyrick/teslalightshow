@@ -63,7 +63,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
             {user && profile ? (
               <>
                 <div className="flex items-center gap-2 bg-charcoal border border-border rounded-full px-4 py-1.5">
-                  <span className={`text-sm font-bold ${profile.credits > 0 ? 'text-electric-cyan' : 'text-text-secondary/50'}`}>
+                  <span className={`text-sm font-bold ${profile.credits > 0 ? 'text-electric-cyan' : 'text-text-secondary/70'}`}>
                     {profile.credits}
                   </span>
                   <span className="text-text-secondary text-xs">Credits</span>
@@ -156,7 +156,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
               <div className="space-y-3">
                 <div className="flex items-center justify-between px-3">
                   <span className="text-text-secondary text-sm truncate max-w-[200px]">{profile.email}</span>
-                  <span className={`text-sm font-bold ${profile.credits > 0 ? 'text-electric-cyan' : 'text-text-secondary/50'}`}>
+                  <span className={`text-sm font-bold ${profile.credits > 0 ? 'text-electric-cyan' : 'text-text-secondary/70'}`}>
                     {profile.credits} credit{profile.credits !== 1 ? 's' : ''}
                   </span>
                 </div>

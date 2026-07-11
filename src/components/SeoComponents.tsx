@@ -153,7 +153,7 @@ export function IndependentNotice() {
 
 export function Breadcrumbs({ items }: { items: { label: string; href?: string }[] }) {
   return (
-    <nav aria-label="Breadcrumb" className="text-xs text-text-secondary/60">
+    <nav aria-label="Breadcrumb" className="text-xs text-text-secondary/80">
       {items.map((item, i) => (
         <span key={i}>
           {i > 0 && <span className="mx-1.5">/</span>}

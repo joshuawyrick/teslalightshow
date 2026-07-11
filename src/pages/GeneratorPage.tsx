@@ -759,7 +759,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
                 {Array.from({ length: trunkCountMax }, (_, i) => i + 1).map(n => (<option key={n} value={n}>x {n}</option>))}
               </select>
             </div>
-            <p className="text-text-secondary/50 text-[11px] hidden sm:block">Powered trunk on Cybertruck.</p>
+            <p className="text-text-secondary/80 text-[11px] hidden sm:block">Powered trunk on Cybertruck.</p>
           </div>
         </div>
       </section>
@@ -799,7 +799,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
           <Zap size={18} />
           {user ? 'Generate Light Shows' : 'Sign up to generate'}
         </button>
-        <p className="text-text-secondary/50 text-xs text-center">1 Credit per show &bull; .fseq format</p>
+        <p className="text-text-secondary/80 text-xs text-center">1 Credit per show &bull; .fseq format</p>
       </section>
 
       {/* Results */}
@@ -807,7 +807,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         <section className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <h2 className="text-sm font-display font-bold uppercase tracking-wide text-text-primary">AI Show Presets</h2>
-            <p className="text-text-secondary/60 text-xs leading-relaxed">{songInfo}</p>
+            <p className="text-text-secondary/80 text-xs leading-relaxed">{songInfo}</p>
           </div>
           {downloadError && (
             <div className="flex items-start gap-2 bg-accent-red/10 border border-accent-red/20 rounded-xl px-4 py-3 text-accent-red text-sm">

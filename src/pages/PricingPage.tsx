@@ -63,11 +63,11 @@ export default function PricingPage({ onOpenAuth, onNavigate }: PricingPageProps
         </p>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 items-stretch">
         {cards.map((card) => (
           <div
             key={card.tier}
-            className={`relative h-full bg-charcoal border rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center space-y-5 ${
+            className={`relative h-full bg-charcoal border rounded-2xl p-6 sm:p-8 flex flex-col items-center text-center ${
               card.highlight ? 'border-accent-red' : 'border-border'
             }`}
           >
@@ -78,10 +78,12 @@ export default function PricingPage({ onOpenAuth, onNavigate }: PricingPageProps
                 {card.badge}
               </span>
             )}
-            <h2 className="text-text-primary text-lg font-display font-bold">{card.tier}</h2>
-            <p className="text-text-secondary text-sm">{card.credits} credit{card.credits !== 1 ? 's' : ''}</p>
-            <p className="text-text-primary text-4xl font-display font-bold">{card.price}</p>
-            <p className="text-text-secondary text-xs">{card.perShow}</p>
+            <div className="flex flex-col items-center gap-4 pt-2">
+              <h2 className="text-text-primary text-lg font-display font-bold">{card.tier}</h2>
+              <p className="text-text-secondary text-sm">{card.credits} credit{card.credits !== 1 ? 's' : ''}</p>
+              <p className="text-text-primary text-4xl font-display font-bold">{card.price}</p>
+              <p className="text-text-secondary text-xs">{card.perShow}</p>
+            </div>
             <button
               onClick={onOpenAuth}
               className="mt-auto inline-flex items-center justify-center min-h-[44px] w-full bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all duration-150 glow-red"

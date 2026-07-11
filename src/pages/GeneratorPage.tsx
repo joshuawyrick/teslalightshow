@@ -595,6 +595,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             ref={fileInputRef}
             type="file"
             accept=".mp3,.wav"
+            aria-label="Upload MP3 or WAV audio file"
             className="sr-only"
             onChange={e => { if (e.target.files?.[0]) loadFile(e.target.files[0]); }}
           />
@@ -708,16 +709,16 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <div className="space-y-1.5">
-            <label className="text-text-secondary text-xs sm:text-sm font-medium block">Mirror Flicks</label>
-            <select value={mirrors} onChange={e => setMirrors(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+            <label htmlFor="mirror-flicks" className="text-text-secondary text-xs sm:text-sm font-medium block">Mirror Flicks</label>
+            <select id="mirror-flicks" value={mirrors} onChange={e => setMirrors(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
               <option value={0}>Off</option>
               {Array.from({ length: 10 }, (_, i) => i + 1).map(n => (<option key={n} value={n}>x {n}</option>))}
             </select>
             <p className="text-text-secondary/50 text-[11px] hidden sm:block">Max 10 flicks.</p>
           </div>
           <div className="space-y-1.5">
-            <label className="text-text-secondary text-xs sm:text-sm font-medium block">Window Bounces</label>
-            <select value={windows} onChange={e => setWindows(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+            <label htmlFor="window-bounces" className="text-text-secondary text-xs sm:text-sm font-medium block">Window Bounces</label>
+            <select id="window-bounces" value={windows} onChange={e => setWindows(parseInt(e.target.value))} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
               <option value={0}>Off</option>
               <option value={1}>x 1</option>
               <option value={2}>x 2</option>
@@ -725,8 +726,8 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             <p className="text-text-secondary/50 text-[11px] hidden sm:block">All windows roll.</p>
           </div>
           <div className="space-y-1.5">
-            <label className="text-text-secondary text-xs sm:text-sm font-medium block">Charge Port</label>
-            <select value={chargeMode} onChange={e => setChargeMode(e.target.value as ChargeMode)} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
+            <label htmlFor="charge-port" className="text-text-secondary text-xs sm:text-sm font-medium block">Charge Port</label>
+            <select id="charge-port" value={chargeMode} onChange={e => setChargeMode(e.target.value as ChargeMode)} className="w-full bg-midnight border border-border text-text-primary rounded-lg px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors">
               <option value="none">Off</option>
               <option value="open">Open only</option>
               <option value="show">Open + Rainbow</option>
@@ -734,9 +735,11 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             <p className="text-text-secondary/50 text-[11px] hidden sm:block">Rainbow opens early, flashes at chorus.</p>
           </div>
           <div className="space-y-1.5">
-            <label className="text-text-secondary text-xs sm:text-sm font-medium block">Trunk / Liftgate</label>
+            <label htmlFor="trunk-mode" className="text-text-secondary text-xs sm:text-sm font-medium block">Trunk / Liftgate</label>
             <div className="flex gap-2">
               <select
+                id="trunk-mode"
+                aria-label="Trunk / Liftgate mode"
                 value={trunkMode}
                 onChange={e => { const m = e.target.value as TrunkMode; setTrunkMode(m); if (m === 'dance' && trunkCount > 2) setTrunkCount(2); }}
                 className="flex-1 bg-midnight border border-border text-text-primary rounded-lg px-2 sm:px-3 py-2.5 text-sm outline-none focus:border-electric-cyan/50 cursor-pointer transition-colors"
@@ -747,6 +750,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
                 <option value="dance">Dance</option>
               </select>
               <select
+                aria-label="Trunk / Liftgate repeat count"
                 value={trunkCount}
                 disabled={trunkMode === 'none'}
                 onChange={e => setTrunkCount(parseInt(e.target.value))}

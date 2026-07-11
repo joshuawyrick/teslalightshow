@@ -1,10 +1,9 @@
-import { lazy, Suspense } from 'react';
 import { Sparkles, Usb, Play, Music, Car, Zap } from 'lucide-react';
 import SeoHead from '../components/SeoHead';
 import JsonLd from '../components/JsonLd';
 import { FaqAccordion, InternalLinkGrid } from '../components/SeoComponents';
 
-const GeneratorPage = lazy(() => import('./GeneratorPage'));
+import GeneratorPage from './GeneratorPage';
 
 interface Props {
   onOpenAuth: () => void;
@@ -121,9 +120,7 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
       </section>
 
       {/* Generator */}
-      <Suspense fallback={<div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-6 sm:py-8 min-h-[600px]" />}>
-        <GeneratorPage onOpenAuth={onOpenAuth} onOpenPricing={onOpenPricing} />
-      </Suspense>
+      <GeneratorPage onOpenAuth={onOpenAuth} onOpenPricing={onOpenPricing} />
 
       {/* How It Works */}
       <section className="max-w-[1320px] mx-auto px-4 sm:px-6 py-12 sm:py-16">

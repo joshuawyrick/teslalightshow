@@ -6,10 +6,10 @@ import AuthModal from './components/AuthModal';
 import PricingModal from './components/PricingModal';
 import ResetPasswordModal from './components/ResetPasswordModal';
 import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import GeneratorPage from './pages/GeneratorPage';
 import { supabase } from './lib/supabase';
 
-const GeneratorPage = lazy(() => import('./pages/GeneratorPage'));
-const HomePage = lazy(() => import('./pages/HomePage'));
 const MyDownloadsPage = lazy(() => import('./pages/MyDownloadsPage'));
 const GalleryPage = lazy(() => import('./pages/GalleryPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));

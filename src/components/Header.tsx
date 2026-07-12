@@ -134,7 +134,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
               { path: '/tesla-light-show-gallery', label: 'Gallery' },
               { path: '/pricing', label: 'Pricing' },
               { path: '/how-to-add-custom-light-show-to-tesla', label: 'How It Works' },
-              ...(user ? [{ path: '/downloads', label: 'My Shows' }] : []),
+              ...(user ? [{ path: '/downloads', label: 'My Shows' }, { path: '/tesla-light-show-gallery/my-submissions', label: 'My Submissions' }] : []),
               ...(profile?.is_admin ? [{ path: '/admin', label: 'Admin' }] : []),
             ].map(item => (
               <a

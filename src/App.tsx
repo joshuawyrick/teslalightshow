@@ -12,6 +12,9 @@ import { supabase } from './lib/supabase';
 
 const MyDownloadsPage = lazy(() => import('./pages/MyDownloadsPage'));
 const GalleryPage = lazy(() => import('./pages/GalleryPage'));
+const GallerySubmitPage = lazy(() => import('./pages/GallerySubmitPage'));
+const GalleryVideoPage = lazy(() => import('./pages/GalleryVideoPage'));
+const MyGallerySubmissionsPage = lazy(() => import('./pages/MyGallerySubmissionsPage'));
 const AdminPage = lazy(() => import('./pages/AdminPage'));
 const SuccessPage = lazy(() => import('./pages/SuccessPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
@@ -138,7 +141,7 @@ function AppInner() {
           <Routes>
             <Route path="/" element={<HomePage onOpenAuth={() => setShowAuth(true)} onOpenPricing={() => setShowPricing(true)} />} />
             <Route path="/downloads" element={<MyDownloadsPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/gallery" element={<GalleryPage onNavigate={onNavigate} />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/terms" element={<TermsPage onNavigate={onNavigate} />} />
             <Route path="/privacy" element={<PrivacyPage onNavigate={onNavigate} />} />
@@ -170,7 +173,10 @@ function AppInner() {
             <Route path="/tesla-new-year-light-show" element={<NewYearPage />} />
             <Route path="/tesla-light-show-ideas" element={<IdeasPage />} />
             <Route path="/tesla-light-show-faq" element={<FaqHubPage />} />
-            <Route path="/tesla-light-show-gallery" element={<GalleryPage />} />
+            <Route path="/tesla-light-show-gallery" element={<GalleryPage onNavigate={onNavigate} />} />
+            <Route path="/tesla-light-show-gallery/submit" element={<GallerySubmitPage onOpenAuth={() => setShowAuth(true)} />} />
+            <Route path="/tesla-light-show-gallery/show/:slug" element={<GalleryVideoPage />} />
+            <Route path="/tesla-light-show-gallery/my-submissions" element={<MyGallerySubmissionsPage onOpenAuth={() => setShowAuth(true)} />} />
 
             {/* Fallback */}
             <Route path="*" element={<NotFoundPage />} />

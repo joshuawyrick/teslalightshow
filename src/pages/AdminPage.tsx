@@ -1,3 +1,4 @@
+import GalleryModerationPanel from './admin/GalleryModerationPanel';
 import { useState, useEffect, useCallback } from 'react';
 import { Users, DollarSign, Download, Loader2, AlertCircle, Search, Plus, Minus, Trash2, RefreshCw, ShieldCheck, UserPlus, X, Video, ExternalLink } from 'lucide-react';
 import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
@@ -696,6 +697,11 @@ export default function AdminPage() {
           )}
         </>
       )}
+
+      {/* Gallery Moderation */}
+      <div className="mt-12 border-t border-border pt-8">
+        <GalleryModerationPanel />
+      </div>
     </main>
   );
 }

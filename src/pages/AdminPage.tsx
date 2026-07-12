@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Users, DollarSign, Download, Loader2, AlertCircle, Search, Plus, Trash2, RefreshCw, ShieldCheck, UserPlus, X, Video, ExternalLink } from 'lucide-react';
+import { Users, DollarSign, Download, Loader2, AlertCircle, Search, Plus, Minus, Trash2, RefreshCw, ShieldCheck, UserPlus, X, Video, ExternalLink } from 'lucide-react';
 import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { extractYouTubeId, getYouTubeThumbnail } from '../lib/youtube';
@@ -85,12 +85,13 @@ export default function AdminPage() {
   const [error, setError] = useState('');
   const [userSearch, setUserSearch] = useState('');
 
-  // Grant credits state
+  // Adjust credits state
   const [grantEmail, setGrantEmail] = useState('');
   const [grantAmount, setGrantAmount] = useState(1);
   const [grantNote, setGrantNote] = useState('');
   const [granting, setGranting] = useState(false);
   const [grantMsg, setGrantMsg] = useState('');
+  const [quickAdjusting, setQuickAdjusting] = useState<string | null>(null);
 
   // Manage admins state
   const [adminEmail, setAdminEmail] = useState('');
@@ -162,13 +163,15 @@ export default function AdminPage() {
 
   const grantCredits = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !grantEmail.trim() || grantAmount < 1) return;
+    if (!user || !grantEmail.trim() || grantAmount === 0) return;
     setGranting(true);
     setGrantMsg('');
     setError('');
     try {
       const result = await callAdminAction({ action: 'grant', email: grantEmail.trim(), credits: grantAmount, note: grantNote.trim() || null });
-      setGrantMsg(`Granted ${grantAmount} credit${grantAmount !== 1 ? 's' : ''} to ${result.recipient_email || grantEmail}.`);
+      const abs = Math.abs(grantAmount);
+      const verb = grantAmount > 0 ? 'Granted' : 'Deducted';
+      setGrantMsg(`${verb} ${abs} credit${abs !== 1 ? 's' : ''} ${grantAmount > 0 ? 'to' : 'from'} ${result.recipient_email || grantEmail}.`);
       setGrantEmail('');
       setGrantNote('');
       fetchData();
@@ -176,6 +179,20 @@ export default function AdminPage() {
       setError((err as Error).message);
     } finally {
       setGranting(false);
+    }
+  };
+
+  const quickAdjust = async (email: string, amount: number) => {
+    if (!canEdit) return;
+    setQuickAdjusting(email);
+    setError('');
+    try {
+      await callAdminAction({ action: 'grant', email, credits: amount, note: `Quick ${amount > 0 ? '+1' : '-1'} from admin` });
+      fetchData();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setQuickAdjusting(null);
     }
   };
 
@@ -302,10 +319,10 @@ export default function AdminPage() {
             </div>
           )}
 
-          {/* Grant credits — hidden for viewers */}
+          {/* Adjust credits — hidden for viewers */}
           {canEdit && (
             <div className="bg-charcoal border border-border rounded-2xl p-6 space-y-4">
-              <h2 className="text-text-primary font-semibold text-sm">Grant Credits</h2>
+              <h2 className="text-text-primary font-semibold text-sm">Adjust Credits</h2>
               <form onSubmit={grantCredits} className="flex flex-wrap gap-3 items-end">
                 <div className="flex-1 min-w-[200px] space-y-1">
                   <label className="text-text-secondary text-xs">User email</label>
@@ -318,14 +335,14 @@ export default function AdminPage() {
                     className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                   />
                 </div>
-                <div className="w-24 space-y-1">
-                  <label className="text-text-secondary text-xs">Credits</label>
+                <div className="w-28 space-y-1">
+                  <label className="text-text-secondary text-xs">Amount</label>
                   <input
                     type="number"
-                    min={1}
+                    min={-100}
                     max={100}
                     value={grantAmount}
-                    onChange={e => setGrantAmount(parseInt(e.target.value) || 1)}
+                    onChange={e => setGrantAmount(parseInt(e.target.value) || 0)}
                     className="w-full bg-midnight border border-border text-text-primary rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
                   />
                 </div>
@@ -333,7 +350,7 @@ export default function AdminPage() {
                   <label className="text-text-secondary text-xs">Note (optional)</label>
                   <input
                     type="text"
-                    placeholder="Contest winner"
+                    placeholder="Reason for adjustment"
                     value={grantNote}
                     onChange={e => setGrantNote(e.target.value)}
                     className="w-full bg-midnight border border-border text-text-primary placeholder-text-secondary/50 rounded-xl px-3 py-2 text-sm outline-none focus:border-electric-cyan/50 transition-colors"
@@ -341,11 +358,15 @@ export default function AdminPage() {
                 </div>
                 <button
                   type="submit"
-                  disabled={granting}
-                  className="flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 disabled:bg-steel disabled:text-text-secondary/30 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors"
+                  disabled={granting || grantAmount === 0}
+                  className={`flex items-center gap-2 text-white text-sm font-semibold rounded-xl px-4 py-2 transition-colors disabled:bg-steel disabled:text-text-secondary/30 ${
+                    grantAmount < 0
+                      ? 'bg-orange-600 hover:bg-orange-500'
+                      : 'bg-emerald-600 hover:bg-emerald-500'
+                  }`}
                 >
-                  {granting ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
-                  Grant
+                  {granting ? <Loader2 size={14} className="animate-spin" /> : grantAmount < 0 ? <Minus size={14} /> : <Plus size={14} />}
+                  {grantAmount < 0 ? 'Deduct' : 'Grant'}
                 </button>
               </form>
               {grantMsg && <p className="text-emerald-400 text-sm">{grantMsg}</p>}
@@ -419,7 +440,29 @@ export default function AdminPage() {
                       <tr key={u.id} className="border-b border-border/50 last:border-0">
                         <td className="px-4 py-3 text-text-secondary font-mono text-xs max-w-[200px] truncate">{u.email}</td>
                         <td className="px-4 py-3">
-                          <span className={`font-semibold ${u.credits > 0 ? 'text-emerald-400' : 'text-text-secondary/30'}`}>{u.credits}</span>
+                          <div className="flex items-center gap-2">
+                            <span className={`font-semibold ${u.credits > 0 ? 'text-emerald-400' : 'text-text-secondary/30'}`}>{u.credits}</span>
+                            {canEdit && (
+                              <div className="flex items-center gap-1">
+                                <button
+                                  onClick={() => quickAdjust(u.email, 1)}
+                                  disabled={quickAdjusting === u.email}
+                                  className="w-6 h-6 flex items-center justify-center rounded-md bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/40 transition-colors disabled:opacity-30"
+                                  title="Add 1 credit"
+                                >
+                                  {quickAdjusting === u.email ? <Loader2 size={12} className="animate-spin" /> : <Plus size={12} />}
+                                </button>
+                                <button
+                                  onClick={() => quickAdjust(u.email, -1)}
+                                  disabled={quickAdjusting === u.email || u.credits < 1}
+                                  className="w-6 h-6 flex items-center justify-center rounded-md bg-orange-600/20 text-orange-400 hover:bg-orange-600/40 transition-colors disabled:opacity-30"
+                                  title="Remove 1 credit"
+                                >
+                                  {quickAdjusting === u.email ? <Loader2 size={12} className="animate-spin" /> : <Minus size={12} />}
+                                </button>
+                              </div>
+                            )}
+                          </div>
                         </td>
                         <td className="px-4 py-3 text-text-secondary/60">{u.snippet_used ? 'Used' : 'Available'}</td>
                         <td className="px-4 py-3">

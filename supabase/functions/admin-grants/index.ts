@@ -108,8 +108,8 @@ Deno.serve(async (req: Request) => {
 
       if (action === "grant") {
         const { email, credits, note } = body;
-        if (!email || !credits || credits < 1) {
-          return json({ error: "email and credits required" }, 400);
+        if (!email || !credits || credits === 0) {
+          return json({ error: "email and non-zero credits required" }, 400);
         }
 
         const { data: result, error: grantErr } = await supabase.rpc("admin_grant_credits", {

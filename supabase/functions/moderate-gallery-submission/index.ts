@@ -14,13 +14,40 @@ function json(data: unknown, status = 200) {
   });
 }
 
-function generateSlug(title: string, id: string): string {
-  const base = title
+function titleToSlugBase(title: string): string {
+  return title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-  return `${base || "show"}-${id.slice(0, 8)}`;
+    .replace(/^-|-$/g, "") || "show";
+}
+
+async function generateUniqueSlug(
+  supabase: ReturnType<typeof createClient>,
+  title: string,
+  excludeId: string,
+): Promise<string> {
+  const base = titleToSlugBase(title);
+
+  const { data: existing } = await supabase
+    .from("gallery_videos")
+    .select("slug")
+    .eq("slug", base)
+    .neq("id", excludeId)
+    .maybeSingle();
+
+  if (!existing) return base;
+
+  const { data: conflicts } = await supabase
+    .from("gallery_videos")
+    .select("slug")
+    .like("slug", `${base}%`)
+    .neq("id", excludeId);
+
+  const taken = new Set((conflicts || []).map((r: { slug: string }) => r.slug));
+  let n = 2;
+  while (taken.has(`${base}-${n}`)) n++;
+  return `${base}-${n}`;
 }
 
 Deno.serve(async (req: Request) => {
@@ -97,16 +124,7 @@ Deno.serve(async (req: Request) => {
       }
 
       // Generate unique slug
-      let slug = generateSlug(submission.title, submission.id);
-      const { data: existing } = await supabase
-        .from("gallery_videos")
-        .select("id")
-        .eq("slug", slug)
-        .neq("id", submission.id)
-        .maybeSingle();
-      if (existing) {
-        slug = `${slug}-${Date.now().toString(36)}`;
-      }
+      let slug = await generateUniqueSlug(supabase, submission.title, submission.id);
 
       // Update Cloudflare to make video public with allowed origins
       if (submission.source_type === "cloudflare_stream" && submission.cloudflare_video_uid && accountId && apiToken) {

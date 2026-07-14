@@ -26,6 +26,7 @@ const routes = [
   ['tesla-light-show-ideas', 'Tesla Light Show Ideas | Songs, Holidays, Birthdays and Events', 'Explore Tesla light show ideas for holidays, birthdays, parties, weddings, car meets, New Year, Halloween, Christmas, and custom songs.'],
   ['about', 'About EVLightShows.com | Independent Tesla Light Show Generator', 'Learn about EVLightShows.com, an independent web app that generates custom Tesla light show FSEQ files from any song. Not affiliated with Tesla, Inc.'],
   ['contact', 'Contact EVLightShows.com | Support and Questions', 'Contact EVLightShows.com for help with light show generation, downloads, USB setup, orders, or general questions.'],
+  ['support', 'Support | EVLightShows.com', 'Get help with Tesla light show generation, downloads, USB setup, orders, and troubleshooting. Find answers and contact support for EVLightShows.com.'],
   ['terms', 'Terms of Service | EVLightShows.com', 'Read the Terms of Service for EVLightShows.com, covering accounts, purchases, downloads, and acceptable use.'],
   ['privacy', 'Privacy Policy | EVLightShows.com', 'Read the Privacy Policy for EVLightShows.com, covering what data we collect, how it is used, and your privacy choices.'],
   ['faq', 'Frequently Asked Questions | EVLightShows.com', 'Answers about EVLightShows.com: Tesla affiliation, what we create, music rights, refunds, vehicle compatibility, and support.'],

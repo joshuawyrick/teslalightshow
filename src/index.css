@@ -11,7 +11,7 @@
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
-    background-color: #0A0C11;
+    background-color: #000000;
     color: #FFFFFF;
     overflow-x: hidden;
   }
@@ -127,7 +127,7 @@ select option:hover {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0C11;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {

@@ -1,5 +1,9 @@
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import SeoHead from '../components/SeoHead';
 import JsonLd from '../components/JsonLd';
+import { useAuth } from '../contexts/AuthContext';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
 
 interface PricingPageProps {
   onOpenAuth: () => void;
@@ -41,12 +45,48 @@ const faqs = [
 ];
 
 const cards = [
-  { tier: 'Starter', credits: 1, price: '$4.99', perShow: '$4.99 per show', badge: null },
-  { tier: 'Popular', credits: 3, price: '$9.99', perShow: '$3.33 per show', badge: 'MOST POPULAR', highlight: true },
-  { tier: 'Best Value', credits: 10, price: '$14.99', perShow: '$1.50 per show', badge: 'SAVE 70%' },
+  { tier: 'Starter', credits: 1, price: '$4.99', perShow: '$4.99 per show', badge: null, packageId: 'single' },
+  { tier: 'Popular', credits: 3, price: '$9.99', perShow: '$3.33 per show', badge: 'MOST POPULAR', highlight: true, packageId: 'triple' },
+  { tier: 'Best Value', credits: 10, price: '$14.99', perShow: '$1.50 per show', badge: 'SAVE 70%', packageId: 'ten' },
 ];
 
 export default function PricingPage({ onOpenAuth, onNavigate }: PricingPageProps) {
+  const { session } = useAuth();
+  const [loading, setLoading] = useState<string | null>(null);
+  const [error, setError] = useState('');
+
+  const purchase = async (packageId: string) => {
+    if (!session) {
+      onOpenAuth();
+      return;
+    }
+
+    setError('');
+    setLoading(packageId);
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+          'Apikey': SUPABASE_ANON_KEY,
+        },
+        body: JSON.stringify({ packageId }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || `Request failed (${res.status})`);
+      }
+      const { url } = await res.json();
+      if (!url) throw new Error('No checkout URL returned.');
+      window.open(url, '_blank');
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(null);
+    }
+  };
+
   return (
     <main className="max-w-[1080px] mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-12">
       <SeoHead
@@ -85,14 +125,22 @@ export default function PricingPage({ onOpenAuth, onNavigate }: PricingPageProps
               <p className="text-text-secondary text-xs">{card.perShow}</p>
             </div>
             <button
-              onClick={onOpenAuth}
-              className="mt-auto inline-flex items-center justify-center min-h-[44px] w-full bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all duration-150 glow-red"
+              onClick={() => purchase(card.packageId)}
+              disabled={loading !== null}
+              className="mt-auto inline-flex items-center justify-center gap-2 min-h-[44px] w-full bg-accent-red hover:bg-accent-red/90 disabled:bg-steel disabled:text-text-secondary text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all duration-150 glow-red"
             >
+              {loading === card.packageId && <Loader2 size={16} className="animate-spin" />}
               Get Credits
             </button>
           </div>
         ))}
       </section>
+
+      {error && (
+        <div className="bg-accent-red/10 border border-accent-red/20 rounded-xl px-4 py-3 text-accent-red text-sm text-center">
+          {error}
+        </div>
+      )}
 
       <section className="bg-charcoal border border-border rounded-2xl p-8 sm:p-10 text-center space-y-4">
         <h2 className="text-2xl font-display font-bold text-text-primary">Try It Free First</h2>

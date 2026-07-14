@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { useGalleryLikes } from '../hooks/useGalleryLikes';
 import { getYouTubeEmbedUrl, getYouTubeThumbnail } from '../lib/youtube';
-import { getStreamPlayerUrl } from '../lib/cloudflareStream';
+import { getStreamPlayerUrl, getVideoLayout } from '../lib/cloudflareStream';
 import { getVehicleLabel, getOccasionLabel, getGenreLabel } from '../lib/galleryTaxonomy';
 import { buildVideoPageTitle, buildVideoPageDescription, buildVideoCanonical, buildVideoJsonLd, buildBreadcrumbJsonLd } from '../lib/gallerySeo';
 import SeoHead from '../components/SeoHead';
@@ -125,9 +125,16 @@ function VideoDetail({ video, showReport, setShowReport, playing, setPlaying, us
       </nav>
 
       {/* Video Player */}
-      <div className="w-full rounded-2xl overflow-hidden bg-black" style={{ aspectRatio: video.input_width && video.input_height ? `${video.input_width}/${video.input_height}` : '16/9' }}>
-        {renderPlayer()}
-      </div>
+      {(() => {
+        const { aspectRatio, maxWidth } = getVideoLayout(video.input_width, video.input_height);
+        return (
+          <div className="w-full flex justify-center">
+            <div className="w-full rounded-2xl overflow-hidden bg-black" style={{ aspectRatio, maxWidth }}>
+              {renderPlayer()}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Title and actions */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">

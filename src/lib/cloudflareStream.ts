@@ -18,3 +18,13 @@ export function getStreamThumbnailUrl(videoUid: string, time = '35%'): string | 
 export function isStreamConfigured(): boolean {
   return !!CUSTOMER_CODE;
 }
+
+export function getVideoLayout(
+  width: number | null | undefined,
+  height: number | null | undefined,
+): { aspectRatio: string; maxWidth: string } {
+  if (width && height && height > width) {
+    return { aspectRatio: '9 / 16', maxWidth: '440px' };
+  }
+  return { aspectRatio: '16 / 9', maxWidth: '960px' };
+}

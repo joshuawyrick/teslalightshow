@@ -59,7 +59,7 @@ const linkGroups = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border mt-8 sm:mt-12">
+    <footer className="border-t border-border mt-8 sm:mt-12 bg-black">
       {/* Trust icons row */}
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">

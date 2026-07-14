@@ -30,7 +30,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
   );
 
   return (
-    <header className="border-b border-border bg-midnight/90 backdrop-blur-xl sticky top-0 z-30">
+    <header className="border-b border-border bg-black sticky top-0 z-30">
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-4 hidden md:grid grid-cols-3 items-center">
         {/* Left nav */}
         <nav className="flex items-center gap-8 justify-self-start">

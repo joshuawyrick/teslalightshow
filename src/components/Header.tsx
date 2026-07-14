@@ -47,13 +47,10 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           onClick={(e) => { e.preventDefault(); onNavigate('/'); setMobileOpen(false); }}
           className="justify-self-center shrink-0"
         >
-          <img
-            src="/logo.webp"
-            alt="TeslaLightShows.com"
-            width={296}
-            height={46}
-            className="h-[2.85rem] w-auto"
-          />
+          <span className="font-display font-bold text-lg tracking-wider whitespace-nowrap">
+            <span className="text-white">EV LIGHT </span>
+            <span className="text-accent-red">SHOWS</span>
+          </span>
         </a>
 
         {/* Right - CTA + Auth */}
@@ -109,13 +106,10 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           onClick={(e) => { e.preventDefault(); onNavigate('/'); setMobileOpen(false); }}
           className="shrink-0"
         >
-          <img
-            src="/logo.webp"
-            alt="TeslaLightShows.com"
-            width={296}
-            height={46}
-            className="h-[2.85rem] w-auto"
-          />
+          <span className="font-display font-bold text-base tracking-wider whitespace-nowrap">
+            <span className="text-white">EV LIGHT </span>
+            <span className="text-accent-red">SHOWS</span>
+          </span>
         </a>
         <button
           onClick={() => setMobileOpen(v => !v)}

@@ -40,7 +40,7 @@ function ModelPageTemplate({ title, seoTitle, description, canonical, h1, intro,
       <FaqAccordion items={[
         { q: `Does ${title} support custom light shows?`, a: `Yes. ${title} supports custom light shows loaded from a USB drive with the correct LightShow folder structure.` },
         { q: 'What files do I need?', a: 'You need a .fseq sequence file and a matching .mp3 or .wav audio file, placed inside a LightShow folder on a FAT32 or exFAT USB drive.' },
-        { q: 'Do I need special software?', a: 'No. TeslaLightShows.com generates the files in your browser. No xLights or other software required.' },
+        { q: 'Do I need special software?', a: 'No. EVLightShows.com generates the files in your browser. No xLights or other software required.' },
       ]} />
       <IndependentNotice />
     </main>
@@ -52,7 +52,7 @@ export function ModelYPage() {
     title="Model Y"
     seoTitle="Tesla Model Y Light Show Generator | Custom MP3 and WAV Shows"
     description="Create a custom Tesla Model Y light show from your own MP3 or WAV. Generate downloadable FSEQ files and setup instructions for your Model Y."
-    canonical="https://teslalightshows.com/tesla-model-y-light-show"
+    canonical="https://evlightshows.com/tesla-model-y-light-show"
     h1="Tesla Model Y Light Show Generator"
     intro="Create custom light shows designed for your Tesla Model Y. Upload any MP3 or WAV and generate Tesla-ready FSEQ files."
     vehicleNotes="Tesla Model Y supports custom light shows through the Light Show feature in Toybox. Upload your song, select the Model Y profile, and download FSEQ files ready for USB playback."
@@ -65,7 +65,7 @@ export function Model3Page() {
     title="Model 3"
     seoTitle="Tesla Model 3 Light Show Generator | Custom FSEQ Files"
     description="Create a custom Tesla Model 3 light show from your own MP3 or WAV. Generate Tesla-ready FSEQ files, download your show, and play it from USB."
-    canonical="https://teslalightshows.com/tesla-model-3-light-show"
+    canonical="https://evlightshows.com/tesla-model-3-light-show"
     h1="Tesla Model 3 Light Show Generator"
     intro="Create custom light shows for your Tesla Model 3 or Model 3 Highland. Upload any song and generate Tesla-ready FSEQ files."
     vehicleNotes="Tesla Model 3 (including Highland) supports custom light shows loaded from USB. Select the Model 3 or Model 3 Highland profile in the generator for the best-matched show output."
@@ -78,7 +78,7 @@ export function CybertruckPage() {
     title="Cybertruck"
     seoTitle="Cybertruck Light Show Generator | Custom Tesla Light Shows"
     description="Create a custom Cybertruck light show from your own MP3 or WAV. Generate Tesla-ready FSEQ files and download a custom light show package."
-    canonical="https://teslalightshows.com/cybertruck-light-show"
+    canonical="https://evlightshows.com/cybertruck-light-show"
     h1="Cybertruck Light Show Generator"
     intro="Create custom light shows that take advantage of the Cybertruck's unique 60-LED front light bar and rear bar chase effects."
     vehicleNotes="Cybertruck supports custom light shows with its full 60-LED front light bar VU meter and rear bar chase. Select the Cybertruck profile in the generator for sequences optimized for this vehicle's expanded light capabilities."
@@ -91,7 +91,7 @@ export function ModelSXPage() {
     title="Model S / Model X"
     seoTitle="Tesla Model S and Model X Light Show Generator | Custom FSEQ Files"
     description="Create custom Tesla Model S and Model X light shows from MP3 or WAV files. Generate Tesla-ready FSEQ files and download setup instructions."
-    canonical="https://teslalightshows.com/tesla-model-s-model-x-light-show"
+    canonical="https://evlightshows.com/tesla-model-s-model-x-light-show"
     h1="Tesla Model S and Model X Light Show Generator"
     intro="Create custom light shows for your Tesla Model S (2021+) or Model X (2021+), including Falcon Wing door effects."
     vehicleNotes="Tesla Model S (2021+) and Model X (2021+) support custom light shows via USB. Model X shows can include Falcon Wing door movements. Select the appropriate vehicle profile in the generator."
@@ -105,7 +105,7 @@ export function ModelsHubPage() {
       <SeoHead
         title="Tesla Light Show Compatibility by Model | Model 3, Model Y, Cybertruck, S and X"
         description="Learn which Tesla vehicles support custom light shows and create downloadable FSEQ files for Model 3, Model Y, Cybertruck, Model S, and Model X."
-        canonical="https://teslalightshows.com/tesla-light-show-models"
+        canonical="https://evlightshows.com/tesla-light-show-models"
       />
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Model Compatibility' }]} />
       <div className="space-y-4">

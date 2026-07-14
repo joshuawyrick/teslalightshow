@@ -8,8 +8,8 @@ export default function RefundPage({ onNavigate }: RefundPageProps) {
       <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary">Refund Policy</h1>
 
       <div className="space-y-4 text-text-secondary text-sm leading-relaxed">
-        <p>Because TeslaLightShows.com provides custom digital files generated from customer-uploaded audio, completed digital orders are generally not refundable once files have been generated or delivered.</p>
-        <p>However, we want customers to have a good experience. If your generated files do not download properly, are missing, or there is a technical issue with your order, contact us at support@teslalightshows.com and we will review the issue.</p>
+        <p>Because EVLightShows.com provides custom digital files generated from customer-uploaded audio, completed digital orders are generally not refundable once files have been generated or delivered.</p>
+        <p>However, we want customers to have a good experience. If your generated files do not download properly, are missing, or there is a technical issue with your order, contact us at support@evlightshows.com and we will review the issue.</p>
       </div>
 
       <section className="space-y-3">
@@ -32,7 +32,7 @@ export default function RefundPage({ onNavigate }: RefundPageProps) {
 
       <section className="space-y-3">
         <h2 className="text-lg font-display font-bold text-text-primary">How To Request Support</h2>
-        <p className="text-text-secondary text-sm leading-relaxed">To request help with an order, email support@teslalightshows.com and include your order number, the email used at checkout, and a clear description of the issue.</p>
+        <p className="text-text-secondary text-sm leading-relaxed">To request help with an order, email support@evlightshows.com and include your order number, the email used at checkout, and a clear description of the issue.</p>
       </section>
 
       <button onClick={() => onNavigate('/')} className="text-electric-cyan hover:text-electric-cyan/80 text-sm font-medium transition-colors">

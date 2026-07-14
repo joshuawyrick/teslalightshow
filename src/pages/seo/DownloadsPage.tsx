@@ -8,14 +8,14 @@ export default function DownloadsPage() {
       <SeoHead
         title="Tesla Light Show Downloads | Custom FSEQ Files from Any Song"
         description="Download a custom Tesla light show made from your own MP3 or WAV. Get Tesla-ready FSEQ files, matching audio, setup instructions, and a free 20-second sample option."
-        canonical="https://teslalightshows.com/tesla-light-show-downloads"
+        canonical="https://evlightshows.com/tesla-light-show-downloads"
       />
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Tesla Light Show Downloads",
         "description": "Download custom Tesla light show FSEQ files generated from your own MP3 or WAV audio.",
-        "url": "https://teslalightshows.com/tesla-light-show-downloads"
+        "url": "https://evlightshows.com/tesla-light-show-downloads"
       }} />
 
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Tesla Light Show Downloads' }]} />
@@ -28,7 +28,7 @@ export default function DownloadsPage() {
       </div>
 
       <AnswerBox>
-        TeslaLightShows.com creates downloadable Tesla light show files from your own audio. Instead of picking from a limited library of pre-made shows, you can generate a custom show for a song, holiday, birthday, event, or personal moment.
+        EVLightShows.com creates downloadable Tesla light show files from your own audio. Instead of picking from a limited library of pre-made shows, you can generate a custom show for a song, holiday, birthday, event, or personal moment.
       </AnswerBox>
 
       <div className="flex flex-col sm:flex-row gap-3">
@@ -59,7 +59,7 @@ export default function DownloadsPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-display font-bold text-text-primary">Free Downloads vs. Custom Downloads</h2>
         <ComparisonTable
-          headers={['', 'Free download sites', 'TeslaLightShows.com']}
+          headers={['', 'Free download sites', 'EVLightShows.com']}
           rows={[
             { feature: 'Song selection', col1: 'Pick from existing pre-made shows', col2: 'Upload your own MP3 or WAV' },
             { feature: 'Customization', col1: 'Limited to songs already created', col2: 'Generate a show for any song' },
@@ -99,7 +99,7 @@ export default function DownloadsPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-display font-bold text-text-primary">Frequently Asked Questions</h2>
         <FaqAccordion items={[
-          { q: 'Can I download a Tesla light show for free?', a: 'TeslaLightShows.com offers a free 20-second sample download so you can test the show on your vehicle before purchasing the full-length version.' },
+          { q: 'Can I download a Tesla light show for free?', a: 'EVLightShows.com offers a free 20-second sample download so you can test the show on your vehicle before purchasing the full-length version.' },
           { q: 'Can I create a Tesla light show from my own song?', a: 'Yes. Upload any MP3 or WAV file you own or have permission to use, and the generator creates a custom light show from your audio.' },
           { q: 'What files are included in a Tesla light show download?', a: 'Each download includes a .fseq sequence file and your matching audio file (.mp3 or .wav), packaged in a ZIP with the correct LightShow folder structure.' },
           { q: 'Do I need a USB drive?', a: 'Yes. Tesla requires custom light shows to be loaded from a USB drive with a folder named LightShow containing the .fseq and audio files.' },

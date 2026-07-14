@@ -50,9 +50,9 @@ export default function PricingPage({ onOpenAuth, onNavigate }: PricingPageProps
   return (
     <main className="max-w-[1080px] mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-12">
       <SeoHead
-        title="Pricing — Custom Tesla Light Shows from $1.50 | TeslaLightShows.com"
+        title="Pricing — Custom Tesla Light Shows from $1.50 | EVLightShows.com"
         description="See pricing for custom Tesla light shows. Turn any song into a light show file for your Tesla. Free 20-second preview, credits from $1.50 per show."
-        canonical="https://teslalightshows.com/pricing"
+        canonical="https://evlightshows.com/pricing"
       />
       <JsonLd data={faqSchema} />
 

@@ -29,23 +29,23 @@ const faqItems = [
   { q: 'What is a Tesla light show?', a: 'A Tesla light show is a custom sequence that controls your vehicle\'s exterior lights, trunk, doors, and charge port in sync with music. It uses .fseq files loaded from a USB drive.' },
   { q: 'Which Tesla models support light shows?', a: 'All current Tesla models support light shows: Model S, Model 3, Model X, Model Y, and Cybertruck. The vehicle needs software version 2021.44.25 or later.' },
   { q: 'How do I play a light show on my Tesla?', a: 'Copy the .fseq file and matching audio to a USB drive, insert it into your Tesla, go to Toybox > Light Show, and select your custom show.' },
-  { q: 'Is this service affiliated with Tesla?', a: 'No. TeslaLightShows.com is an independent service. We are not affiliated with, endorsed by, or sponsored by Tesla, Inc.' },
+  { q: 'Is this service affiliated with Tesla?', a: 'No. EVLightShows.com is an independent service. We are not affiliated with, endorsed by, or sponsored by Tesla, Inc.' },
 ];
 
 const orgJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'TeslaLightShows.com',
-  url: 'https://teslalightshows.com',
+  name: 'EVLightShows.com',
+  url: 'https://evlightshows.com',
   description: 'Independent Tesla light show generator and resource platform.',
-  contactPoint: { '@type': 'ContactPoint', email: 'support@teslalightshows.com', contactType: 'customer service' },
+  contactPoint: { '@type': 'ContactPoint', email: 'support@evlightshows.com', contactType: 'customer service' },
 };
 
 const webAppJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Tesla Light Show Generator',
-  url: 'https://teslalightshows.com',
+  url: 'https://evlightshows.com',
   applicationCategory: 'MultimediaApplication',
   operatingSystem: 'Web',
   description: 'Create custom Tesla light shows from any song. AI-powered FSEQ generator for all Tesla models.',
@@ -56,9 +56,9 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
   return (
     <>
       <SeoHead
-        title="Tesla Light Show Generator | Create Custom Light Shows from Any Song"
+        title="Custom Tesla Light Show Generator | EV Light Shows"
         description="Create stunning custom Tesla light shows from any song. AI-powered generator produces FSEQ files for Model S, 3, X, Y, and Cybertruck. Free to try."
-        canonical="https://teslalightshows.com/"
+        canonical="https://evlightshows.com/"
       />
       <JsonLd data={orgJsonLd} />
       <JsonLd data={webAppJsonLd} />
@@ -67,18 +67,18 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
         "@graph": [
           {
             "@type": "Organization",
-            "@id": "https://teslalightshows.com/#organization",
-            "name": "TeslaLightShows.com",
-            "url": "https://teslalightshows.com",
-            "logo": "https://teslalightshows.com/og-image.jpg",
+            "@id": "https://evlightshows.com/#organization",
+            "name": "EVLightShows.com",
+            "url": "https://evlightshows.com",
+            "logo": "https://evlightshows.com/og-image.webp",
             "description": "Independent web app that generates custom Tesla light show FSEQ files from any song. Not affiliated with Tesla, Inc."
           },
           {
             "@type": "WebSite",
-            "@id": "https://teslalightshows.com/#website",
-            "url": "https://teslalightshows.com",
-            "name": "TeslaLightShows.com",
-            "publisher": { "@id": "https://teslalightshows.com/#organization" }
+            "@id": "https://evlightshows.com/#website",
+            "url": "https://evlightshows.com",
+            "name": "EVLightShows.com",
+            "publisher": { "@id": "https://evlightshows.com/#organization" }
           }
         ]
       }} />
@@ -176,7 +176,7 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
         <div className="border border-border rounded-xl p-4 sm:p-6 bg-charcoal/50">
           <h3 className="text-text-primary text-sm font-semibold mb-2">Independent Service Notice</h3>
           <p className="text-text-secondary text-xs leading-relaxed">
-            TeslaLightShows.com is an independent digital service that creates custom light show files intended for compatible Tesla vehicles that support the Light Show feature. TeslaLightShows.com is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use.
+            EVLightShows.com is an independent digital service that creates custom light show files intended for compatible Tesla vehicles that support the Light Show feature. EVLightShows.com is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use.
           </p>
         </div>
       </div>

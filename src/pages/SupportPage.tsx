@@ -11,7 +11,7 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
       <div className="space-y-6">
         <h1 className="text-text-primary text-2xl sm:text-3xl font-bold font-display">Support</h1>
         <p className="text-text-secondary text-sm leading-relaxed">
-          Need help with TeslaLightShows.com? Check the FAQ below or reach out directly.
+          Need help with EVLightShows.com? Check the FAQ below or reach out directly.
         </p>
 
         <div className="bg-charcoal border border-border rounded-xl p-6 space-y-3">
@@ -24,10 +24,10 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             respond within 24-48 business hours.
           </p>
           <a
-            href="mailto:support@teslalightshows.com"
+            href="mailto:support@evlightshows.com"
             className="inline-block text-electric-cyan text-sm font-medium hover:underline"
           >
-            support@teslalightshows.com
+            support@evlightshows.com
           </a>
         </div>
 
@@ -57,7 +57,7 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             />
             <FaqItem
               q="Does this work on mobile?"
-              a="Technically yes, but it is not recommended. The various file types (.fseq, .mp3) are difficult to work with on mobile devices -- you would need to save the files, email them to yourself, then open them on a desktop computer to transfer to a USB drive. Desktop is the ideal way to use TeslaLightShows.com and mobile will not be actively supported."
+              a="Technically yes, but it is not recommended. The various file types (.fseq, .mp3) are difficult to work with on mobile devices -- you would need to save the files, email them to yourself, then open them on a desktop computer to transfer to a USB drive. Desktop is the ideal way to use EVLightShows.com and mobile will not be actively supported."
             />
           </div>
 
@@ -77,11 +77,11 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             />
             <FaqItem
               q="Can I get a refund?"
-              a="Completed digital orders are generally not refundable once files have been generated or delivered. If you purchased credits by mistake and have not used them, contact us at support@teslalightshows.com and we will review the issue."
+              a="Completed digital orders are generally not refundable once files have been generated or delivered. If you purchased credits by mistake and have not used them, contact us at support@evlightshows.com and we will review the issue."
             />
             <FaqItem
               q="I was charged but did not receive credits."
-              a="This is rare but can happen if the payment confirmation was interrupted. Contact us at support@teslalightshows.com with your email and approximate purchase time, and we will resolve it within 24 hours."
+              a="This is rare but can happen if the payment confirmation was interrupted. Contact us at support@evlightshows.com with your email and approximate purchase time, and we will resolve it within 24 hours."
             />
             <FaqItem
               q="What payment methods do you accept?"
@@ -133,11 +133,11 @@ export default function SupportPage({ onNavigate }: { onNavigate: (to: string) =
             />
             <FaqItem
               q="How do I delete my account?"
-              a="Email support@teslalightshows.com with your account email and request deletion. We will process your request and remove all associated data within 30 days."
+              a="Email support@evlightshows.com with your account email and request deletion. We will process your request and remove all associated data within 30 days."
             />
             <FaqItem
               q="Is this affiliated with Tesla?"
-              a="No. TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use."
+              a="No. EVLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use."
             />
           </div>
         </div>

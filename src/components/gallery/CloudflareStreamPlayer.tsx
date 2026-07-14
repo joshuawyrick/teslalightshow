@@ -41,7 +41,7 @@ export default function CloudflareStreamPlayer({ videoUid, signedToken, width, h
         loading="lazy"
         allowFullScreen
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-        title={title || 'Tesla Light Show Video'}
+        title={title || 'EV Light Show Video'}
         className="w-full h-full border-0"
       />
     </div>

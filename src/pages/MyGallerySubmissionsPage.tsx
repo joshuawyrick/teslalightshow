@@ -33,7 +33,7 @@ export default function MyGallerySubmissionsPage({ onOpenAuth }: MyGallerySubmis
   if (!user) {
     return (
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-16 text-center">
-        <SeoHead title="My Submissions | TeslaLightShows.com" description="Manage your submitted light show videos." canonical="https://teslalightshows.com/tesla-light-show-gallery/my-submissions" noindex />
+        <SeoHead title="My Submissions | EVLightShows.com" description="Manage your submitted light show videos." canonical="https://evlightshows.com/tesla-light-show-gallery/my-submissions" noindex />
         <p className="text-text-secondary">Please sign in to view your submissions.</p>
       </main>
     );
@@ -41,7 +41,7 @@ export default function MyGallerySubmissionsPage({ onOpenAuth }: MyGallerySubmis
 
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
-      <SeoHead title="My Submissions | TeslaLightShows.com" description="Manage your submitted light show videos." canonical="https://teslalightshows.com/tesla-light-show-gallery/my-submissions" noindex />
+      <SeoHead title="My Submissions | EVLightShows.com" description="Manage your submitted light show videos." canonical="https://evlightshows.com/tesla-light-show-gallery/my-submissions" noindex />
 
       <div className="flex items-center justify-between">
         <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary">My Submissions</h1>

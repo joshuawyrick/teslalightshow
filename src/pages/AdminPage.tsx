@@ -290,7 +290,7 @@ export default function AdminPage() {
         <div className="flex items-center gap-3">
           <div>
             <h1 className="text-2xl text-text-primary font-heading">Admin Dashboard</h1>
-            <p className="text-text-secondary text-sm mt-1">TeslaLightShows.com management</p>
+            <p className="text-text-secondary text-sm mt-1">EVLightShows.com management</p>
           </div>
           <RoleBadge role={callerRole} />
         </div>

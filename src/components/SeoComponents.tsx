@@ -145,7 +145,7 @@ export function IndependentNotice() {
   return (
     <div className="border border-border rounded-xl p-4 sm:p-5 bg-charcoal/50">
       <p className="text-text-secondary text-xs leading-relaxed">
-        TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. Tesla, Model S, Model 3, Model X, Model Y, Cybertruck, and related marks are trademarks of Tesla, Inc. References are used only to describe vehicle compatibility and user-created light show files.
+        EVLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. Tesla, Model S, Model 3, Model X, Model Y, Cybertruck, and related marks are trademarks of Tesla, Inc. References are used only to describe vehicle compatibility and user-created light show files.
       </p>
     </div>
   );

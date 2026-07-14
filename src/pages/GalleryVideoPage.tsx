@@ -52,7 +52,7 @@ export default function GalleryVideoPage() {
   if (notFound || !video) {
     return (
       <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-20 text-center">
-        <SeoHead title="Video Not Found | TeslaLightShows.com" description="This video could not be found." canonical={`https://teslalightshows.com/tesla-light-show-gallery/show/${slug}`} noindex />
+        <SeoHead title="Video Not Found | EVLightShows.com" description="This video could not be found." canonical={`https://evlightshows.com/tesla-light-show-gallery/show/${slug}`} noindex />
         <p className="text-text-secondary">This video is not available.</p>
       </main>
     );

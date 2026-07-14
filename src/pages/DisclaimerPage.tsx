@@ -8,11 +8,11 @@ export default function DisclaimerPage({ onNavigate }: DisclaimerPageProps) {
       <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary">Independent Service Disclaimer</h1>
 
       <div className="space-y-4 text-text-secondary text-sm leading-relaxed">
-        <p>TeslaLightShows.com is an independent digital service. TeslaLightShows.com is not affiliated with, endorsed by, sponsored by, partnered with, or approved by Tesla, Inc.</p>
+        <p>EVLightShows.com is an independent digital service. EVLightShows.com is not affiliated with, endorsed by, sponsored by, partnered with, or approved by Tesla, Inc.</p>
         <p>Tesla, Model 3, Model Y, Cybertruck, Model S, Model X, and related vehicle names are trademarks of Tesla, Inc. References to Tesla and Tesla vehicle names on this website are used only to describe compatibility and intended file use.</p>
-        <p>TeslaLightShows.com creates custom digital light show files intended for compatible Tesla vehicles that support the Light Show feature. The use of Tesla-related names on this website is for identification and compatibility purposes only.</p>
-        <p>TeslaLightShows.com does not sell Tesla vehicles, Tesla products, Tesla parts, Tesla accessories, Tesla software, Tesla repair, Tesla service, or Tesla support. TeslaLightShows.com does not represent Tesla, Inc. in any way.</p>
-        <p>Do not provide Tesla account login information, Tesla app credentials, or other sensitive vehicle account information through this website. TeslaLightShows.com does not need access to your Tesla account to provide custom light show files.</p>
+        <p>EVLightShows.com creates custom digital light show files intended for compatible Tesla vehicles that support the Light Show feature. The use of Tesla-related names on this website is for identification and compatibility purposes only.</p>
+        <p>EVLightShows.com does not sell Tesla vehicles, Tesla products, Tesla parts, Tesla accessories, Tesla software, Tesla repair, Tesla service, or Tesla support. EVLightShows.com does not represent Tesla, Inc. in any way.</p>
+        <p>Do not provide Tesla account login information, Tesla app credentials, or other sensitive vehicle account information through this website. EVLightShows.com does not need access to your Tesla account to provide custom light show files.</p>
       </div>
 
       <section className="space-y-3">

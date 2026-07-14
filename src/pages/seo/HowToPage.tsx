@@ -9,7 +9,7 @@ export default function HowToPage() {
     "name": "How to Add a Custom Light Show to Your Tesla",
     "description": "Learn how to add a custom Tesla light show using a USB drive, LightShow folder, FSEQ file, and matching MP3 or WAV audio.",
     "step": [
-      { "@type": "HowToStep", "name": "Create or download your Tesla light show files", "text": "You need a Tesla-compatible .fseq file and a matching audio file. Generate one with TeslaLightShows.com or create one manually." },
+      { "@type": "HowToStep", "name": "Create or download your Tesla light show files", "text": "You need a Tesla-compatible .fseq file and a matching audio file. Generate one with EVLightShows.com or create one manually." },
       { "@type": "HowToStep", "name": "Prepare your USB drive", "text": "Use a compatible USB drive formatted as FAT32 or exFAT." },
       { "@type": "HowToStep", "name": "Create a folder named LightShow", "text": "At the top level of the USB drive, create a folder named exactly LightShow." },
       { "@type": "HowToStep", "name": "Add the matching files", "text": "Place your .fseq file and matching .mp3 or .wav file inside the LightShow folder." },
@@ -23,7 +23,7 @@ export default function HowToPage() {
       <SeoHead
         title="How to Add a Custom Light Show to Your Tesla | USB Setup Guide"
         description="Learn how to add a custom Tesla light show using a USB drive, LightShow folder, FSEQ file, and matching MP3 or WAV audio. Or generate Tesla-ready files automatically."
-        canonical="https://teslalightshows.com/how-to-add-custom-light-show-to-tesla"
+        canonical="https://evlightshows.com/how-to-add-custom-light-show-to-tesla"
       />
       <JsonLd data={howToSchema} />
 
@@ -42,7 +42,7 @@ export default function HowToPage() {
 
       <div className="bg-charcoal border border-electric-cyan/20 rounded-xl p-4 sm:p-5">
         <p className="text-text-secondary text-sm leading-relaxed">
-          If you do not want to manually build the .fseq file, <a href="/tesla-light-show-generator#upload" className="text-electric-cyan hover:underline">TeslaLightShows.com</a> can generate the Tesla-ready files from your uploaded song automatically.
+          If you do not want to manually build the .fseq file, <a href="/tesla-light-show-generator#upload" className="text-electric-cyan hover:underline">EVLightShows.com</a> can generate the Tesla-ready files from your uploaded song automatically.
         </p>
       </div>
 
@@ -60,7 +60,7 @@ export default function HowToPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-display font-bold text-text-primary">Step-by-Step Setup</h2>
         <StepGuide steps={[
-          { number: '1', title: 'Create or download your light show files', text: 'You need a Tesla-compatible .fseq file and a matching audio file. You can create one manually in advanced software like xLights, or generate one automatically with TeslaLightShows.com.' },
+          { number: '1', title: 'Create or download your light show files', text: 'You need a Tesla-compatible .fseq file and a matching audio file. You can create one manually in advanced software like xLights, or generate one automatically with EVLightShows.com.' },
           { number: '2', title: 'Prepare your USB drive', text: 'Use a compatible USB drive and format it as FAT32 or exFAT. Do not use NTFS.' },
           { number: '3', title: 'Create a folder named LightShow', text: 'At the top level of the USB drive, create a folder named exactly LightShow (case-sensitive).' },
           { number: '4', title: 'Add the matching files', text: 'Place your .fseq file and matching .mp3 or .wav file inside the LightShow folder. Filenames must match (e.g., mysong.fseq and mysong.mp3).' },
@@ -72,7 +72,7 @@ export default function HowToPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-display font-bold text-text-primary">Manual Method vs. Generator Method</h2>
         <ComparisonTable
-          headers={['', 'Manual method', 'TeslaLightShows.com']}
+          headers={['', 'Manual method', 'EVLightShows.com']}
           rows={[
             { feature: 'Setup', col1: 'Install and learn xLights or similar', col2: 'Upload MP3 or WAV' },
             { feature: 'Process', col1: 'Map channels manually', col2: 'Generator creates show options' },
@@ -130,7 +130,7 @@ export default function HowToPage() {
           { q: 'Can I have multiple shows on one USB?', a: 'Yes. Place multiple file pairs inside the same LightShow folder. Each pair needs matching filenames.' },
           { q: 'Which USB port should I use?', a: 'Use a data-capable USB port, not a charge-only port. In most Teslas, the glovebox USB port or center console USB port works.' },
           { q: 'What format should the USB drive be?', a: 'FAT32 or exFAT. Do not use NTFS as Tesla may not recognize it.' },
-          { q: 'Do I need xLights?', a: 'No. TeslaLightShows.com generates Tesla-compatible .fseq files automatically from your uploaded audio without any external software.' },
+          { q: 'Do I need xLights?', a: 'No. EVLightShows.com generates Tesla-compatible .fseq files automatically from your uploaded audio without any external software.' },
         ]} />
       </section>
 

@@ -66,7 +66,7 @@ export function HalloweenPage() {
   return <SeasonalTemplate
     seoTitle="Tesla Halloween Light Show Generator | Custom Spooky Light Shows"
     description="Create a Tesla Halloween light show from your own MP3 or WAV. Generate spooky custom FSEQ files and download a Tesla-ready light show package."
-    canonical="https://teslalightshows.com/tesla-halloween-light-show"
+    canonical="https://evlightshows.com/tesla-halloween-light-show"
     h1="Tesla Halloween Light Show Generator"
     intro="Create a spooky custom Tesla light show for Halloween using your own music. Perfect for trick-or-treaters, Halloween parties, and haunted house vibes."
     answerText="Upload a spooky or high-energy Halloween song (MP3 or WAV you own), select a Halloween color theme with purple and orange styling, and generate a Tesla-ready FSEQ light show file."
@@ -80,7 +80,7 @@ export function ChristmasPage() {
   return <SeasonalTemplate
     seoTitle="Tesla Christmas Light Show Generator | Custom Holiday Shows"
     description="Create a Tesla Christmas light show from your own holiday music. Generate Tesla-ready FSEQ files from MP3 or WAV and download your custom show."
-    canonical="https://teslalightshows.com/tesla-christmas-light-show"
+    canonical="https://evlightshows.com/tesla-christmas-light-show"
     h1="Tesla Christmas Light Show Generator"
     intro="Create a festive Tesla light show for the holidays using your favorite Christmas music. Red and green themed shows for the season."
     answerText="Upload your own holiday music (MP3 or WAV you own or have rights to), select a Christmas color theme with red and green styling, and generate a Tesla-ready FSEQ light show file."
@@ -94,7 +94,7 @@ export function BirthdayPage() {
   return <SeasonalTemplate
     seoTitle="Tesla Birthday Light Show Generator | Custom Birthday Shows"
     description="Create a custom Tesla birthday light show from your own song. Generate a Tesla-ready FSEQ package for birthday surprises, parties, and celebrations."
-    canonical="https://teslalightshows.com/tesla-birthday-light-show"
+    canonical="https://evlightshows.com/tesla-birthday-light-show"
     h1="Tesla Birthday Light Show Generator"
     intro="Surprise someone with a personalized Tesla light show for their birthday. Upload their favorite song and create a one-of-a-kind celebration."
     answerText="Upload a birthday celebrant's favorite song (MP3 or WAV you own), choose a fun and dynamic color theme, and generate a Tesla light show that makes the moment unforgettable."
@@ -108,7 +108,7 @@ export function NewYearPage() {
   return <SeasonalTemplate
     seoTitle="Tesla New Year Light Show Generator | Custom Countdown Shows"
     description="Create a custom Tesla New Year light show from your own MP3 or WAV. Generate countdown, celebration, and party-style Tesla light show files."
-    canonical="https://teslalightshows.com/tesla-new-year-light-show"
+    canonical="https://evlightshows.com/tesla-new-year-light-show"
     h1="Tesla New Year Light Show Generator"
     intro="Ring in the new year with a custom Tesla light show. Create countdown and celebration sequences from your favorite party music."
     answerText="Upload a New Year celebration track (MP3 or WAV you own), select a high-energy show style, and generate a Tesla light show perfect for midnight countdowns and celebrations."
@@ -124,7 +124,7 @@ export function IdeasPage() {
       <SeoHead
         title="Tesla Light Show Ideas | Songs, Holidays, Birthdays and Events"
         description="Explore Tesla light show ideas for holidays, birthdays, parties, weddings, car meets, New Year, Halloween, Christmas, and custom songs."
-        canonical="https://teslalightshows.com/tesla-light-show-ideas"
+        canonical="https://evlightshows.com/tesla-light-show-ideas"
       />
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Light Show Ideas' }]} />
       <div className="space-y-4">

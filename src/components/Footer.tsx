@@ -127,23 +127,21 @@ export default function Footer() {
       {/* Fine print */}
       <div className="border-t border-border py-6 sm:py-8 px-4 sm:px-6">
         <div className="max-w-[1320px] mx-auto flex flex-col items-center gap-5">
-          <img
-            src="/logo.webp"
-            alt="TeslaLightShows.com"
-            width={233}
-            height={36}
-            loading="lazy"
-            decoding="async"
-            className="h-8 sm:h-9 w-auto"
-          />
+          <span className="font-display font-bold text-base tracking-wider whitespace-nowrap">
+            <span className="text-text-primary">EV LIGHT </span>
+            <span className="text-accent-red">SHOWS</span>
+          </span>
           <p className="text-text-secondary/80 text-[10px] sm:text-xs text-center leading-relaxed max-w-3xl">
-            TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. Tesla and related vehicle names are trademarks of Tesla, Inc. References to Tesla are used only to describe compatibility and intended file use.
+            EV Light Shows is not affiliated with, endorsed by, or sponsored by Tesla, Inc. Tesla and its model names are trademarks of Tesla, Inc., used here only to describe product compatibility.
           </p>
           <p className="text-text-secondary/80 text-[10px] sm:text-xs text-center leading-relaxed">
-            TeslaLightShows.com is operated by a California-based sole proprietor. California, United States | support@teslalightshows.com
+            EVLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. Tesla and related vehicle names are trademarks of Tesla, Inc. References to Tesla are used only to describe compatibility and intended file use.
+          </p>
+          <p className="text-text-secondary/80 text-[10px] sm:text-xs text-center leading-relaxed">
+            EVLightShows.com is operated by a California-based sole proprietor. California, United States | support@evlightshows.com
           </p>
           <p className="text-text-secondary/70 text-[10px] text-center">
-            &copy; {new Date().getFullYear()} TeslaLightShows.com. All rights reserved.
+            &copy; {new Date().getFullYear()} EVLightShows.com. All rights reserved.
           </p>
         </div>
       </div>

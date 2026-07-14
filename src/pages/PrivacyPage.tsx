@@ -8,7 +8,7 @@ export default function PrivacyPage({ onNavigate }: PrivacyPageProps) {
       <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary">Privacy Policy</h1>
 
       <p className="text-text-secondary text-sm leading-relaxed">Effective Date: July 8, 2026</p>
-      <p className="text-text-secondary text-sm leading-relaxed">TeslaLightShows.com respects your privacy. This Privacy Policy explains what information we collect, how we use it, and how you can contact us.</p>
+      <p className="text-text-secondary text-sm leading-relaxed">EVLightShows.com respects your privacy. This Privacy Policy explains what information we collect, how we use it, and how you can contact us.</p>
 
       <section className="space-y-3">
         <h2 className="text-lg font-display font-bold text-text-primary">1. Information We Collect</h2>
@@ -37,7 +37,7 @@ export default function PrivacyPage({ onNavigate }: PrivacyPageProps) {
 
       <section className="space-y-3">
         <h2 className="text-lg font-display font-bold text-text-primary">3. Payments</h2>
-        <p className="text-text-secondary text-sm leading-relaxed">Payments may be processed by third-party payment processors. TeslaLightShows.com does not store full credit card numbers. Payment processors may collect and process payment information according to their own terms and privacy policies.</p>
+        <p className="text-text-secondary text-sm leading-relaxed">Payments may be processed by third-party payment processors. EVLightShows.com does not store full credit card numbers. Payment processors may collect and process payment information according to their own terms and privacy policies.</p>
       </section>
 
       <section className="space-y-3">
@@ -76,12 +76,12 @@ export default function PrivacyPage({ onNavigate }: PrivacyPageProps) {
 
       <section className="space-y-3">
         <h2 className="text-lg font-display font-bold text-text-primary">7. Customer Rights</h2>
-        <p className="text-text-secondary text-sm leading-relaxed">Depending on your location, you may have rights to access, correct, delete, or request information about certain personal data. To make a request, contact support@teslalightshows.com.</p>
+        <p className="text-text-secondary text-sm leading-relaxed">Depending on your location, you may have rights to access, correct, delete, or request information about certain personal data. To make a request, contact support@evlightshows.com.</p>
       </section>
 
       <section className="space-y-3">
         <h2 className="text-lg font-display font-bold text-text-primary">8. Children</h2>
-        <p className="text-text-secondary text-sm leading-relaxed">TeslaLightShows.com is not intended for children under 13. We do not knowingly collect personal information from children under 13.</p>
+        <p className="text-text-secondary text-sm leading-relaxed">EVLightShows.com is not intended for children under 13. We do not knowingly collect personal information from children under 13.</p>
       </section>
 
       <section className="space-y-3">
@@ -102,10 +102,10 @@ export default function PrivacyPage({ onNavigate }: PrivacyPageProps) {
       <section className="space-y-3">
         <h2 className="text-lg font-display font-bold text-text-primary">12. Contact</h2>
         <div className="text-text-secondary text-sm leading-relaxed space-y-1">
-          <p>TeslaLightShows.com</p>
+          <p>EVLightShows.com</p>
           <p>Operated by a California-based sole proprietor</p>
           <p>California, United States</p>
-          <p>support@teslalightshows.com</p>
+          <p>support@evlightshows.com</p>
         </div>
       </section>
 

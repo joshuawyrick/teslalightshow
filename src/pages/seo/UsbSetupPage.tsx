@@ -8,7 +8,7 @@ export default function UsbSetupPage() {
       <SeoHead
         title="Tesla Light Show USB Setup | Folder, FSEQ, MP3 and WAV Guide"
         description="Set up a USB drive for a custom Tesla light show. Learn the LightShow folder name, FSEQ file requirements, audio file matching, and common USB mistakes."
-        canonical="https://teslalightshows.com/tesla-light-show-usb-setup"
+        canonical="https://evlightshows.com/tesla-light-show-usb-setup"
       />
       <JsonLd data={{
         "@context": "https://schema.org",

@@ -5,18 +5,18 @@ interface ContactPageProps {
 export default function ContactPage({ onNavigate }: ContactPageProps) {
   return (
     <main className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14 space-y-8">
-      <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary">Contact TeslaLightShows.com</h1>
+      <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary">Contact EVLightShows.com</h1>
 
       <div className="space-y-4 text-text-secondary text-sm leading-relaxed">
         <p>Need help with an order, download, upload, generated light show file, or general question? Contact us and we will review your request.</p>
         <div className="space-y-1">
-          <p>Support Email: support@teslalightshows.com</p>
-          <p>Business Name: TeslaLightShows.com</p>
+          <p>Support Email: support@evlightshows.com</p>
+          <p>Business Name: EVLightShows.com</p>
           <p>Business Type: Sole Proprietorship</p>
           <p>Business Location: California, United States</p>
-          <p>Website: https://teslalightshows.com</p>
+          <p>Website: https://evlightshows.com</p>
         </div>
-        <p>TeslaLightShows.com is operated by a California-based sole proprietor.</p>
+        <p>EVLightShows.com is operated by a California-based sole proprietor.</p>
       </div>
 
       <section className="space-y-3">
@@ -38,7 +38,7 @@ export default function ContactPage({ onNavigate }: ContactPageProps) {
 
       <section className="space-y-3">
         <h2 className="text-lg font-display font-bold text-text-primary">Independent Service Notice</h2>
-        <p className="text-text-secondary text-sm leading-relaxed">TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc.</p>
+        <p className="text-text-secondary text-sm leading-relaxed">EVLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc.</p>
       </section>
 
       <button onClick={() => onNavigate('/')} className="text-electric-cyan hover:text-electric-cyan/80 text-sm font-medium transition-colors">

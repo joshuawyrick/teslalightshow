@@ -505,7 +505,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
                 src="/tesla-light-show-generator-920.webp"
                 srcSet="/tesla-light-show-generator-220.webp 220w, /tesla-light-show-generator-440.webp 440w, /tesla-light-show-generator-640.webp 640w, /tesla-light-show-generator-800.webp 800w, /tesla-light-show-generator-920.webp 920w"
                 sizes="(min-width: 1280px) 460px, (min-width: 1024px) 400px, (min-width: 640px) 320px, 220px"
-                alt="Tesla Light Shows"
+                alt="EV Light Shows"
                 width={460}
                 height={259}
                 fetchPriority="high"

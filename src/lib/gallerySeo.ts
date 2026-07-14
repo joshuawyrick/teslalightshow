@@ -1,6 +1,6 @@
 import type { GalleryVideo } from '../types';
 
-const SITE = 'https://teslalightshows.com';
+const SITE = 'https://evlightshows.com';
 
 export function buildVideoPageTitle(video: GalleryVideo): string {
   const parts: string[] = [];
@@ -18,7 +18,7 @@ export function buildVideoPageTitle(video: GalleryVideo): string {
     parts.push(modelNames[video.vehicle_model] || 'Tesla');
   }
   parts.push('Light Show');
-  return `${parts.join(' ')} | TeslaLightShows.com`;
+  return `${parts.join(' ')} | EVLightShows.com`;
 }
 
 export function buildVideoPageDescription(video: GalleryVideo): string {
@@ -26,7 +26,7 @@ export function buildVideoPageDescription(video: GalleryVideo): string {
     ? { 'model-3': 'Model 3', 'model-y': 'Model Y', 'model-s': 'Model S', 'model-x': 'Model X', 'cybertruck': 'Cybertruck', 'other': 'Tesla' }[video.vehicle_model] || 'Tesla'
     : 'Tesla';
   const song = video.song_title ? ` featuring "${video.song_title}"` : '';
-  return `Watch a custom ${model} light show${song} submitted by the TeslaLightShows.com community. Explore more AI-generated Tesla light shows.`;
+  return `Watch a custom ${model} light show${song} submitted by the EVLightShows.com community. Explore more AI-generated Tesla light shows.`;
 }
 
 export function buildVideoCanonical(slug: string): string {

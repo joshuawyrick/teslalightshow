@@ -3,9 +3,9 @@ export default function NotFoundPage() {
   return (
     <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center space-y-6">
       <SeoHead
-        title="Page Not Found | TeslaLightShows.com"
+        title="Page Not Found | EVLightShows.com"
         description="The page you are looking for does not exist."
-        canonical="https://teslalightshows.com/404"
+        canonical="https://evlightshows.com/404"
         noindex
       />
       <h1 className="text-4xl sm:text-5xl font-display font-bold text-text-primary">404</h1>

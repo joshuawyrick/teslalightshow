@@ -8,7 +8,7 @@ export default function TroubleshootingPage() {
       <SeoHead
         title="Tesla Light Show Not Working? Fix USB, File, and Folder Issues"
         description="Fix a Tesla custom light show that is not showing or not working. Check your USB format, LightShow folder, FSEQ file, matching MP3 or WAV, and vehicle setup."
-        canonical="https://teslalightshows.com/tesla-light-show-not-working"
+        canonical="https://evlightshows.com/tesla-light-show-not-working"
       />
       <JsonLd data={{
         "@context": "https://schema.org",

@@ -8,12 +8,12 @@ interface FaqPageProps {
 
 const FAQ_ITEMS = [
   {
-    q: 'Is TeslaLightShows.com affiliated with Tesla?',
-    a: 'No. TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use.',
+    q: 'Is EVLightShows.com affiliated with Tesla?',
+    a: 'No. EVLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc. References to Tesla and Tesla vehicle names are used only to describe compatibility and intended file use.',
   },
   {
-    q: 'What does TeslaLightShows.com create?',
-    a: 'TeslaLightShows.com creates custom digital light show files from customer-uploaded MP3 or WAV audio files. The generated files are intended for compatible Tesla vehicles that support the Light Show feature.',
+    q: 'What does EVLightShows.com create?',
+    a: 'EVLightShows.com creates custom digital light show files from customer-uploaded MP3 or WAV audio files. The generated files are intended for compatible Tesla vehicles that support the Light Show feature.',
   },
   {
     q: 'Do I need to own the music I upload?',
@@ -25,19 +25,19 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Do you need access to my Tesla account?',
-    a: 'No. TeslaLightShows.com does not require access to your Tesla account. Do not provide Tesla account login information, Tesla app credentials, or other sensitive account information through this website.',
+    a: 'No. EVLightShows.com does not require access to your Tesla account. Do not provide Tesla account login information, Tesla app credentials, or other sensitive account information through this website.',
   },
   {
     q: 'Are refunds available?',
-    a: 'Because TeslaLightShows.com provides custom digital files generated from customer-uploaded audio, completed digital orders are generally not refundable once files have been generated or delivered. If there is a technical issue, missing download, or fulfillment problem, contact support@teslalightshows.com and we will review the issue.',
+    a: 'Because EVLightShows.com provides custom digital files generated from customer-uploaded audio, completed digital orders are generally not refundable once files have been generated or delivered. If there is a technical issue, missing download, or fulfillment problem, contact support@evlightshows.com and we will review the issue.',
   },
   {
     q: 'Can I resell the files I download?',
-    a: 'Purchased generated files are for personal use with your own compatible vehicle unless TeslaLightShows.com gives written permission for another use.',
+    a: 'Purchased generated files are for personal use with your own compatible vehicle unless EVLightShows.com gives written permission for another use.',
   },
   {
     q: 'How do I contact support?',
-    a: 'Email support@teslalightshows.com with your order number, checkout email, and a description of the issue.',
+    a: 'Email support@evlightshows.com with your order number, checkout email, and a description of the issue.',
   },
 ];
 

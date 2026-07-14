@@ -104,7 +104,7 @@ export default function GallerySubmitPage({ onOpenAuth }: GallerySubmitPageProps
   if (!user) {
     return (
       <main className="max-w-2xl mx-auto px-4 sm:px-6 py-16 text-center">
-        <SeoHead title="Submit Your Tesla Light Show | TeslaLightShows.com" description="Upload a video of your Tesla playing a custom light show." canonical="https://teslalightshows.com/tesla-light-show-gallery/submit" noindex />
+        <SeoHead title="Submit Your Tesla Light Show | EVLightShows.com" description="Upload a video of your Tesla playing a custom light show." canonical="https://evlightshows.com/tesla-light-show-gallery/submit" noindex />
         <p className="text-text-secondary">Please sign in to submit a video.</p>
       </main>
     );
@@ -112,11 +112,11 @@ export default function GallerySubmitPage({ onOpenAuth }: GallerySubmitPageProps
 
   return (
     <main className="max-w-2xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
-      <SeoHead title="Submit Your Tesla Light Show | TeslaLightShows.com" description="Upload a video of your Tesla playing a custom light show." canonical="https://teslalightshows.com/tesla-light-show-gallery/submit" noindex />
+      <SeoHead title="Submit Your Tesla Light Show | EVLightShows.com" description="Upload a video of your Tesla playing a custom light show." canonical="https://evlightshows.com/tesla-light-show-gallery/submit" noindex />
 
       <div className="space-y-2">
         <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary">Share Your Tesla Light Show</h1>
-        <p className="text-text-secondary text-sm">Upload a video of your vehicle playing a show generated with TeslaLightShows.com.</p>
+        <p className="text-text-secondary text-sm">Upload a video of your vehicle playing a show generated with EVLightShows.com.</p>
       </div>
 
       {isDone ? (
@@ -261,7 +261,7 @@ export default function GallerySubmitPage({ onOpenAuth }: GallerySubmitPageProps
               disabled={isUploading}
             />
             <span className="text-text-secondary text-xs leading-relaxed">
-              I confirm that I recorded this video or have permission to submit it, and that I have the rights needed for the video and audio to be displayed on TeslaLightShows.com. I agree to the{' '}
+              I confirm that I recorded this video or have permission to submit it, and that I have the rights needed for the video and audio to be displayed on EVLightShows.com. I agree to the{' '}
               <a href="/terms" className="text-electric-cyan hover:underline">Terms</a> and{' '}
               <a href="/copyright-music-upload-policy" className="text-electric-cyan hover:underline">Copyright & Music Upload Policy</a>.
             </span>

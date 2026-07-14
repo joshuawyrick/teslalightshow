@@ -9,7 +9,7 @@ export default function FaqHubPage() {
     "mainEntity": [
       { "@type": "Question", "name": "What is a Tesla light show?", "acceptedAnswer": { "@type": "Answer", "text": "A Tesla light show is a choreographed sequence of vehicle light animations synced to music, played from a USB drive using Tesla's built-in Light Show feature." }},
       { "@type": "Question", "name": "What is an FSEQ file?", "acceptedAnswer": { "@type": "Answer", "text": "An FSEQ file is a light sequence file that controls which vehicle lights activate and when. It is paired with a matching audio file to create a synced light show." }},
-      { "@type": "Question", "name": "Do I need xLights to make a Tesla light show?", "acceptedAnswer": { "@type": "Answer", "text": "No. TeslaLightShows.com generates Tesla-compatible FSEQ files automatically from your uploaded MP3 or WAV without requiring xLights." }},
+      { "@type": "Question", "name": "Do I need xLights to make a Tesla light show?", "acceptedAnswer": { "@type": "Answer", "text": "No. EVLightShows.com generates Tesla-compatible FSEQ files automatically from your uploaded MP3 or WAV without requiring xLights." }},
     ]
   };
 
@@ -18,7 +18,7 @@ export default function FaqHubPage() {
       <SeoHead
         title="Tesla Light Show FAQ | Generator, Downloads, USB Setup and FSEQ Files"
         description="Answers to common Tesla light show questions about generators, downloads, FSEQ files, MP3 and WAV audio, USB setup, Model Y, Model 3, Cybertruck, and troubleshooting."
-        canonical="https://teslalightshows.com/tesla-light-show-faq"
+        canonical="https://evlightshows.com/tesla-light-show-faq"
       />
       <JsonLd data={faqSchema} />
 
@@ -31,7 +31,7 @@ export default function FaqHubPage() {
         <FaqAccordion items={[
           { q: 'What is a Tesla light show?', a: 'A Tesla light show is a choreographed sequence of vehicle light animations synced to music. It plays from a USB drive using Tesla\'s built-in Light Show feature in Toybox.' },
           { q: 'What is a custom Tesla light show?', a: 'A custom Tesla light show is one created from your own audio file, rather than a pre-made show downloaded from a library. It matches the lights to your specific song.' },
-          { q: 'What is a Tesla light show generator?', a: 'A Tesla light show generator is software that converts music into a Tesla-compatible FSEQ sequence file. TeslaLightShows.com lets you upload an MP3 or WAV and download the generated files.' },
+          { q: 'What is a Tesla light show generator?', a: 'A Tesla light show generator is software that converts music into a Tesla-compatible FSEQ sequence file. EVLightShows.com lets you upload an MP3 or WAV and download the generated files.' },
           { q: 'Can I make a Tesla light show from any song?', a: 'Yes. You can use any MP3 or WAV file you own or have permission to use. The generator analyzes your audio and creates a synced light sequence.' },
         ]} />
       </section>
@@ -49,8 +49,8 @@ export default function FaqHubPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-display font-bold text-text-primary">Generator</h2>
         <FaqAccordion items={[
-          { q: 'How does TeslaLightShows.com work?', a: 'Upload your MP3 or WAV, choose a vehicle profile and show style, then the generator analyzes your audio for beats, drops, and energy to create multiple synced light show options you can download.' },
-          { q: 'Do I need xLights?', a: 'No. TeslaLightShows.com generates Tesla-compatible FSEQ files automatically from your uploaded audio without requiring xLights or any other desktop software.' },
+          { q: 'How does EVLightShows.com work?', a: 'Upload your MP3 or WAV, choose a vehicle profile and show style, then the generator analyzes your audio for beats, drops, and energy to create multiple synced light show options you can download.' },
+          { q: 'Do I need xLights?', a: 'No. EVLightShows.com generates Tesla-compatible FSEQ files automatically from your uploaded audio without requiring xLights or any other desktop software.' },
           { q: 'Can I preview before downloading?', a: 'The generator creates multiple show presets you can compare before choosing which to download.' },
           { q: 'Can I generate a free sample?', a: 'Yes. New accounts get one free 20-second snippet to test on your vehicle before purchasing full-length shows.' },
         ]} />
@@ -78,9 +78,9 @@ export default function FaqHubPage() {
       <section className="space-y-4">
         <h2 className="text-xl font-display font-bold text-text-primary">Legal / Affiliation</h2>
         <FaqAccordion items={[
-          { q: 'Is TeslaLightShows.com affiliated with Tesla?', a: 'No. TeslaLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc.' },
+          { q: 'Is EVLightShows.com affiliated with Tesla?', a: 'No. EVLightShows.com is an independent digital service and is not affiliated with, endorsed by, sponsored by, or approved by Tesla, Inc.' },
           { q: 'Can I upload copyrighted music?', a: 'You must own the audio file or have permission to use it. Do not upload music you do not have the right to use.' },
-          { q: 'Who owns the uploaded audio?', a: 'You retain ownership of your uploaded audio. TeslaLightShows.com uses it only to generate your requested light show files.' },
+          { q: 'Who owns the uploaded audio?', a: 'You retain ownership of your uploaded audio. EVLightShows.com uses it only to generate your requested light show files.' },
         ]} />
       </section>
 

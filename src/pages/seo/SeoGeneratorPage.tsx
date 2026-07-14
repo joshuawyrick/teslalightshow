@@ -31,7 +31,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Tesla Light Show Generator',
-  url: 'https://teslalightshows.com/tesla-light-show-generator',
+  url: 'https://evlightshows.com/tesla-light-show-generator',
   applicationCategory: 'MultimediaApplication',
   operatingSystem: 'Web',
   description: 'AI-powered Tesla light show generator. Upload music, generate synchronized FSEQ light show files for Model S, 3, X, Y, and Cybertruck.',
@@ -49,14 +49,14 @@ export default function SeoGeneratorPage({ onOpenAuth, onOpenPricing }: Props) {
       <SeoHead
         title="Tesla Light Show Generator | Create Custom Light Shows from Any Song"
         description="Generate custom Tesla light show files from any music. AI-powered FSEQ generator for Model S, 3, X, Y, and Cybertruck. Upload your song and download in seconds."
-        canonical="https://teslalightshows.com/tesla-light-show-generator"
+        canonical="https://evlightshows.com/tesla-light-show-generator"
       />
       <JsonLd data={jsonLd} />
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "Tesla Light Show Generator",
-        "url": "https://teslalightshows.com/tesla-light-show-generator",
+        "url": "https://evlightshows.com/tesla-light-show-generator",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Web",
         "description": "Upload any MP3 or WAV and generate custom Tesla light show FSEQ files for Model S, Model 3, Model X, Model Y, and Cybertruck.",
@@ -65,7 +65,7 @@ export default function SeoGeneratorPage({ onOpenAuth, onOpenPricing }: Props) {
           { "@type": "Offer", "name": "3 Downloads", "price": "9.99", "priceCurrency": "USD" },
           { "@type": "Offer", "name": "10 Downloads", "price": "14.99", "priceCurrency": "USD" }
         ],
-        "publisher": { "@id": "https://teslalightshows.com/#organization" }
+        "publisher": { "@id": "https://evlightshows.com/#organization" }
       }} />
 
       <Suspense fallback={<div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-6 sm:py-8 min-h-[600px]" />}>

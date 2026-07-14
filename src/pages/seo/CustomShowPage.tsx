@@ -8,13 +8,13 @@ export default function CustomShowPage() {
       <SeoHead
         title="Custom Tesla Light Show | Create a Show from Your Song"
         description="Create a custom Tesla light show from your own MP3 or WAV. Generate synced FSEQ files, preview options, and download a Tesla-ready light show package."
-        canonical="https://teslalightshows.com/custom-tesla-light-show"
+        canonical="https://evlightshows.com/custom-tesla-light-show"
       />
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "WebPage",
         "name": "Custom Tesla Light Show",
-        "url": "https://teslalightshows.com/custom-tesla-light-show"
+        "url": "https://evlightshows.com/custom-tesla-light-show"
       }} />
 
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Custom Tesla Light Show' }]} />
@@ -27,7 +27,7 @@ export default function CustomShowPage() {
       </div>
 
       <AnswerBox>
-        A custom Tesla light show is a light sequence built around your selected audio instead of a generic pre-made download. TeslaLightShows.com helps generate custom light show files from your MP3 or WAV so your show matches the song, beat, and event.
+        A custom Tesla light show is a light sequence built around your selected audio instead of a generic pre-made download. EVLightShows.com helps generate custom light show files from your MP3 or WAV so your show matches the song, beat, and event.
       </AnswerBox>
 
       <a href="/tesla-light-show-generator#upload" className="inline-flex items-center gap-2 bg-accent-red hover:bg-accent-red/90 text-white text-sm font-semibold rounded-xl px-6 py-3 transition-all glow-red">
@@ -91,7 +91,7 @@ export default function CustomShowPage() {
           { q: 'Can I use any song for a custom Tesla light show?', a: 'You can use any MP3 or WAV file you own or have permission to use. The generator works with any audio content.' },
           { q: 'How long does it take to generate a custom show?', a: 'Generation typically takes seconds. The process happens in your browser using audio analysis.' },
           { q: 'What vehicles support custom light shows?', a: 'Model 3, Model Y, Model S (2021+), Model X (2021+), and Cybertruck support custom light shows via USB.' },
-          { q: 'Do I need any special software?', a: 'No. TeslaLightShows.com works in your web browser. No downloads or installations required.' },
+          { q: 'Do I need any special software?', a: 'No. EVLightShows.com works in your web browser. No downloads or installations required.' },
         ]} />
       </section>
 

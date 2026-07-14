@@ -51,13 +51,13 @@ Deno.serve(async (req: Request) => {
       });
     }
 
-    const origin = req.headers.get("origin") ?? "https://teslalightshows.com";
+    const origin = req.headers.get("origin") ?? "https://evlightshows.com";
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [{
         price_data: {
           currency: "usd",
-          product_data: { name: `TeslaLightShows — ${pkg.name}` },
+          product_data: { name: `EVLightShows — ${pkg.name}` },
           unit_amount: pkg.price_cents,
         },
         quantity: 1,

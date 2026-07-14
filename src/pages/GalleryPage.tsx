@@ -31,9 +31,9 @@ export default function GalleryPage({ onNavigate }: GalleryPageProps) {
   return (
     <main className="max-w-[1320px] mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
       <SeoHead
-        title="Tesla Light Show Gallery - Community Videos | TeslaLightShows.com"
-        description="Watch real Tesla light shows created by the TeslaLightShows.com community. Browse by vehicle, occasion, and genre. Share your own custom light show video."
-        canonical="https://teslalightshows.com/tesla-light-show-gallery"
+        title="Tesla Light Show Gallery - Community Videos | EVLightShows.com"
+        description="Watch real Tesla light shows created by the EVLightShows.com community. Browse by vehicle, occasion, and genre. Share your own custom light show video."
+        canonical="https://evlightshows.com/tesla-light-show-gallery"
       />
 
       {/* Hero section */}

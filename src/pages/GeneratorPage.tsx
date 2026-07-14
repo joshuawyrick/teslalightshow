@@ -515,12 +515,12 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
                 Turn your music into
               </p>
               <img
-                src="/tesla-light-show-generator-920.webp"
-                srcSet="/tesla-light-show-generator-220.webp 220w, /tesla-light-show-generator-440.webp 440w, /tesla-light-show-generator-640.webp 640w, /tesla-light-show-generator-800.webp 800w, /tesla-light-show-generator-920.webp 920w"
+                src="/ev-light-shows-wordmark-920.webp"
+                srcSet="/ev-light-shows-wordmark-220.webp 220w, /ev-light-shows-wordmark-440.webp 440w, /ev-light-shows-wordmark-640.webp 640w, /ev-light-shows-wordmark-800.webp 800w, /ev-light-shows-wordmark-920.webp 920w"
                 sizes="(min-width: 1280px) 460px, (min-width: 1024px) 400px, (min-width: 640px) 320px, 220px"
                 alt="EV Light Shows"
-                width={460}
-                height={259}
+                width={920}
+                height={101}
                 fetchPriority="high"
                 className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto mt-4"
               />

@@ -127,7 +127,7 @@ export default function Footer() {
       {/* Fine print */}
       <div className="border-t border-border py-6 sm:py-8 px-4 sm:px-6">
         <div className="max-w-[1320px] mx-auto flex flex-col items-center gap-5">
-          <img src="/logo.jpg" alt="EV Light Shows" className="h-9 w-auto" />
+          <img src="/logo.webp" alt="EV Light Shows" width={234} height={36} className="h-9 w-auto" />
           <p className="text-text-secondary/80 text-[10px] sm:text-xs text-center leading-relaxed max-w-3xl">
             EV Light Shows is not affiliated with, endorsed by, or sponsored by Tesla, Inc. Tesla and its model names are trademarks of Tesla, Inc., used here only to describe product compatibility.
           </p>

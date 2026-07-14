@@ -3,7 +3,8 @@ import SeoHead from '../components/SeoHead';
 import JsonLd from '../components/JsonLd';
 import { FaqAccordion, InternalLinkGrid } from '../components/SeoComponents';
 
-import GeneratorPage from './GeneratorPage';
+import { lazy, Suspense } from 'react';
+const GeneratorPage = lazy(() => import('./GeneratorPage'));
 
 interface Props {
   onOpenAuth: () => void;
@@ -120,7 +121,9 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
       </section>
 
       {/* Generator */}
-      <GeneratorPage onOpenAuth={onOpenAuth} onOpenPricing={onOpenPricing} />
+      <Suspense fallback={<div className="max-w-[1320px] mx-auto px-4 sm:px-6 py-6 sm:py-8"><div className="bg-charcoal border border-border rounded-2xl h-[400px] animate-pulse" /></div>}>
+        <GeneratorPage onOpenAuth={onOpenAuth} onOpenPricing={onOpenPricing} />
+      </Suspense>
 
       {/* How It Works */}
       <section className="max-w-[1320px] mx-auto px-4 sm:px-6 py-12 sm:py-16">

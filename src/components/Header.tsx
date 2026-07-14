@@ -47,7 +47,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           onClick={(e) => { e.preventDefault(); onNavigate('/'); setMobileOpen(false); }}
           className="justify-self-center shrink-0"
         >
-          <img src="/logo.jpg" alt="EV Light Shows" className="h-10 w-auto" />
+          <img src="/logo.webp" alt="EV Light Shows" width={260} height={40} fetchPriority="high" className="h-10 w-auto" />
         </a>
 
         {/* Right - CTA + Auth */}
@@ -103,7 +103,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           onClick={(e) => { e.preventDefault(); onNavigate('/'); setMobileOpen(false); }}
           className="shrink-0"
         >
-          <img src="/logo.jpg" alt="EV Light Shows" className="h-8 w-auto" />
+          <img src="/logo.webp" alt="EV Light Shows" width={208} height={32} fetchPriority="high" className="h-8 w-auto" />
         </a>
         <button
           onClick={() => setMobileOpen(v => !v)}

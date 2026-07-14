@@ -1,18 +1,25 @@
 import { useState, useRef, useCallback } from 'react';
 import { Upload, Zap, Download, Music, AlertTriangle, CheckCircle2, Cpu, Lock, Scissors, ArrowRight, Sparkles, Car, Palette, Sliders } from 'lucide-react';
-import {
-  analyzeAudio,
-  renditionsFor,
-  writeFseq,
-  makeZip,
-  type ArtOptions,
-  type AnalysisResult,
-  type Rendition,
+import type {
+  ArtOptions,
+  AnalysisResult,
+  Rendition,
 } from '../engine';
 import { SNIPPET_SECONDS } from '../config';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase';
-import { resampleTo44100, encodeWav, encodeMp3 } from '../audioConvert';
+
+let enginePromise: Promise<typeof import('../engine')> | null = null;
+function getEngine() {
+  if (!enginePromise) enginePromise = import('../engine');
+  return enginePromise;
+}
+
+let audioConvertPromise: Promise<typeof import('../audioConvert')> | null = null;
+function getAudioConvert() {
+  if (!audioConvertPromise) audioConvertPromise = import('../audioConvert');
+  return audioConvertPromise;
+}
 
 function uint8ToBase64(bytes: Uint8Array): string {
   const chars = new Array<string>(bytes.length);
@@ -273,17 +280,19 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
 
       if (dec.sampleRate !== 44100) {
         const origRate = fileSR || dec.sampleRate;
-        setConvertingStatus('Resampling to 44.1 kHz...');
+        setConvertingStatus('Preparing engine...');
         setFileMeta(`Converting ${origRate} Hz to 44.1 kHz for Tesla compatibility...`);
-        dec = await resampleTo44100(dec);
+        const audioConvert = await getAudioConvert();
+        setConvertingStatus('Resampling to 44.1 kHz...');
+        dec = await audioConvert.resampleTo44100(dec);
         ctx.close();
 
         if (ext === 'wav') {
           setConvertingStatus('Encoding WAV...');
-          bytes = encodeWav(dec);
+          bytes = audioConvert.encodeWav(dec);
         } else {
           setConvertingStatus('Encoding MP3...');
-          bytes = await encodeMp3(dec, (p) => {
+          bytes = await audioConvert.encodeMp3(dec, (p) => {
             setConvertingStatus(`Encoding MP3... ${Math.round(p * 100)}%`);
           });
         }
@@ -326,9 +335,11 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
     setProgress(0);
     setOutputs([]);
     setDownloadError('');
-    setBarLabel('Analyzing — isolating drums, bass, vocals...');
+    setBarLabel('Preparing engine...');
     const t0 = Date.now();
     try {
+      const engine = await getEngine();
+      setBarLabel('Analyzing — isolating drums, bass, vocals...');
       await new Promise(r => setTimeout(r, 30));
       const n = decoded.length, chn = decoded.numberOfChannels;
 
@@ -340,9 +351,9 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       const snippetMono = mono.slice(0, snippetSamples);
 
       const A: AnalysisResult = await new Promise(resolve => {
-        resolve(analyzeAudio(mono.slice(0), decoded.sampleRate, p => setProgress(p)));
+        resolve(engine.analyzeAudio(mono.slice(0), decoded.sampleRate, p => setProgress(p)));
       });
-      const snippetA: AnalysisResult = analyzeAudio(snippetMono, decoded.sampleRate, () => {});
+      const snippetA: AnalysisResult = engine.analyzeAudio(snippetMono, decoded.sampleRate, () => {});
 
       setProgress(1);
       setBarLabel('Building shows...');
@@ -350,13 +361,13 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
 
       const ext = audioFile.name.toLowerCase().split('.').pop() || 'mp3';
       const opts = { model: MODEL_KEY[model], theme: currentTheme(), art: { placement, mirrors, windows, chargeMode, trunkMode, trunkCount } };
-      const rends = renditionsFor(MODEL_KEY[model]);
+      const rends = engine.renditionsFor(MODEL_KEY[model]);
       const built: RenditionOutput[] = [];
       for (const r of rends) {
         const grid = r.build(A, opts);
-        const fseq = writeFseq(grid, `lightshow.${ext}`);
+        const fseq = engine.writeFseq(grid, `lightshow.${ext}`);
         const snippetGrid = r.build(snippetA, opts);
-        const snippetFseq = writeFseq(snippetGrid, `lightshow.${ext}`);
+        const snippetFseq = engine.writeFseq(snippetGrid, `lightshow.${ext}`);
         built.push({ r, fseq, snippetFseq });
         await new Promise(rs => setTimeout(rs, 10));
       }
@@ -405,7 +416,8 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
       const blob = new Blob([output.snippetFseq], { type: 'application/octet-stream' });
       const slug = audioFile.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/gi, '_').slice(0, 40);
       const ext = audioFile.name.toLowerCase().split('.').pop() || 'mp3';
-      const zipData = makeZip([
+      const engine = await getEngine();
+      const zipData = engine.makeZip([
         { name: 'LightShow/lightshow.fseq', data: output.snippetFseq },
         { name: `LightShow/lightshow.${ext}`, data: audioBytes! },
       ]);
@@ -453,7 +465,8 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
 
       const ext = audioFile.name.toLowerCase().split('.').pop() || 'mp3';
       const slug = audioFile.name.replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/gi, '_').slice(0, 40);
-      const zipData = makeZip([
+      const engine = await getEngine();
+      const zipData = engine.makeZip([
         { name: 'LightShow/lightshow.fseq', data: output.fseq },
         { name: `LightShow/lightshow.${ext}`, data: audioBytes! },
       ]);

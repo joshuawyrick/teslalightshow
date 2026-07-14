@@ -7,8 +7,7 @@ import PricingModal from './components/PricingModal';
 import ResetPasswordModal from './components/ResetPasswordModal';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-
-const GeneratorPage = lazy(() => import('./pages/GeneratorPage'));
+import GeneratorPage from './pages/GeneratorPage';
 import { supabase } from './lib/supabase';
 
 const MyDownloadsPage = lazy(() => import('./pages/MyDownloadsPage'));

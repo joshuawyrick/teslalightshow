@@ -70,7 +70,7 @@ export default function HomePage({ onOpenAuth, onOpenPricing }: Props) {
             "@id": "https://evlightshows.com/#organization",
             "name": "EVLightShows.com",
             "url": "https://evlightshows.com",
-            "logo": "https://evlightshows.com/og-image.webp",
+            "logo": "https://evlightshows.com/logo.jpg",
             "description": "Independent web app that generates custom Tesla light show FSEQ files from any song. Not affiliated with Tesla, Inc."
           },
           {

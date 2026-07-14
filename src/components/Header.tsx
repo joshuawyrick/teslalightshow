@@ -47,10 +47,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           onClick={(e) => { e.preventDefault(); onNavigate('/'); setMobileOpen(false); }}
           className="justify-self-center shrink-0"
         >
-          <span className="font-display font-bold text-lg tracking-wider whitespace-nowrap">
-            <span className="text-white">EV LIGHT </span>
-            <span className="text-accent-red">SHOWS</span>
-          </span>
+          <img src="/logo.jpg" alt="EV Light Shows" className="h-10 w-auto" />
         </a>
 
         {/* Right - CTA + Auth */}
@@ -106,10 +103,7 @@ export default function Header({ currentPath, onNavigate, onAuthClick }: HeaderP
           onClick={(e) => { e.preventDefault(); onNavigate('/'); setMobileOpen(false); }}
           className="shrink-0"
         >
-          <span className="font-display font-bold text-base tracking-wider whitespace-nowrap">
-            <span className="text-white">EV LIGHT </span>
-            <span className="text-accent-red">SHOWS</span>
-          </span>
+          <img src="/logo.jpg" alt="EV Light Shows" className="h-8 w-auto" />
         </a>
         <button
           onClick={() => setMobileOpen(v => !v)}

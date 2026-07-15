@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fallback font metrics matching to prevent CLS on font swap */
+@font-face {
+  font-family: 'Orbitron Fallback';
+  src: local('Arial');
+  size-adjust: 112%;
+  ascent-override: 100%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
 @layer base {
   html {
     -webkit-overflow-scrolling: touch;

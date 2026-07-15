@@ -22,8 +22,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Orbitron', 'system-ui', 'sans-serif'],
-        heading: ['Orbitron', 'system-ui', 'sans-serif'],
+        display: ['Orbitron', 'Orbitron fallback', 'system-ui', 'sans-serif'],
+        heading: ['Orbitron', 'Orbitron fallback', 'system-ui', 'sans-serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
       },
     },

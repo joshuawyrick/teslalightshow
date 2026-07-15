@@ -522,6 +522,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
                 width={920}
                 height={101}
                 fetchPriority="high"
+                style={{ aspectRatio: '920 / 101' }}
                 className="w-[220px] sm:w-[320px] lg:w-[400px] xl:w-[460px] h-auto mt-4"
               />
             </div>
@@ -566,7 +567,7 @@ export default function GeneratorPage({ onOpenAuth, onOpenPricing }: GeneratorPa
             )}
           </div>
           {/* Right - Tesla image */}
-          <div className="relative lg:w-[45%] h-48 sm:h-80 lg:h-auto lg:min-h-[340px] w-full overflow-hidden">
+          <div className="relative lg:w-[45%] h-48 sm:h-80 lg:h-auto lg:min-h-[340px] lg:aspect-[1672/941] w-full overflow-hidden">
             <img
               src="/tesla-model-y-light-show-hero-1200.webp"
               srcSet="/tesla-model-y-light-show-hero-400.webp 400w, /tesla-model-y-light-show-hero-800.webp 800w, /tesla-model-y-light-show-hero-1200.webp 1200w"

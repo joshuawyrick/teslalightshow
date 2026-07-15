@@ -2,9 +2,9 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
-import AuthModal from './components/AuthModal';
-import PricingModal from './components/PricingModal';
-import ResetPasswordModal from './components/ResetPasswordModal';
+const AuthModal = lazy(() => import('./components/AuthModal'));
+const PricingModal = lazy(() => import('./components/PricingModal'));
+const ResetPasswordModal = lazy(() => import('./components/ResetPasswordModal'));
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import GeneratorPage from './pages/GeneratorPage';
@@ -187,9 +187,9 @@ function AppInner() {
         <Footer />
       </div>
 
-      {showAuth && <AuthModal onClose={() => setShowAuth(false)} />}
-      {showPricing && <PricingModal onClose={() => setShowPricing(false)} />}
-      {showResetPassword && <ResetPasswordModal onClose={() => setShowResetPassword(false)} />}
+      {showAuth && <Suspense fallback={null}><AuthModal onClose={() => setShowAuth(false)} /></Suspense>}
+      {showPricing && <Suspense fallback={null}><PricingModal onClose={() => setShowPricing(false)} /></Suspense>}
+      {showResetPassword && <Suspense fallback={null}><ResetPasswordModal onClose={() => setShowResetPassword(false)} /></Suspense>}
     </div>
   );
 }

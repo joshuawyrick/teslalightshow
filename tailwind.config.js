@@ -22,9 +22,9 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Orbitron', 'Orbitron Fallback', 'system-ui', 'sans-serif'],
-        heading: ['Orbitron', 'Orbitron Fallback', 'system-ui', 'sans-serif'],
-        body: ['Inter', 'Inter Fallback', 'system-ui', 'sans-serif'],
+        display: ['Orbitron', 'system-ui', 'sans-serif'],
+        heading: ['Orbitron', 'system-ui', 'sans-serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
       },
     },
   },

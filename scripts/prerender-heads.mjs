@@ -5,7 +5,6 @@ import { pathToFileURL } from 'url';
 const SITE = 'https://evlightshows.com';
 
 const routes = [
-  ['', 'Custom Tesla Light Show Generator | EV Light Shows', 'Create stunning custom Tesla light shows from any song. AI-powered generator produces FSEQ files for Model S, 3, X, Y, and Cybertruck. Free to try.'],
   ['tesla-light-show-generator', 'Tesla Light Show Generator | Create Custom Light Shows from Any Song', 'Generate custom Tesla light show files from any music. AI-powered FSEQ generator for Model S, 3, X, Y, and Cybertruck. Upload your song and download in seconds.'],
   ['tesla-light-show-downloads', 'Tesla Light Show Downloads | Custom FSEQ Files from Any Song', 'Download a custom Tesla light show made from your own MP3 or WAV. Get Tesla-ready FSEQ files, matching audio, setup instructions, and a free 20-second sample option.'],
   ['how-to-add-custom-light-show-to-tesla', 'How to Add a Custom Light Show to Your Tesla | USB Setup Guide', 'Learn how to add a custom Tesla light show using a USB drive, LightShow folder, FSEQ file, and matching MP3 or WAV audio. Or generate Tesla-ready files automatically.'],
@@ -40,7 +39,7 @@ const routes = [
 function esc(s) { return s.replace(/&/g, '&amp;'); }
 
 function buildPage(base, path, title, desc) {
-  const url = path === '' ? SITE : SITE + '/' + path;
+  const url = SITE + '/' + path;
   let html = base;
   html = html.replace(/<title>[\s\S]*?<\/title>/, '<title>' + esc(title) + '</title>');
   html = html.replace(/(<meta name="description" content=")[^"]*(")/, '$1' + esc(desc) + '$2');
@@ -58,13 +57,9 @@ export function prerenderHeads() {
   const base = readFileSync(join(dist, 'index.html'), 'utf8');
   let count = 0;
   for (const [path, title, desc] of routes) {
-    if (path === '') {
-      writeFileSync(join(dist, 'index.html'), buildPage(base, path, title, desc));
-    } else {
-      const dir = join(dist, path);
-      mkdirSync(dir, { recursive: true });
-      writeFileSync(join(dir, 'index.html'), buildPage(base, path, title, desc));
-    }
+    const dir = join(dist, path);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'index.html'), buildPage(base, path, title, desc));
     count++;
   }
   console.log('Prerendered ' + count + ' route heads into ' + dist);
@@ -85,7 +80,7 @@ export async function prerenderContent() {
 
   let count = 0;
   for (const [path] of routes) {
-    const filePath = path === '' ? join('dist', 'index.html') : join('dist', path, 'index.html');
+    const filePath = join('dist', path, 'index.html');
     try {
       const bodyHtml = await render('/' + path);
       let html = readFileSync(filePath, 'utf8');
